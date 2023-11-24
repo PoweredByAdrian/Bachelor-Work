@@ -1,0 +1,24 @@
+# Fdb version 4
+["pdflatex"] 1700858889 "d:/School/BC/Bachelor-Work/Latex/Notes.tex" "Notes.pdf" "Notes" 1700858890 0
+  "C:/Users/adrih/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1699725289 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
+  "C:/Users/adrih/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1699725304 24200172 9f38d9f4e7f02d07fff9bd18187d5f17 ""
+  "D:/Programs/Latex/fonts/tfm/public/cm/cmbx12.tfm" 1136765053 1324 c910af8c371558dc20f2d7822f66fe64 ""
+  "D:/Programs/Latex/fonts/tfm/public/cm/cmr12.tfm" 1136765053 1288 655e228510b4c2a1abe905c368440826 ""
+  "D:/Programs/Latex/fonts/tfm/public/cm/cmr17.tfm" 1136765053 1292 296a67155bdbfc32aa9c636f21e91433 ""
+  "D:/Programs/Latex/fonts/type1/public/amsfonts/cm/cmbx12.pfb" 1247596666 32080 340ef9bf63678554ee606688e7b5339d ""
+  "D:/Programs/Latex/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1247596667 32722 d7379af29a190c3f453aba36302ff5a9 ""
+  "D:/Programs/Latex/tex/latex/base/report.cls" 1698826601 23203 eb8fb57cc7a1166aa455e38e2f887972 ""
+  "D:/Programs/Latex/tex/latex/base/size12.clo" 1698826601 8449 9de778d73ba774a5f2bd601f23f8922e ""
+  "D:/Programs/Latex/tex/latex/l3backend/l3backend-pdftex.def" 1698073837 29988 bb6a6635dd6c1ccb32cf27163b4e39bb ""
+  "D:/Programs/Latex/tex/latex/l3kernel/expl3.sty" 1698825060 6547 385deaf4c7ce93ef0b73001a8853b1fe ""
+  "D:/Programs/Latex/tex/latex/l3packages/l3keys2e/l3keys2e.sty" 1696961617 4674 15ab6bdfc97f65b00e59c2867851f715 ""
+  "D:/Programs/Latex/tex/latex/lipsum/lipsum.ltd.tex" 1633253722 95525 6fd0552101a6b1f9b7a84b402ec435ba ""
+  "D:/Programs/Latex/tex/latex/lipsum/lipsum.sty" 1633253722 14690 c2c754218a7108db7823a4839c1bc3cd ""
+  "Notes.aux" 1700858890 208 4781c48cd4a8faacfc14b3a836dc57e6 "pdflatex"
+  "Notes.tex" 1700858889 145 f330bd540344768840d9f5380c3a7197 ""
+  "d:/School/BC/Bachelor-Work/Latex/Notes.tex" 1700858889 145 f330bd540344768840d9f5380c3a7197 ""
+  (generated)
+  "Notes.aux"
+  "Notes.log"
+  "Notes.pdf"
+  (rewritten before read)
