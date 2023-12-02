@@ -1,4 +1,4 @@
-\babel@toc {czech}{}\relax 
+\babel@toc {slovak}{}\relax 
 \contentsline {chapter}{\numberline {1}Úvod}{4}{chapter.1}%
 \contentsline {chapter}{\numberline {2}Abstrakt}{6}{chapter.2}%
 \contentsline {paragraph}{První část -- Jaký se řeší problém? Jaké je téma? Jaký je cíl textu?}{7}{section*.6}%
@@ -40,7 +40,7 @@
 \contentsline {section}{\numberline {7.1}Odevzdání listinné formy práce}{49}{section.7.1}%
 \contentsline {section}{\numberline {7.2}Jak odevzdat práci v IS VUT}{50}{section.7.2}%
 \contentsline {chapter}{\numberline {8}Závěr}{51}{chapter.8}%
-\contentsline {chapter}{Literatura}{52}{chapter*.63}%
+\contentsline {chapter}{Literatúra}{52}{chapter*.63}%
 \contentsline {chapter}{\numberline {A}Jak pracovat s touto šablonou}{54}{appendix.A}%
 \contentsline {paragraph}{Pozor na číslování stránek!}{55}{section*.65}%
 \contentsline {chapter}{\numberline {B}Psaní anglického textu}{59}{appendix.B}%

@@ -1,14 +1,24 @@
 #include "cell.h"
 
 Cell::Cell(QObject *parent)
-    : QObject{parent}, hasFigureOnCell(false)
+    : QObject{parent}, figure(nullptr)
 {
 }
 
-void Cell::setHasFigure(bool hasFigure)
+Figure *Cell::getFigure() const
 {
-    if (hasFigureOnCell != hasFigure) {
-        hasFigureOnCell = hasFigure;
-        emit figureStateChanged(hasFigure);
+    return figure;
+}
+
+void Cell::setFigure(Figure *newFigure)
+{
+    if (figure != newFigure) {
+        figure = newFigure;
+        emit figureStateChanged();
     }
+}
+
+bool Cell::hasFigure() const
+{
+    return figure != nullptr;
 }

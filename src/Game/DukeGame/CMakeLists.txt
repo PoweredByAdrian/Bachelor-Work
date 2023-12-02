@@ -24,6 +24,22 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         cell.h cell.cpp
+        figure.h figure.cpp
+        p_duke.h p_duke.cpp
+        p_bowman.h p_bowman.cpp
+        p_dracoon.h p_dracoon.cpp
+        p_assassin.h p_assassin.cpp
+        p_champion.h p_champion.cpp
+        p_footman.h p_footman.cpp
+        p_general.h p_general.cpp
+        p_marshall.h p_marshall.cpp
+        p_priest.h p_priest.cpp
+        p_knight.h p_knight.cpp
+        p_pikeman.h p_pikeman.cpp
+        p_seer.h p_seer.cpp
+        p_wizard.h p_wizard.cpp
+        figurebag.h figurebag.cpp
+        player.h player.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET DukeGame APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

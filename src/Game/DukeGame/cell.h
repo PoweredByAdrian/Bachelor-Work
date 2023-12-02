@@ -2,6 +2,7 @@
 #define CELL_H
 
 #include <QObject>
+#include "figure.h"
 
 class Cell : public QObject
 {
@@ -9,14 +10,16 @@ class Cell : public QObject
 public:
     explicit Cell(QObject *parent = nullptr);
 
-    bool hasFigure() const {return hasFigureOnCell; }
-    void setHasFigure(bool hasFigure);
+    Figure *getFigure() const;
+    void setFigure(Figure *figure);
+
+    bool hasFigure() const;
 
 signals:
-    void figureStateChanged(bool hasFigure);
+    void figureStateChanged();
 
 private:
-    bool hasFigureOnCell;
+    Figure *figure;
 
 };
 
