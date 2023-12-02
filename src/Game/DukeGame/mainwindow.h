@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGridLayout>
+#include "cell.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,12 +19,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void handleBoardClick(int row, int col);
-
 private:
-    void setupBoard();
-
     Ui::MainWindow *ui;
+    QGridLayout *boardLayout;
+    Cell *cells[6][6];
+
+    void setupBoard();
+    void handleCellClick(int row, int col);
 };
 #endif // MAINWINDOW_H
