@@ -7,7 +7,7 @@ class p_Footman : public Figure
 {
     Q_OBJECT
 public:
-    explicit p_Footman(QObject *parent = nullptr);
+    explicit p_Footman(Figure::Team team, QObject *parent = nullptr);
 
     // Override the isValidMove function
     bool isValidMove(Cell *destination) const override;

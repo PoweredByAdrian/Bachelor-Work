@@ -3,9 +3,9 @@
 
 #include <QMainWindow>
 #include <QGridLayout>
+#include <QPushButton>
 #include "cell.h"
 #include "figure.h"
-#include "p_duke.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,6 +30,8 @@ private:
     QGridLayout *boardLayout;
     Cell *cells[6][6];
     Figure *selectedFigure;
+
+    void setButtonText(Cell* cell, QPushButton* button);
 
     void setupBoard();
     void setupPlayers();

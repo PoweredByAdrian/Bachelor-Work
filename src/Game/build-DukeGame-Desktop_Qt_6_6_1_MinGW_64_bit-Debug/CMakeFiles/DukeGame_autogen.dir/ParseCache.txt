@@ -444,11 +444,14 @@ D:/School/BC/Bachelor-Work/src/Game/DukeGame/mainwindow.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qwindowdefs_win.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/QGridLayout
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/QMainWindow
+ mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/QPushButton
+ mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qabstractbutton.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qboxlayout.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qgridlayout.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qlayout.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qlayoutitem.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qmainwindow.h
+ mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qpushbutton.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qsizepolicy.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qtabwidget.h
  mdp:D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qtwidgets-config.h
@@ -657,7 +660,6 @@ D:/School/BC/Bachelor-Work/src/Game/DukeGame/mainwindow.h
  mdp:D:/School/BC/Bachelor-Work/src/Game/DukeGame/cell.h
  mdp:D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.h
  mdp:D:/School/BC/Bachelor-Work/src/Game/DukeGame/mainwindow.h
- mdp:D:/School/BC/Bachelor-Work/src/Game/DukeGame/p_duke.h
  mdp:D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/moc_predefs.h
 D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.h
  mmc:Q_OBJECT

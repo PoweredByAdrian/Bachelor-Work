@@ -4,6 +4,7 @@
 #include <QObject>
 
 class Cell; // Forward declaration
+class p_Duke;
 
 class Figure : public QObject
 {
@@ -16,7 +17,7 @@ public:
     };
 
     enum PieceType {
-        Assasin,
+        Assassin,
         Bowman,
         Champion,
         Dracoon,
@@ -28,10 +29,13 @@ public:
         Pikeman,
         Priest,
         Seer,
-        Wizard
+        Wizard,
+
+
+        NoPiece
     };
 
-    explicit Figure(QObject *parent = nullptr);
+    explicit Figure(Team team, PieceType type, QObject *parent = nullptr);
 
     Team getTeam() const { return team; }
     void setTeam(Team newTeam);
@@ -44,7 +48,9 @@ public:
     // New method to check if the figure is a duke
     virtual bool isDuke() const { return type() == Duke; }
 
-protected:
+    // Factory method to create specific types of figures
+    static Figure* createFigure(Team team, PieceType type, QObject *parent = nullptr);
+
     // Abstract method to get the type of the figure
     virtual PieceType type() const = 0;
 

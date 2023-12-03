@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include <QPushButton>
+
 #include <QDebug>
 
 
@@ -53,24 +53,27 @@ void MainWindow::setupBoard()
             });
 
             // Connect the cell's signal to update the button's appearance
-            connect(cell, &Cell::figureStateChanged, this, [button, cell]() {
-                button->setText(cell->hasFigure() ? "X" : "");
+            connect(cell, &Cell::figureStateChanged, this, [button, cell, this]() {
+                setButtonText(cell, button);
             });
 
             // Add the button to the layout
             boardLayout->addWidget(button, row, col);
 
             // Place initial figures on the sides
-            if ((row == 0 && col == 0) || (row == 5 && col == 5)) {
-                p_Duke *duke = new p_Duke(this);
-                duke->setTeam((row == 0 && col == 0) ? Figure::TeamA : Figure::TeamB);
-                cell->setFigure(duke);
+            if (row == 0 && col == 0) {
+                Figure *dukeA = Figure::createFigure(Figure::TeamA, Figure::Duke, this);
+                cell->setFigure(dukeA);
+            }
+            // Place initial figures on the sides
+            if (row == 5 && col == 5) {
+                Figure *dukeB = Figure::createFigure(Figure::TeamA, Figure::Duke, this)  ;
+                cell->setFigure(dukeB);
             }
 
+            setButtonText(cell, button);
 
-            // Set text and font properties
-            button->setText(cell->hasFigure() ? "X" : "");
-            button->setFont(QFont("Arial", 12, QFont::Bold));
+
         }
     }
 }
@@ -123,4 +126,63 @@ void MainWindow::handleCellClick(int row, int col)
             clickedCell->setFigure(nullptr);
         }
     }
+}
+
+void MainWindow::setButtonText(Cell* cell, QPushButton* button){
+    // Set text and font properties
+    // Set text and font properties
+    if (cell->hasFigure()) {
+        Figure::PieceType pieceType = cell->getFigureType();
+
+        // Convert the PieceType enum to a string for display
+        QString pieceTypeText;
+        switch (pieceType) {
+        case Figure::Assassin:
+            pieceTypeText = "Assassin";
+            break;
+        case Figure::Bowman:
+            pieceTypeText = "Bowman";
+            break;
+        case Figure::Champion:
+            pieceTypeText = "Champion";
+            break;
+        case Figure::Dracoon:
+            pieceTypeText = "Dracoon";
+            break;
+        case Figure::Duke:
+            pieceTypeText = "Duke";
+            break;
+        case Figure::Footman:
+            pieceTypeText = "Footman";
+            break;
+        case Figure::General:
+            pieceTypeText = "General";
+            break;
+        case Figure::Knight:
+            pieceTypeText = "Knight";
+            break;
+        case Figure::Marshall:
+            pieceTypeText = "Marshall";
+            break;
+        case Figure::Pikeman:
+            pieceTypeText = "Pikeman";
+            break;
+        case Figure::Priest:
+            pieceTypeText = "Priest";
+            break;
+        case Figure::Seer:
+            pieceTypeText = "Seer";
+            break;
+        case Figure::Wizard:
+            pieceTypeText = "Wizard";
+            break;
+        default:
+            pieceTypeText = "U";
+            break;
+        }
+        button->setText(pieceTypeText);
+    } else {
+        button->setText("");
+    }
+    button->setFont(QFont("Arial", 12, QFont::Bold));
 }

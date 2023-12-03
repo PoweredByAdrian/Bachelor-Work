@@ -1,7 +1,7 @@
 #include "p_priest.h"
 
-p_Priest::p_Priest(QObject *parent)
-    : Figure{parent}
+p_Priest::p_Priest(Figure::Team team, QObject *parent)
+    : Figure(team, Figure::Priest, parent)
 {}
 
 bool p_Priest::isValidMove(Cell *destination) const

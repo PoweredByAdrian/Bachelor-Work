@@ -22,3 +22,8 @@ bool Cell::hasFigure() const
 {
     return figure != nullptr;
 }
+
+Figure::PieceType Cell::getFigureType() const
+{
+    return figure ? figure->type() : Figure::NoPiece; // Assuming NoPiece is a default type
+}

@@ -7,7 +7,7 @@ class p_Assassin : public Figure
 {
     Q_OBJECT
 public:
-    explicit p_Assassin(QObject *parent = nullptr);
+    explicit p_Assassin(Figure::Team team, QObject *parent = nullptr);
 
     // Override the isValidMove function
     bool isValidMove(Cell *destination) const override;
@@ -16,7 +16,7 @@ public:
     void markAvailableJumps() override;
 protected:
     // Implementation of the type method for the Pawn class
-    PieceType type() const override { return Assasin; }
+    PieceType type() const override { return Assassin; }
 };
 
 #endif // P_ASSASSIN_H

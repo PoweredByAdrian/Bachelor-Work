@@ -7,7 +7,7 @@ class p_General : public Figure
 {
     Q_OBJECT
 public:
-    explicit p_General(QObject *parent = nullptr);
+    explicit p_General(Figure::Team team, QObject *parent = nullptr);
 
     // Override the isValidMove function
     bool isValidMove(Cell *destination) const override;

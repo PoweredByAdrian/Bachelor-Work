@@ -15,11 +15,14 @@ public:
 
     bool hasFigure() const;
 
+    Figure::PieceType getFigureType() const;
+
 signals:
     void figureStateChanged();
 
 private:
     Figure *figure;
+
 
 };
 
