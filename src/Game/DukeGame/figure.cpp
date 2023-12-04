@@ -15,12 +15,12 @@
 #include "p_wizard.h"
 
 
-Figure::Figure(Team team, PieceType type, QObject *parent)
+Figure::Figure(PlayerTeam team, PieceType type, QObject *parent)
     : QObject(parent), cell(nullptr), team(team)
 {
 }
 
-void Figure::setTeam(Figure::Team team)
+void Figure::setTeam(PlayerTeam team)
 {
     this->team = team;
 }
@@ -35,34 +35,34 @@ Cell *Figure::getCell() const
     return cell;
 }
 
-Figure* Figure::createFigure(Figure::Team team, Figure::PieceType type, QObject *parent)
+Figure* Figure::createFigure(PlayerTeam team, PieceType type, QObject *parent)
 {
     switch (type) {
-    case Figure::PieceType::Assassin:
+    case PieceType::Assassin:
         return new p_Assassin(team, parent);
-    case Figure::PieceType::Bowman:
+    case PieceType::Bowman:
         return new p_Bowman(team, parent);
-    case Figure::PieceType::Champion:
+    case PieceType::Champion:
         return new p_Champion(team, parent);
-    case Figure::PieceType::Dracoon:
+    case PieceType::Dracoon:
         return new p_Dracoon(team, parent);
-    case Figure::PieceType::Duke:
+    case PieceType::Duke:
         return new p_Duke(team, parent);
-    case Figure::PieceType::Footman:
+    case PieceType::Footman:
         return new p_Footman(team, parent);
-    case Figure::PieceType::General:
+    case PieceType::General:
         return new p_General(team, parent);
-    case Figure::PieceType::Knight:
+    case PieceType::Knight:
         return new p_Knight(team, parent);
-    case Figure::PieceType::Marshall:
+    case PieceType::Marshall:
         return new p_Marshall(team, parent);
-    case Figure::PieceType::Pikeman:
+    case PieceType::Pikeman:
         return new p_Pikeman(team, parent);
-    case Figure::PieceType::Priest:
+    case PieceType::Priest:
         return new p_Priest(team, parent);
-    case Figure::PieceType::Seer:
+    case PieceType::Seer:
         return new p_Seer(team, parent);
-    case Figure::PieceType::Wizard:
+    case PieceType::Wizard:
         return new p_Wizard(team, parent);
     // Add cases for other piece types
     default:

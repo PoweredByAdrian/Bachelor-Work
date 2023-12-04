@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-774b008382b266d1fa66.json",
+					"jsonFile" : "directory-.-Debug-7a310015ce0594fb2d3c.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -44,7 +44,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "DukeGame::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-DukeGame-Debug-b87b0001dca40967d35a.json",
+					"jsonFile" : "target-DukeGame-Debug-7a9cdfb7079f4c6e8076.json",
 					"name" : "DukeGame",
 					"projectIndex" : 0
 				},

@@ -297,6 +297,18 @@
 			null
 		],
 		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/connectionmanager.h",
+			"MU",
+			"EWIEGA46WW/moc_connectionmanager.cpp",
+			null
+		],
+		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/enums.h",
+			"MU",
+			"EWIEGA46WW/moc_enums.cpp",
+			null
+		],
+		[
 			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.h",
 			"MU",
 			"EWIEGA46WW/moc_figure.cpp",
@@ -360,6 +372,12 @@
 			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/p_knight.h",
 			"MU",
 			"EWIEGA46WW/moc_p_knight.cpp",
+			null
+		],
+		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/p_longbowman.h",
+			"MU",
+			"EWIEGA46WW/moc_p_longbowman.cpp",
 			null
 		],
 		[
@@ -470,6 +488,11 @@
 	"SOURCES" : 
 	[
 		[ "D:/School/BC/Bachelor-Work/src/Game/DukeGame/cell.cpp", "MU", null ],
+		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/connectionmanager.cpp",
+			"MU",
+			null
+		],
 		[ "D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.cpp", "MU", null ],
 		[
 			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/figurebag.cpp",
@@ -515,6 +538,11 @@
 		],
 		[
 			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/p_knight.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/p_longbowman.cpp",
 			"MU",
 			null
 		],

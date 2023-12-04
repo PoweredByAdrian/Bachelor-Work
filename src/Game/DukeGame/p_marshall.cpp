@@ -1,7 +1,7 @@
 #include "p_marshall.h"
 
-p_Marshall::p_Marshall(Figure::Team team, QObject *parent)
-    : Figure(team, Figure::Marshall, parent)
+p_Marshall::p_Marshall(PlayerTeam team, QObject *parent)
+    : Figure(team, Marshall, parent)
 {}
 
 bool p_Marshall::isValidMove(Cell *destination) const

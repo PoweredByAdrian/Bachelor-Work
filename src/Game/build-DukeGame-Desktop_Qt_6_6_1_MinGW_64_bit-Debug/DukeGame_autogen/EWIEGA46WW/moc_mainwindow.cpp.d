@@ -1,5 +1,6 @@
 D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/EWIEGA46WW/moc_mainwindow.cpp: D:/School/BC/Bachelor-Work/src/Game/DukeGame/mainwindow.h \
   D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/moc_predefs.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QList \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QObject \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20functional.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20memory.h \
@@ -43,6 +44,7 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qglobalstatic.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qhash.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qhashfunctions.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qiodevice.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qiodevicebase.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qiterable.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qiterator.h \
@@ -109,6 +111,7 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtversionchecks.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtypeinfo.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtypes.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qurl.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qutf8stringview.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qvariant.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qvarlengtharray.h \
@@ -127,12 +130,14 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qkeysequence.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpaintdevice.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpalette.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpicture.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpixelformat.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpixmap.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpolygon.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qregion.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qrgb.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qrgba64.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qtextdocument.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qtgui-config.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qtguiexports.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qtguiglobal.h \
@@ -140,11 +145,14 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qwindowdefs.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qwindowdefs_win.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/QGridLayout \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/QLabel \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/QMainWindow \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/QPushButton \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qabstractbutton.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qboxlayout.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qframe.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qgridlayout.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qlabel.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qlayout.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qlayoutitem.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qmainwindow.h \
@@ -355,4 +363,7 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
   D:/Programs/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/cell.h \
-  D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.h
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/connectionmanager.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/enums.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/figurebag.h

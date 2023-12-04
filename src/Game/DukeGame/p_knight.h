@@ -7,7 +7,7 @@ class p_Knight : public Figure
 {
     Q_OBJECT
 public:
-    explicit p_Knight(Figure::Team team, QObject *parent = nullptr);
+    explicit p_Knight(PlayerTeam team, QObject *parent = nullptr);
 
     // Override the isValidMove function
     bool isValidMove(Cell *destination) const override;

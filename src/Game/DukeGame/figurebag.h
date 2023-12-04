@@ -4,16 +4,22 @@
 #include <QList>
 #include "figure.h"
 
+
 class figureBag
 {
 public:
-    figureBag();
+    explicit figureBag(PlayerTeam team);
 
-    void setPieces(QList<Figure*> pieces);
     Figure* takeRandomPiece();
+
+    // Check if the bag is empty
+    bool isEmpty() const;
 
 private:
     QList<Figure*> pieces;
+    // Initialize the bag with pieces
+    void initialize();
+    PlayerTeam team;
 };
 
 #endif // FIGUREBAG_H

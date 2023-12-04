@@ -7,7 +7,7 @@ class p_Marshall : public Figure
 {
     Q_OBJECT
 public:
-    explicit p_Marshall(Figure::Team team, QObject *parent = nullptr);
+    explicit p_Marshall(PlayerTeam team, QObject *parent = nullptr);
 
     // Override the isValidMove function
     bool isValidMove(Cell *destination) const override;

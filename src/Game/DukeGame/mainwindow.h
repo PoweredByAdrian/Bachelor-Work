@@ -6,6 +6,9 @@
 #include <QPushButton>
 #include "cell.h"
 #include "figure.h"
+#include "figurebag.h"
+#include <QLabel>
+#include "connectionmanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,19 +24,30 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
     void handleCellClick(int row, int col);
-    void handlePlayerButtonClick();
+    void handlePlayerButtonClick(figureBag *bag, const QString &playerName);
+    void handleCellFigureStateChanged();
 
 private:
+    void setupBoard();
+    void setupPlayers();
+
+    void setButtonText(Cell* cell, QPushButton* button);
     Ui::MainWindow *ui;
     QGridLayout *boardLayout;
     Cell *cells[6][6];
     Figure *selectedFigure;
 
-    void setButtonText(Cell* cell, QPushButton* button);
 
-    void setupBoard();
-    void setupPlayers();
+
+
+    QLabel *selectedPlayerLabel;
+    QLabel *selectedPieceLabel;
+
+    QString pieceTypeToString(PieceType type);
+
+    ConnectionManager *connectionManager;
 };
 #endif // MAINWINDOW_H

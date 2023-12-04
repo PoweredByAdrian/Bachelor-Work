@@ -7,6 +7,7 @@
 *****************************************************************************/
 
 #include "../../../DukeGame/mainwindow.h"
+#include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
 
 #if __has_include(<QtCore/qtmochelpers.h>)
@@ -43,17 +44,25 @@ static constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers:
     "",
     "row",
     "col",
-    "handlePlayerButtonClick"
+    "handlePlayerButtonClick",
+    "figureBag*",
+    "bag",
+    "playerName",
+    "handleCellFigureStateChanged"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
-    uint offsetsAndSizes[12];
+    uint offsetsAndSizes[20];
     char stringdata0[11];
     char stringdata1[16];
     char stringdata2[1];
     char stringdata3[4];
     char stringdata4[4];
     char stringdata5[24];
+    char stringdata6[11];
+    char stringdata7[4];
+    char stringdata8[11];
+    char stringdata9[29];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -64,14 +73,22 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(27, 0),  // ""
         QT_MOC_LITERAL(28, 3),  // "row"
         QT_MOC_LITERAL(32, 3),  // "col"
-        QT_MOC_LITERAL(36, 23)   // "handlePlayerButtonClick"
+        QT_MOC_LITERAL(36, 23),  // "handlePlayerButtonClick"
+        QT_MOC_LITERAL(60, 10),  // "figureBag*"
+        QT_MOC_LITERAL(71, 3),  // "bag"
+        QT_MOC_LITERAL(75, 10),  // "playerName"
+        QT_MOC_LITERAL(86, 28)   // "handleCellFigureStateChanged"
     },
     "MainWindow",
     "handleCellClick",
     "",
     "row",
     "col",
-    "handlePlayerButtonClick"
+    "handlePlayerButtonClick",
+    "figureBag*",
+    "bag",
+    "playerName",
+    "handleCellFigureStateChanged"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -83,7 +100,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -91,11 +108,13 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    2,   26,    2, 0x08,    1 /* Private */,
-       5,    0,   31,    2, 0x08,    4 /* Private */,
+       1,    2,   32,    2, 0x08,    1 /* Private */,
+       5,    2,   37,    2, 0x08,    4 /* Private */,
+       9,    0,   42,    2, 0x08,    7 /* Private */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    4,
+    QMetaType::Void, 0x80000000 | 6, QMetaType::QString,    7,    8,
     QMetaType::Void,
 
        0        // eod
@@ -115,6 +134,10 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'handlePlayerButtonClick'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<figureBag *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        // method 'handleCellFigureStateChanged'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -127,7 +150,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         (void)_t;
         switch (_id) {
         case 0: _t->handleCellClick((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
-        case 1: _t->handlePlayerButtonClick(); break;
+        case 1: _t->handlePlayerButtonClick((*reinterpret_cast< std::add_pointer_t<figureBag*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
+        case 2: _t->handleCellFigureStateChanged(); break;
         default: ;
         }
     }
@@ -152,13 +176,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 3)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

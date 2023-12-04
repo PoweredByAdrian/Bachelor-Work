@@ -294,5 +294,6 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/time.h \
   D:/Programs/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
   D:/Programs/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/enums.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/figurebag.h

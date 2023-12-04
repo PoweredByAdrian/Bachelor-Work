@@ -7,7 +7,7 @@ class p_Priest : public Figure
 {
     Q_OBJECT
 public:
-    explicit p_Priest(Figure::Team team, QObject *parent = nullptr);
+    explicit p_Priest(PlayerTeam team, QObject *parent = nullptr);
 
     // Override the isValidMove function
     bool isValidMove(Cell *destination) const override;
