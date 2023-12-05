@@ -9,6 +9,7 @@
 #include "figurebag.h"
 #include <QLabel>
 #include "connectionmanager.h"
+#include "enums.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -49,5 +50,8 @@ private:
     QString pieceTypeToString(PieceType type);
 
     ConnectionManager *connectionManager;
+
+
+    PlayerTeam currentPlayer;
 };
 #endif // MAINWINDOW_H

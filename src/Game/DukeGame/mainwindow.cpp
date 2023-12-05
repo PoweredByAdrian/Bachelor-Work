@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , boardLayout(new QGridLayout)
     , selectedFigure(nullptr)
+    ,  currentPlayer(PlayerTeam::TeamA)
 {
     ui->setupUi(this);
     connectionManager = new ConnectionManager(this);
@@ -69,7 +70,7 @@ void MainWindow::setupBoard()
             }
             // Place initial figures on the sides
             if (row == 5 && col == 5) {
-                Figure *dukeB = Figure::createFigure(TeamA, Duke, this)  ;
+                Figure *dukeB = Figure::createFigure(TeamB, Duke, this)  ;
                 cell->setFigure(dukeB);
             }
 
@@ -149,20 +150,46 @@ void MainWindow::handleCellClick(int row, int col)
     Cell *clickedCell = cells[row][col];
     PieceType pieceType;
 
-    if (!selectedFigure) {
-        // If selectedFigure is empty, set it to the figure in the clicked cell (if any)
-        if (clickedCell->hasFigure()) {
-            selectedFigure = clickedCell->getFigure();
-            pieceType = selectedFigure->type();
-            clickedCell->setFigure(nullptr);
-            // Update the selected piece label
-            selectedPieceLabel->setText("Selected Piece: " + pieceTypeToString(pieceType));
+    // Check whose turn it is
+    if (currentPlayer == PlayerTeam::TeamA) {
+        // Handle moving pieces for PlayerA
+        if (!selectedFigure) {
+            // If selectedFigure is empty, set it to the figure in the clicked cell (if any)
+            if (clickedCell->hasFigure() && clickedCell->getFigure()->getTeam() == PlayerTeam::TeamA) {
+                selectedFigure = clickedCell->getFigure();
+                pieceType = selectedFigure->type();
+                clickedCell->setFigure(nullptr);
+                // Update the selected piece label
+                selectedPieceLabel->setText("Selected Piece: " + pieceTypeToString(pieceType));
+            }
+        } else {
+            // Move the selected figure to the clicked cell
+            if (!clickedCell->hasFigure()) {
+                clickedCell->setFigure(selectedFigure);
+                selectedFigure = nullptr;
+                // After moving, switch to the other player's turn
+                currentPlayer = PlayerTeam::TeamB;
+            }
         }
-    } else {
-        // Move the selected figure to the clicked cell
-        if (!clickedCell->hasFigure()) {
-            clickedCell->setFigure(selectedFigure);
-            selectedFigure = nullptr;
+    } else {  // Current player is PlayerB
+        // Handle moving pieces for PlayerB
+        if (!selectedFigure) {
+            // If selectedFigure is empty, set it to the figure in the clicked cell (if any)
+            if (clickedCell->hasFigure() && clickedCell->getFigure()->getTeam() == PlayerTeam::TeamB) {
+                selectedFigure = clickedCell->getFigure();
+                pieceType = selectedFigure->type();
+                clickedCell->setFigure(nullptr);
+                // Update the selected piece label
+                selectedPieceLabel->setText("Selected Piece: " + pieceTypeToString(pieceType));
+            }
+        } else {
+            // Move the selected figure to the clicked cell
+            if (!clickedCell->hasFigure()) {
+                clickedCell->setFigure(selectedFigure);
+                selectedFigure = nullptr;
+                // After moving, switch to the other player's turn
+                currentPlayer = PlayerTeam::TeamA;
+            }
         }
     }
 }
