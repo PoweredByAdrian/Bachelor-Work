@@ -360,7 +360,7 @@ build DukeGame_autogen/timestamp DukeGame_autogen/mocs_compilation.cpp | ${cmake
 #############################################
 # Phony custom command for CMakeFiles\DukeGame_autogen_timestamp_deps
 
-build CMakeFiles/DukeGame_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/DukeGame_autogen_timestamp_deps: phony D$:/Programs/Qt/6.6.1/mingw_64/./bin/uic.exe D$:/Programs/Qt/6.6.1/mingw_64/./bin/moc.exe D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Widgets.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Core.a
+build CMakeFiles/DukeGame_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/DukeGame_autogen_timestamp_deps: phony D$:/Programs/Qt/6.6.1/mingw_64/./bin/moc.exe D$:/Programs/Qt/6.6.1/mingw_64/./bin/uic.exe D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Widgets.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Core.a
 
 
 #############################################

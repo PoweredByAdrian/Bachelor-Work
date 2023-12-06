@@ -38,5 +38,18 @@ Figure::MoveResult p_Champion::markAvailableJumps(Cell *cells[6][6]) const
         validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row + 2, col));
         validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row - 2, col));
     }
+
+    //TODO Strike
+    for (auto move = validMoves.begin(); move != validMoves.end();) {
+        int targetRow = std::get<1>(*move);
+        int targetCol = std::get<2>(*move);
+
+        if (cells[targetRow][targetCol]->hasFigure()) {
+            move = validMoves.erase(move);
+        } else {
+            ++move;
+        }
+    }
+
     return{currentPosition, validMoves};
 }

@@ -38,8 +38,18 @@ Figure::MoveResult p_Bowman::markAvailableJumps(Cell *cells[6][6]) const
         validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 1, col + 1));
         validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 1, col -1));
 
-
-
     }
+    for (auto move = validMoves.begin(); move != validMoves.end();) {
+        int targetRow = std::get<1>(*move);
+        int targetCol = std::get<2>(*move);
+
+        if (cells[targetRow][targetCol]->hasFigure()) {
+            move = validMoves.erase(move);
+        } else {
+            ++move;
+        }
+    }
+
+
     return{currentPosition, validMoves};
 }

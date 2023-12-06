@@ -22,6 +22,8 @@ public:
     figureBag* getBagPlayerA() const { return bagPlayerA; }
     figureBag* getBagPlayerB() const { return bagPlayerB; }
 
+    Cell* (*getCells())[6][6] {return &cells; }
+
 private:
     // Private member functions for setup
     void createCells();

@@ -34,12 +34,36 @@ Figure::MoveResult p_Dracoon::markAvailableJumps(Cell *cells[6][6]) const
 
         // Check diagonal backward moves
         for (int moveRow = row - 1, moveCol = col - 1; row >= 0 && col >= 0; --moveRow, --moveCol) {
-            validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+            if(cells[moveRow][moveCol]->hasFigure()){
+                break;
+            }
+            else{
+                validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+            }
+
         }
 
         for (int moveRow = row - 1, moveCol = col + 1; row >= 0 && col < 6; --moveRow, ++moveCol) {
-            validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+            if(cells[moveRow][moveCol]->hasFigure()){
+                break;
+            }
+            else{
+                validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+            }
+
         }
     }
+    //TODO Strike
+    for (auto move = validMoves.begin(); move != validMoves.end();) {
+        int targetRow = std::get<1>(*move);
+        int targetCol = std::get<2>(*move);
+
+        if (cells[targetRow][targetCol]->hasFigure()) {
+            move = validMoves.erase(move);
+        } else {
+            ++move;
+        }
+    }
+
     return{currentPosition, validMoves};
 }

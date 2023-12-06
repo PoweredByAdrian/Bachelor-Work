@@ -16,12 +16,71 @@ Figure::MoveResult p_Duke::markAvailableJumps(Cell *cells[6][6]) const
     int row = cell->getRow();
     QPair<int,int> currentPosition = QPair<int, int>(row, col);
     if(!flipped){
-        validMoves.append(std::tuple<MoveTypes,int,int>(Slide, row, 0));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Slide, row, 5));
+        for (int moveCol = col - 1; moveCol >= 0; ++moveCol) {
+            if(cells[row][moveCol]->hasFigure()){
+                break;
+            }
+            else{
+                validMoves.append(std::tuple<MoveTypes,int,int>(Slide, row, moveCol));
+            }
+
+        }
+        for (int moveCol = col + 1; moveCol < 6; ++moveCol) {
+            if(cells[row][moveCol]->hasFigure()){
+                break;
+            }
+            else{
+                validMoves.append(std::tuple<MoveTypes,int,int>(Slide, row, moveCol));
+            }
+
+        }
     }
     else{
-        validMoves.append(std::tuple<MoveTypes,int,int>(Slide, row, 0));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Slide, row, 5));
+        for (int moveRow = row - 1; moveRow >= 0; --moveRow) {
+            if(cells[moveRow][col]->hasFigure()){
+                break;
+            }
+            else{
+                validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, col));
+            }
+
+        }
+        for (int moveRow = row + 1; moveRow < 6; ++moveRow) {
+            if(cells[moveRow][col]->hasFigure()){
+                break;
+            }
+            else{
+                validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, col));
+            }
+
+        }
     }
     return{currentPosition, validMoves};
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
