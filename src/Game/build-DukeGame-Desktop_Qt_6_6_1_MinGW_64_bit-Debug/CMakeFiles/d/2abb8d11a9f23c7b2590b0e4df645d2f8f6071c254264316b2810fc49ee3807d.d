@@ -1,6 +1,7 @@
 DukeGame_autogen/timestamp: \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QList \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QObject \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QPair \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20functional.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20memory.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20type_traits.h \
@@ -570,6 +571,8 @@ DukeGame_autogen/timestamp: \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/figurebag.cpp \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/figurebag.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameconfigure.cpp \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameconfigure.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/main.cpp \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/mainwindow.cpp \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/mainwindow.h \

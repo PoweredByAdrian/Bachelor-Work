@@ -3,7 +3,9 @@
 
 enum PlayerTeam {
     TeamA,
-    TeamB
+    TeamB,
+
+    NoTeam
 };
 
 enum PieceType {
@@ -23,6 +25,16 @@ enum PieceType {
     Longbowman,
 
     NoPiece
+};
+
+enum MoveTypes{
+    Move,
+    Jump,
+    Slide,
+    JumpSlide,
+    Strike,
+    Command
+
 };
 
 #endif // ENUMS_H

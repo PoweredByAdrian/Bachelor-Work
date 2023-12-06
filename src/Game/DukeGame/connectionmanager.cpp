@@ -33,7 +33,7 @@ void ConnectionManager::handlePlayerButtonClicked()
     QPushButton *clickedButton = qobject_cast<QPushButton *>(sender());
     if (clickedButton && buttonBagMap.contains(clickedButton)) {
         figureBag *bag = buttonBagMap.value(clickedButton);
-        emit playerButtonClicked(bag, clickedButton->text());
+        emit playerButtonClicked(bag, clickedButton);
     }
 }
 

@@ -75,13 +75,13 @@
 			{
 				"command" : 4,
 				"file" : 1,
-				"line" : 82,
+				"line" : 85,
 				"parent" : 0
 			},
 			{
 				"command" : 5,
 				"file" : 1,
-				"line" : 65,
+				"line" : 68,
 				"parent" : 0
 			},
 			{
@@ -383,18 +383,21 @@
 				36,
 				38,
 				40,
-				43
+				43,
+				45,
+				47,
+				49
 			]
 		}
 	],
 	"dependencies" : 
 	[
 		{
-			"id" : "DukeGame_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
-		},
-		{
 			"backtrace" : 0,
 			"id" : "DukeGame_autogen::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "DukeGame_autogen_timestamp_deps::@6890427a1f51a3e7e1df"
 		}
 	],
 	"id" : "DukeGame::@6890427a1f51a3e7e1df",
@@ -525,7 +528,10 @@
 				36,
 				38,
 				40,
-				43
+				43,
+				45,
+				47,
+				49
 			]
 		},
 		{
@@ -553,7 +559,10 @@
 				39,
 				41,
 				42,
-				44
+				44,
+				46,
+				48,
+				50
 			]
 		},
 		{
@@ -561,14 +570,14 @@
 			"sourceIndexes" : 
 			[
 				4,
-				45
+				51
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				46
+				52
 			]
 		}
 	],
@@ -815,6 +824,39 @@
 			"backtrace" : 4,
 			"compileGroupIndex" : 0,
 			"path" : "connectionmanager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "gameconfigure.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "gameconfigure.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "gameinterface.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "gameinterface.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "gamelogic.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 0,
+			"path" : "gamelogic.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

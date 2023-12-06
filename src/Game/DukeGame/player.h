@@ -7,15 +7,17 @@ class Player : public QObject
 {
     Q_OBJECT
 public:
-    explicit Player(QObject *parent = nullptr);
+    explicit Player( PlayerTeam newTeam = NoTeam);
 
-    void setPieceBag(figureBag* bag);
+    void setPieceBag();
     figureBag* getPieceBag() const;
 
     Figure* getRandomPieceFromBag();
+    PlayerTeam getTeam() {return team;}
 
 private:
     figureBag* figurebag;
+    PlayerTeam team;
 signals:
 };
 

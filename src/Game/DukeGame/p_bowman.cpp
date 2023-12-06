@@ -4,14 +4,42 @@ p_Bowman::p_Bowman(PlayerTeam team, QObject *parent)
     : Figure(team, Bowman, parent)
 {}
 
-bool p_Bowman::isValidMove(Cell *destination) const
+bool p_Bowman::isValidMove(Cell *cells[6][6], int row, int col) const
 {
-    // Implementation for validating normal moves
-    // ...
+    //TODO
+    return true;
 }
 
-void p_Bowman::markAvailableJumps()
+Figure::MoveResult p_Bowman::markAvailableJumps(Cell *cells[6][6]) const
 {
-    // Implementation for marking cells where the Duke can jump
-    // ...
+    QList<std::tuple<MoveTypes,int,int>> validMoves;
+    int col = cell->getCol();
+    int row = cell->getRow();
+    QPair<int,int> currentPosition = QPair<int, int>(row, col);
+    if(!flipped){
+
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col + 1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col - 1));
+
+        validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row - 1, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row, col + 2));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row, col - 2));
+
+
+    }
+    else{
+
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1, col + 1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1, col - 1));
+
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 2, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 1, col + 1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 1, col -1));
+
+
+
+    }
+    return{currentPosition, validMoves};
 }

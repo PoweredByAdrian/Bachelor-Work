@@ -1,6 +1,7 @@
 D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/EWIEGA46WW/moc_p_footman.cpp: D:/School/BC/Bachelor-Work/src/Game/DukeGame/p_footman.h \
   D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/moc_predefs.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QObject \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QPair \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20functional.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20memory.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20type_traits.h \

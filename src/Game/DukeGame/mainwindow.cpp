@@ -12,10 +12,15 @@ MainWindow::MainWindow(QWidget *parent)
     ,  currentPlayer(PlayerTeam::TeamA)
 {
     ui->setupUi(this);
+    gc = new GameConfigure();
+
+
+
     connectionManager = new ConnectionManager(this);
     setupBoard();
 
     connect(connectionManager, &ConnectionManager::cellClicked, this, &MainWindow::handleCellClick);
+    connect(connectionManager, &ConnectionManager::playerButtonClicked, this, &MainWindow::handlePlayerButtonClick);
     setupPlayers();
 }
 
@@ -27,11 +32,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupBoard()
 {
-
-
-
     // Set up the layout for the chessboard
     ui->centralwidget->setLayout(boardLayout);
+
     // Set spacing and margins to 0 to eliminate gaps
     boardLayout->setSpacing(0);
     boardLayout->setContentsMargins(0, 0, 0, 0);
@@ -43,40 +46,23 @@ void MainWindow::setupBoard()
             // Create a button to represent the cell visually
             QPushButton *button = new QPushButton(this);
 
-            Cell *cell = new Cell(this, row, col, button);
-            cells[row][col] = cell;
-
+            Cell* cell = gc->getCell(row, col);
+            cell->setButton(button);
 
             // Set the size policy to make the button fill the available space
             button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-            // Set a border style to create a grid-like appearance
-            button->setStyleSheet("border: 1px solid black;");
-
             // Add the button to the layout
             boardLayout->addWidget(button, row, col);
 
+
+            //////////////////////////////////////////////////////////
+            //TODO need checkup all below
+
             // Connect the cell button using ConnectionManager
             connectionManager->connectCellButton(cell, button);
-
             connect(cell, &Cell::figureStateChanged, this, &MainWindow::handleCellFigureStateChanged);
-
-
-
-            //##############################################################################
-            // Place initial figures on the sides
-            if (row == 0 && col == 0) {
-                Figure *dukeA = Figure::createFigure(TeamA, Duke, this);
-                cell->setFigure(dukeA);
-            }
-            // Place initial figures on the sides
-            if (row == 5 && col == 5) {
-                Figure *dukeB = Figure::createFigure(TeamB, Duke, this)  ;
-                cell->setFigure(dukeB);
-            }
-
             setButtonText(cell, button);
-
-
+            //////////////////////////////////////////////////////////////
         }
     }
 }
@@ -86,68 +72,75 @@ void MainWindow::setupPlayers()
     // Create buttons for each player
     QPushButton *playerAButton = new QPushButton("Player A", this);
     QPushButton *playerBButton = new QPushButton("Player B", this);
-
     // Set vertical size policy to make the buttons fill the available vertical space
     playerAButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     playerBButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-
-    // Create figure bags for each player
-    figureBag *bagPlayerA = new figureBag(TeamA);
-    figureBag *bagPlayerB = new figureBag(TeamB);
-
     // Add QLabel widgets to display selected piece type and player
-    selectedPieceLabel = new QLabel("Selected Piece: None", this);
-    selectedPlayerLabel = new QLabel("Selected Player: None", this);
+    selectedPieceLabelPlayerA = new QLabel("Selected Piece: None", this);
+    selectedPieceLabelPlayerB = new QLabel("Selected Piece: None", this);
 
-    // Connect button clicks to corresponding slots
-    connect(playerAButton, &QPushButton::clicked, this, [=]() {
-        handlePlayerButtonClick(bagPlayerA, "Player A");
-    });
-    connect(playerBButton, &QPushButton::clicked, this, [=]() {
-        handlePlayerButtonClick(bagPlayerB, "Player B");
-    });
+    selectedPlayerLabel = new QLabel("Selected Player: None", this);
+    selectedPlayerLabel->setText("Selected Player: Player A");
 
     // Add buttons to the layout
     boardLayout->addWidget(playerAButton, 0, 6, 1, 1); // Adjust column span as needed
+    selectedPieceLabelPlayerA->setStyleSheet("QLabel { border: 1px solid black; background-color: #FFD700; }");
+
     boardLayout->addWidget(playerBButton, 5, 6, 1, 1); // Adjust column span as needed
-
-
+    selectedPieceLabelPlayerB->setStyleSheet("QLabel { border: 1px solid black; background-color: #4169E1 }");
 
     // Add QLabel widgets to the layout
-    boardLayout->addWidget(selectedPieceLabel, 1, 6, 1, 1);
-    boardLayout->addWidget(selectedPlayerLabel, 4, 6, 1, 1);
+    boardLayout->addWidget(selectedPieceLabelPlayerA, 1, 6, 1, 1);
+    boardLayout->addWidget(selectedPieceLabelPlayerB, 4, 6, 1, 1);
+
+    selectedPlayerLabel->setStyleSheet("QLabel { border: 1px solid black;}" );
+    boardLayout->addWidget(selectedPlayerLabel, 2, 6, 2, 1); // Span 2 rows
+
+    // Create figure bags for each player
+    figureBag *bagPlayerA = gc->getBagPlayerA();
+    figureBag *bagPlayerB = gc->getBagPlayerB();
+
+
+
+    //////////////////////////////////////////////////////////
+    //TODO need checkup all below
+    connectionManager->connectPlayerButton(playerAButton, bagPlayerA, "Player A");
+    connectionManager->connectPlayerButton(playerBButton, bagPlayerB, "Player B");
 }
 
-void MainWindow::handlePlayerButtonClick(figureBag *bag, const QString &playerName)
+void MainWindow::handlePlayerButtonClick(figureBag *bag, QPushButton *clickedButton)
 {
     // Implement logic to handle player button clicks
     // For now, let's print a message to the console
-    QPushButton *clickedButton = qobject_cast<QPushButton *>(sender());
     if (clickedButton) {
         qDebug() << "Clicked on Player Button: " << clickedButton->text();
 
         // Get the player from the button text
         QString playerName = clickedButton->text();
-        if (selectedPlayerLabel) {
-            selectedPlayerLabel->setText("Selected Player: " + playerName);
-        } else {
-            qDebug() << "Error: selectedPlayerLabel is null.";
-        }
 
+        // Check if the button corresponds to the current player's turn
+        if ((currentPlayer == PlayerTeam::TeamA && playerName == "Player A") ||
+            (currentPlayer == PlayerTeam::TeamB && playerName == "Player B")) {
+            // For now, let's assume you have a function getRandomPieceTypeForPlayer
+            Figure* randomPieceType = bag->takeRandomPiece();
+            if (randomPieceType == nullptr){
+                qDebug() << "NULL";
+            }
+            selectedFigure = randomPieceType;
 
-        // For now, let's assume you have a function getRandomPieceTypeForPlayer
-        Figure* randomPieceType = bag->takeRandomPiece();
-        if (randomPieceType == nullptr){
-            qDebug() << "NULL";
+            if(currentPlayer == PlayerTeam::TeamA && playerName == "Player A"){
+                selectedPieceLabelPlayerA->setText("Selected Piece: " + pieceTypeToString(randomPieceType->type()));
+            }
+            else{
+                selectedPieceLabelPlayerA->setText("Selected Piece: " + pieceTypeToString(randomPieceType->type()));
+            }
         }
-        selectedFigure = randomPieceType;
-        selectedPieceLabel->setText("Selected Piece: " + pieceTypeToString(randomPieceType->type()));
     }
 }
 
 void MainWindow::handleCellClick(int row, int col)
 {
-    Cell *clickedCell = cells[row][col];
+    Cell *clickedCell = gc->getCell(row, col);
     PieceType pieceType;
 
     // Check whose turn it is
@@ -160,7 +153,7 @@ void MainWindow::handleCellClick(int row, int col)
                 pieceType = selectedFigure->type();
                 clickedCell->setFigure(nullptr);
                 // Update the selected piece label
-                selectedPieceLabel->setText("Selected Piece: " + pieceTypeToString(pieceType));
+                selectedPieceLabelPlayerA->setText("Selected Piece: " + pieceTypeToString(pieceType));
             }
         } else {
             // Move the selected figure to the clicked cell
@@ -169,6 +162,7 @@ void MainWindow::handleCellClick(int row, int col)
                 selectedFigure = nullptr;
                 // After moving, switch to the other player's turn
                 currentPlayer = PlayerTeam::TeamB;
+                selectedPlayerLabel->setText("Selected Player: Player B");
             }
         }
     } else {  // Current player is PlayerB
@@ -180,7 +174,7 @@ void MainWindow::handleCellClick(int row, int col)
                 pieceType = selectedFigure->type();
                 clickedCell->setFigure(nullptr);
                 // Update the selected piece label
-                selectedPieceLabel->setText("Selected Piece: " + pieceTypeToString(pieceType));
+                selectedPieceLabelPlayerB->setText("Selected Piece: " + pieceTypeToString(pieceType));
             }
         } else {
             // Move the selected figure to the clicked cell
@@ -189,6 +183,7 @@ void MainWindow::handleCellClick(int row, int col)
                 selectedFigure = nullptr;
                 // After moving, switch to the other player's turn
                 currentPlayer = PlayerTeam::TeamA;
+                selectedPlayerLabel->setText("Selected Player: Player A");
             }
         }
     }
@@ -218,6 +213,21 @@ void MainWindow::setButtonText(Cell* cell, QPushButton* button){
         button->setText("");
     }
     button->setFont(QFont("Arial", 12, QFont::Bold));
+
+    // Set background color based on the player if the cell has a figure
+    if (cell->hasFigure()) {
+        Figure* figure = cell->getFigure();
+        if (figure->getTeam() == PlayerTeam::TeamA) {
+            // Set background color for Player A
+            button->setStyleSheet("background-color: #FFD700"); // Example color: gold
+        } else if (figure->getTeam() == PlayerTeam::TeamB) {
+            // Set background color for Player B
+            button->setStyleSheet("background-color: #4169E1"); // Example color: royal blue
+        }
+    } else {
+        // Clear background color if the cell doesn't have a figure
+        button->setStyleSheet("");
+    }
 }
 
 

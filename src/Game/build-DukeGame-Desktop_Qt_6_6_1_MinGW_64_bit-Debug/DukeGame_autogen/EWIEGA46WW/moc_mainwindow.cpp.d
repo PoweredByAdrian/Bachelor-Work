@@ -2,6 +2,7 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/moc_predefs.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QList \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QObject \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QPair \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20functional.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20memory.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20type_traits.h \
@@ -366,4 +367,6 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/connectionmanager.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/enums.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.h \
-  D:/School/BC/Bachelor-Work/src/Game/DukeGame/figurebag.h
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/figurebag.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameconfigure.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/player.h

@@ -1,10 +1,11 @@
 #include "figurebag.h"
 #include <QRandomGenerator>
 
-figureBag::figureBag(PlayerTeam team)
+figureBag::figureBag(PlayerTeam playerteam)
 {
-    team = team;
+    team = playerteam;
     initialize();
+    dukeDelivered = false;
 }
 void figureBag::initialize() {
 
@@ -46,6 +47,13 @@ void figureBag::initialize() {
 
 }
 Figure* figureBag::takeRandomPiece(){
+
+    if(!dukeDelivered){
+        Figure* F_Duke = Figure::createFigure(team, Duke);
+        dukeDelivered = true;
+        return F_Duke;
+    }
+
 
     if(!(isEmpty())){
         int randomIndex = QRandomGenerator::global()->bounded(pieces.size());

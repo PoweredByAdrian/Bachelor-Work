@@ -2,6 +2,7 @@
 #define P_BOWMAN_H
 
 #include "figure.h"
+#include "cell.h"
 
 
 class p_Bowman : public Figure
@@ -12,11 +13,10 @@ public:
     explicit p_Bowman(PlayerTeam team, QObject *parent = nullptr);
 
     // Override the isValidMove function
-    bool isValidMove(Cell *destination) const override;
+    bool isValidMove(Cell *cells[6][6], int row, int col) const override;
 
     // Override the markAvailableJumps function
-    void markAvailableJumps() override;
-
+    MoveResult markAvailableJumps(Cell *cells[6][6]) const override;
 protected:
     // Implementation of the type method for the Pawn class
     PieceType type() const override { return Bowman; }

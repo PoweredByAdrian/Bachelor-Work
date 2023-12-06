@@ -16,7 +16,7 @@
 
 
 Figure::Figure(PlayerTeam team, PieceType type, QObject *parent)
-    : QObject(parent), cell(nullptr), team(team)
+    : QObject(parent), cell(nullptr), team(team), flipped(false)
 {
 }
 

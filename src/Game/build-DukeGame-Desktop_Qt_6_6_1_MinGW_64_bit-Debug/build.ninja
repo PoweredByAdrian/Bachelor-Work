@@ -225,6 +225,30 @@ build CMakeFiles/DukeGame.dir/connectionmanager.cpp.obj: CXX_COMPILER__DukeGame_
   OBJECT_DIR = CMakeFiles\DukeGame.dir
   OBJECT_FILE_DIR = CMakeFiles\DukeGame.dir
 
+build CMakeFiles/DukeGame.dir/gameconfigure.cpp.obj: CXX_COMPILER__DukeGame_unscanned_Debug D$:/School/BC/Bachelor-Work/src/Game/DukeGame/gameconfigure.cpp || cmake_object_order_depends_target_DukeGame
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\DukeGame.dir\gameconfigure.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -ID:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/include -isystem D:/Programs/Qt/6.6.1/mingw_64/include/QtCore -isystem D:/Programs/Qt/6.6.1/mingw_64/include -isystem D:/Programs/Qt/6.6.1/mingw_64/mkspecs/win32-g++ -isystem D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets -isystem D:/Programs/Qt/6.6.1/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\DukeGame.dir
+  OBJECT_FILE_DIR = CMakeFiles\DukeGame.dir
+
+build CMakeFiles/DukeGame.dir/gameinterface.cpp.obj: CXX_COMPILER__DukeGame_unscanned_Debug D$:/School/BC/Bachelor-Work/src/Game/DukeGame/gameinterface.cpp || cmake_object_order_depends_target_DukeGame
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\DukeGame.dir\gameinterface.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -ID:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/include -isystem D:/Programs/Qt/6.6.1/mingw_64/include/QtCore -isystem D:/Programs/Qt/6.6.1/mingw_64/include -isystem D:/Programs/Qt/6.6.1/mingw_64/mkspecs/win32-g++ -isystem D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets -isystem D:/Programs/Qt/6.6.1/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\DukeGame.dir
+  OBJECT_FILE_DIR = CMakeFiles\DukeGame.dir
+
+build CMakeFiles/DukeGame.dir/gamelogic.cpp.obj: CXX_COMPILER__DukeGame_unscanned_Debug D$:/School/BC/Bachelor-Work/src/Game/DukeGame/gamelogic.cpp || cmake_object_order_depends_target_DukeGame
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\DukeGame.dir\gamelogic.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -std=gnu++17 -fdiagnostics-color=always
+  INCLUDES = -ID:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/include -isystem D:/Programs/Qt/6.6.1/mingw_64/include/QtCore -isystem D:/Programs/Qt/6.6.1/mingw_64/include -isystem D:/Programs/Qt/6.6.1/mingw_64/mkspecs/win32-g++ -isystem D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets -isystem D:/Programs/Qt/6.6.1/mingw_64/include/QtGui
+  OBJECT_DIR = CMakeFiles\DukeGame.dir
+  OBJECT_FILE_DIR = CMakeFiles\DukeGame.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target DukeGame
@@ -233,7 +257,7 @@ build CMakeFiles/DukeGame.dir/connectionmanager.cpp.obj: CXX_COMPILER__DukeGame_
 #############################################
 # Link the executable DukeGame.exe
 
-build DukeGame.exe: CXX_EXECUTABLE_LINKER__DukeGame_Debug CMakeFiles/DukeGame.dir/DukeGame_autogen/mocs_compilation.cpp.obj CMakeFiles/DukeGame.dir/main.cpp.obj CMakeFiles/DukeGame.dir/mainwindow.cpp.obj CMakeFiles/DukeGame.dir/cell.cpp.obj CMakeFiles/DukeGame.dir/figure.cpp.obj CMakeFiles/DukeGame.dir/p_duke.cpp.obj CMakeFiles/DukeGame.dir/p_bowman.cpp.obj CMakeFiles/DukeGame.dir/p_dracoon.cpp.obj CMakeFiles/DukeGame.dir/p_assassin.cpp.obj CMakeFiles/DukeGame.dir/p_champion.cpp.obj CMakeFiles/DukeGame.dir/p_footman.cpp.obj CMakeFiles/DukeGame.dir/p_general.cpp.obj CMakeFiles/DukeGame.dir/p_marshall.cpp.obj CMakeFiles/DukeGame.dir/p_priest.cpp.obj CMakeFiles/DukeGame.dir/p_knight.cpp.obj CMakeFiles/DukeGame.dir/p_pikeman.cpp.obj CMakeFiles/DukeGame.dir/p_seer.cpp.obj CMakeFiles/DukeGame.dir/p_wizard.cpp.obj CMakeFiles/DukeGame.dir/figurebag.cpp.obj CMakeFiles/DukeGame.dir/player.cpp.obj CMakeFiles/DukeGame.dir/p_longbowman.cpp.obj CMakeFiles/DukeGame.dir/connectionmanager.cpp.obj | D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Widgets.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Gui.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Core.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6EntryPoint.a || DukeGame_autogen DukeGame_autogen_timestamp_deps
+build DukeGame.exe: CXX_EXECUTABLE_LINKER__DukeGame_Debug CMakeFiles/DukeGame.dir/DukeGame_autogen/mocs_compilation.cpp.obj CMakeFiles/DukeGame.dir/main.cpp.obj CMakeFiles/DukeGame.dir/mainwindow.cpp.obj CMakeFiles/DukeGame.dir/cell.cpp.obj CMakeFiles/DukeGame.dir/figure.cpp.obj CMakeFiles/DukeGame.dir/p_duke.cpp.obj CMakeFiles/DukeGame.dir/p_bowman.cpp.obj CMakeFiles/DukeGame.dir/p_dracoon.cpp.obj CMakeFiles/DukeGame.dir/p_assassin.cpp.obj CMakeFiles/DukeGame.dir/p_champion.cpp.obj CMakeFiles/DukeGame.dir/p_footman.cpp.obj CMakeFiles/DukeGame.dir/p_general.cpp.obj CMakeFiles/DukeGame.dir/p_marshall.cpp.obj CMakeFiles/DukeGame.dir/p_priest.cpp.obj CMakeFiles/DukeGame.dir/p_knight.cpp.obj CMakeFiles/DukeGame.dir/p_pikeman.cpp.obj CMakeFiles/DukeGame.dir/p_seer.cpp.obj CMakeFiles/DukeGame.dir/p_wizard.cpp.obj CMakeFiles/DukeGame.dir/figurebag.cpp.obj CMakeFiles/DukeGame.dir/player.cpp.obj CMakeFiles/DukeGame.dir/p_longbowman.cpp.obj CMakeFiles/DukeGame.dir/connectionmanager.cpp.obj CMakeFiles/DukeGame.dir/gameconfigure.cpp.obj CMakeFiles/DukeGame.dir/gameinterface.cpp.obj CMakeFiles/DukeGame.dir/gamelogic.cpp.obj | D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Widgets.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Gui.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Core.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6EntryPoint.a || DukeGame_autogen DukeGame_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = D:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Widgets.a  D:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Gui.a  D:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lmingw32  D:/Programs/Qt/6.6.1/mingw_64/lib/libQt6EntryPoint.a  -lshell32  -ld3d11  -ldxgi  -ldxguid  -ld3d12  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
@@ -336,7 +360,7 @@ build DukeGame_autogen/timestamp DukeGame_autogen/mocs_compilation.cpp | ${cmake
 #############################################
 # Phony custom command for CMakeFiles\DukeGame_autogen_timestamp_deps
 
-build CMakeFiles/DukeGame_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/DukeGame_autogen_timestamp_deps: phony D$:/Programs/Qt/6.6.1/mingw_64/./bin/moc.exe D$:/Programs/Qt/6.6.1/mingw_64/./bin/uic.exe D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Core.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Widgets.a
+build CMakeFiles/DukeGame_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/DukeGame_autogen_timestamp_deps: phony D$:/Programs/Qt/6.6.1/mingw_64/./bin/uic.exe D$:/Programs/Qt/6.6.1/mingw_64/./bin/moc.exe D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Widgets.a D$:/Programs/Qt/6.6.1/mingw_64/lib/libQt6Core.a
 
 
 #############################################

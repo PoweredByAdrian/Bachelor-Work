@@ -4,14 +4,42 @@ p_Dracoon::p_Dracoon(PlayerTeam team, QObject *parent)
     : Figure(team, Dracoon, parent)
 {}
 
-bool p_Dracoon::isValidMove(Cell *destination) const
+bool p_Dracoon::isValidMove(Cell *cells[6][6], int row, int col) const
 {
-    // Implementation for validating normal moves
-    // ...
+    //TODO
+    return true;
 }
 
-void p_Dracoon::markAvailableJumps()
+Figure::MoveResult p_Dracoon::markAvailableJumps(Cell *cells[6][6]) const
 {
-    // Implementation for marking cells where the Duke can jump
-    // ...
+    QList<std::tuple<MoveTypes,int,int>> validMoves;
+    int col = cell->getCol();
+    int row = cell->getRow();
+    QPair<int,int> currentPosition = QPair<int, int>(row, col);
+    if(!flipped){
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col +1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col - 1));
+
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 2, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 2, col + 2));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 2, col - 2));
+
+    }
+    else{
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 2, col));
+
+        validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row + 2, col + 1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row + 2, col - 1));
+
+        // Check diagonal backward moves
+        for (int moveRow = row - 1, moveCol = col - 1; row >= 0 && col >= 0; --moveRow, --moveCol) {
+            validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+        }
+
+        for (int moveRow = row - 1, moveCol = col + 1; row >= 0 && col < 6; --moveRow, ++moveCol) {
+            validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+        }
+    }
+    return{currentPosition, validMoves};
 }

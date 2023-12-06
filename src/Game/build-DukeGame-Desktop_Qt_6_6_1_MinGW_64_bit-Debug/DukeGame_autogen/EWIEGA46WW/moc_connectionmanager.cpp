@@ -46,13 +46,14 @@ static constexpr auto qt_meta_stringdata_CLASSConnectionManagerENDCLASS = QtMocH
     "playerButtonClicked",
     "figureBag*",
     "bag",
-    "playerName",
+    "QPushButton*",
+    "clickedButton",
     "handleCellButtonClicked",
     "handlePlayerButtonClicked"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSConnectionManagerENDCLASS_t {
-    uint offsetsAndSizes[22];
+    uint offsetsAndSizes[24];
     char stringdata0[18];
     char stringdata1[12];
     char stringdata2[1];
@@ -61,9 +62,10 @@ struct qt_meta_stringdata_CLASSConnectionManagerENDCLASS_t {
     char stringdata5[20];
     char stringdata6[11];
     char stringdata7[4];
-    char stringdata8[11];
-    char stringdata9[24];
-    char stringdata10[26];
+    char stringdata8[13];
+    char stringdata9[14];
+    char stringdata10[24];
+    char stringdata11[26];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSConnectionManagerENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -77,9 +79,10 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSConnectionManagerENDCLASS_t qt_
         QT_MOC_LITERAL(39, 19),  // "playerButtonClicked"
         QT_MOC_LITERAL(59, 10),  // "figureBag*"
         QT_MOC_LITERAL(70, 3),  // "bag"
-        QT_MOC_LITERAL(74, 10),  // "playerName"
-        QT_MOC_LITERAL(85, 23),  // "handleCellButtonClicked"
-        QT_MOC_LITERAL(109, 25)   // "handlePlayerButtonClicked"
+        QT_MOC_LITERAL(74, 12),  // "QPushButton*"
+        QT_MOC_LITERAL(87, 13),  // "clickedButton"
+        QT_MOC_LITERAL(101, 23),  // "handleCellButtonClicked"
+        QT_MOC_LITERAL(125, 25)   // "handlePlayerButtonClicked"
     },
     "ConnectionManager",
     "cellClicked",
@@ -89,7 +92,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSConnectionManagerENDCLASS_t qt_
     "playerButtonClicked",
     "figureBag*",
     "bag",
-    "playerName",
+    "QPushButton*",
+    "clickedButton",
     "handleCellButtonClicked",
     "handlePlayerButtonClicked"
 };
@@ -115,12 +119,12 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSConnectionManagerENDCLASS[] = {
        5,    2,   43,    2, 0x06,    4 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       9,    0,   48,    2, 0x08,    7 /* Private */,
-      10,    0,   49,    2, 0x08,    8 /* Private */,
+      10,    0,   48,    2, 0x08,    7 /* Private */,
+      11,    0,   49,    2, 0x08,    8 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    3,    4,
-    QMetaType::Void, 0x80000000 | 6, QMetaType::QString,    7,    8,
+    QMetaType::Void, 0x80000000 | 6, 0x80000000 | 8,    7,    9,
 
  // slots: parameters
     QMetaType::Void,
@@ -145,7 +149,7 @@ Q_CONSTINIT const QMetaObject ConnectionManager::staticMetaObject = { {
         // method 'playerButtonClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<figureBag *, std::false_type>,
-        QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QPushButton *, std::false_type>,
         // method 'handleCellButtonClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'handlePlayerButtonClicked'
@@ -161,10 +165,21 @@ void ConnectionManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         (void)_t;
         switch (_id) {
         case 0: _t->cellClicked((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2]))); break;
-        case 1: _t->playerButtonClicked((*reinterpret_cast< std::add_pointer_t<figureBag*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2]))); break;
+        case 1: _t->playerButtonClicked((*reinterpret_cast< std::add_pointer_t<figureBag*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QPushButton*>>(_a[2]))); break;
         case 2: _t->handleCellButtonClicked(); break;
         case 3: _t->handlePlayerButtonClicked(); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+        case 1:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 1:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< QPushButton* >(); break;
+            }
+            break;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
@@ -176,7 +191,7 @@ void ConnectionManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
             }
         }
         {
-            using _t = void (ConnectionManager::*)(figureBag * , const QString & );
+            using _t = void (ConnectionManager::*)(figureBag * , QPushButton * );
             if (_t _q_method = &ConnectionManager::playerButtonClicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
@@ -209,7 +224,7 @@ int ConnectionManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 4;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 4)
-            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
+            qt_static_metacall(this, _c, _id, _a);
         _id -= 4;
     }
     return _id;
@@ -223,7 +238,7 @@ void ConnectionManager::cellClicked(int _t1, int _t2)
 }
 
 // SIGNAL 1
-void ConnectionManager::playerButtonClicked(figureBag * _t1, const QString & _t2)
+void ConnectionManager::playerButtonClicked(figureBag * _t1, QPushButton * _t2)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

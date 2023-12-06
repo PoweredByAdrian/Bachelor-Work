@@ -10,6 +10,7 @@
 #include <QLabel>
 #include "connectionmanager.h"
 #include "enums.h"
+#include "gameconfigure.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,7 +29,7 @@ public:
 
 private slots:
     void handleCellClick(int row, int col);
-    void handlePlayerButtonClick(figureBag *bag, const QString &playerName);
+    void handlePlayerButtonClick(figureBag *bag, QPushButton* clickedButton);
     void handleCellFigureStateChanged();
 
 private:
@@ -38,14 +39,14 @@ private:
     void setButtonText(Cell* cell, QPushButton* button);
     Ui::MainWindow *ui;
     QGridLayout *boardLayout;
-    Cell *cells[6][6];
     Figure *selectedFigure;
 
 
 
 
     QLabel *selectedPlayerLabel;
-    QLabel *selectedPieceLabel;
+    QLabel *selectedPieceLabelPlayerA;
+    QLabel *selectedPieceLabelPlayerB;
 
     QString pieceTypeToString(PieceType type);
 
@@ -53,5 +54,27 @@ private:
 
 
     PlayerTeam currentPlayer;
+    GameConfigure* gc;
 };
 #endif // MAINWINDOW_H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

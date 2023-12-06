@@ -1,9 +1,11 @@
 D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/EWIEGA46WW/moc_p_duke.cpp: D:/School/BC/Bachelor-Work/src/Game/DukeGame/p_duke.h \
   D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/DukeGame_autogen/moc_predefs.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QObject \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/QPair \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20functional.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20memory.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q20type_traits.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/q23utility.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qalgorithms.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qanystringview.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qarraydata.h \
@@ -27,8 +29,10 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qcontainerfwd.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qcontainerinfo.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qcontainertools_impl.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qcontiguouscache.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qdarwinhelpers.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qdatastream.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qdebug.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qexceptionhandling.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qflags.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qfloat16.h \
@@ -38,14 +42,18 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qgenericatomic.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qglobal.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qglobalstatic.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qhash.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qhashfunctions.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qiodevicebase.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qiterable.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qiterator.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qlatin1stringview.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qline.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qlist.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qlogging.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qmalloc.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qmap.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qmargins.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qmath.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qmetacontainer.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qmetatype.h \
@@ -58,13 +66,22 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qobjectdefs_impl.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qoverload.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qpair.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qpoint.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qprocessordetection.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qrect.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qrefcount.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qscopedpointer.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qscopeguard.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qset.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qshareddata.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qshareddata_impl.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qsharedpointer.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qsharedpointer_impl.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qsize.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qstring.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qstringalgorithms.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qstringbuilder.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qstringconverter_base.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qstringfwd.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qstringlist.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qstringliteral.h \
@@ -82,6 +99,7 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtcoreexports.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtdeprecationmarkers.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtenvironmentvariables.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtextstream.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtmetamacros.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtnoop.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtpreprocessorsupport.h \
@@ -93,8 +111,43 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtypeinfo.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qtypes.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qutf8stringview.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qvariant.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qvarlengtharray.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qversiontagging.h \
   D:/Programs/Qt/6.6.1/mingw_64/include/QtCore/qxptype_traits.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qaction.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qbitmap.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qbrush.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qcolor.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qcursor.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qfont.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qfontinfo.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qfontmetrics.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qicon.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qimage.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qkeysequence.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpaintdevice.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpalette.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpixelformat.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpixmap.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qpolygon.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qregion.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qrgb.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qrgba64.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qtgui-config.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qtguiexports.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qtguiglobal.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qtransform.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qwindowdefs.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtGui/qwindowdefs_win.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/QPushButton \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qabstractbutton.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qpushbutton.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qsizepolicy.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qtwidgets-config.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qtwidgetsexports.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
+  D:/Programs/Qt/6.6.1/mingw_64/include/QtWidgets/qwidget.h \
   D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed/limits.h \
   D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed/syslimits.h \
   D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/algorithm \
@@ -184,6 +237,7 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cctype \
   D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cerrno \
   D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/chrono \
+  D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/climits \
   D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/clocale \
   D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cmath \
   D:/Programs/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/cstddef \
@@ -293,5 +347,6 @@ D:/School/BC/Bachelor-Work/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit
   D:/Programs/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/time.h \
   D:/Programs/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/vadefs.h \
   D:/Programs/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include/wchar.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/cell.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/enums.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.h

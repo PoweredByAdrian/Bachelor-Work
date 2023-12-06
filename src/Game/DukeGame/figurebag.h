@@ -8,7 +8,7 @@
 class figureBag
 {
 public:
-    explicit figureBag(PlayerTeam team);
+    explicit figureBag(PlayerTeam playerteam);
 
     Figure* takeRandomPiece();
 
@@ -20,6 +20,7 @@ private:
     // Initialize the bag with pieces
     void initialize();
     PlayerTeam team;
+    bool dukeDelivered;
 };
 
 #endif // FIGUREBAG_H

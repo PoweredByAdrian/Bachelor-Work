@@ -321,6 +321,24 @@
 			null
 		],
 		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameconfigure.h",
+			"MU",
+			"EWIEGA46WW/moc_gameconfigure.cpp",
+			null
+		],
+		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameinterface.h",
+			"MU",
+			"EWIEGA46WW/moc_gameinterface.cpp",
+			null
+		],
+		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/gamelogic.h",
+			"MU",
+			"EWIEGA46WW/moc_gamelogic.cpp",
+			null
+		],
+		[
 			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -496,6 +514,21 @@
 		[ "D:/School/BC/Bachelor-Work/src/Game/DukeGame/figure.cpp", "MU", null ],
 		[
 			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/figurebag.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameconfigure.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameinterface.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/School/BC/Bachelor-Work/src/Game/DukeGame/gamelogic.cpp",
 			"MU",
 			null
 		],

@@ -1,12 +1,14 @@
 #include "player.h"
 
-Player::Player(QObject *parent)
-    : QObject{parent}
-{}
-
-void Player::setPieceBag(figureBag* bag)
+Player::Player( PlayerTeam newTeam)
 {
-    figurebag = bag;
+    team = newTeam;
+    setPieceBag();
+}
+
+void Player::setPieceBag()
+{
+    figurebag = new figureBag(team);
 }
 
 figureBag* Player::getPieceBag() const

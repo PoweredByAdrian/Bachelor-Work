@@ -1,11 +1,10 @@
 #include "cell.h"
 
-Cell::Cell(QObject *parent, int row, int col, QPushButton *newbutton)
-    : QObject{parent}, figure(nullptr)
+Cell::Cell(int row, int col)
+    : figure(nullptr)
 {
     x = row;
     y = col;
-    button = newbutton;
 }
 
 Figure *Cell::getFigure() const

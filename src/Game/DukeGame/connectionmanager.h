@@ -19,7 +19,7 @@ public:
 
 signals:
     void cellClicked(int row, int col);
-    void playerButtonClicked(figureBag *bag, const QString &playerName);
+    void playerButtonClicked(figureBag *bag, QPushButton* clickedButton);
 
 private slots:
     void handleCellButtonClicked();
