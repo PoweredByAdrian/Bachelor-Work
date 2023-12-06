@@ -2,6 +2,7 @@
 #include "EWIEGA46WW/moc_cell.cpp"
 #include "EWIEGA46WW/moc_connectionmanager.cpp"
 #include "EWIEGA46WW/moc_figure.cpp"
+#include "EWIEGA46WW/moc_gameinterface.cpp"
 #include "EWIEGA46WW/moc_mainwindow.cpp"
 #include "EWIEGA46WW/moc_p_assassin.cpp"
 #include "EWIEGA46WW/moc_p_bowman.cpp"

@@ -573,6 +573,10 @@ DukeGame_autogen/timestamp: \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/figurebag.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameconfigure.cpp \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameconfigure.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameinterface.cpp \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/gameinterface.h \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/gamelogic.cpp \
+  D:/School/BC/Bachelor-Work/src/Game/DukeGame/gamelogic.h \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/main.cpp \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/mainwindow.cpp \
   D:/School/BC/Bachelor-Work/src/Game/DukeGame/mainwindow.h \
