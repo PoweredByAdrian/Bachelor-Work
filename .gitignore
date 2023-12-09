@@ -10,4 +10,4 @@
 # But allow PDF files
 !/Latex/*.pdf
 
-.txt
+*.txt
