@@ -26,7 +26,8 @@ public:
     void setTeam(PlayerTeam newTeam);
     void setCell(Cell *newCell);
     Cell *getCell() const;
-    QList<QPair<int, int>> placableCells(Cell* dukeCell);
+
+    void flip(){flipped = !flipped;}
 
     virtual bool isValidMove(Cell *cells[6][6], int row, int col) const = 0; // Pure virtual function for move validation
     virtual MoveResult markAvailableJumps(Cell *cells[6][6]) const = 0; // New virtual function to mark available jumps

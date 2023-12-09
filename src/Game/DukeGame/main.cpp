@@ -1,11 +1,11 @@
-#include "mainwindow.h"
+#include "gameinterface.h"  // Include the declaration of GameInterface
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
+    GameInterface gameInterface;  // Create an instance of GameInterface
+    gameInterface.startGame();    // Start the game using GameInterface
     return a.exec();
 }

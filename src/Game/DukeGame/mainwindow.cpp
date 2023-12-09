@@ -9,18 +9,18 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , boardLayout(new QGridLayout)
     , selectedFigure(nullptr)
-    ,  currentPlayer(PlayerTeam::TeamA)
+    , currentPlayer(PlayerTeam::TeamA)
 {
     ui->setupUi(this);
     gc = new GameConfigure();
 
 
 
-    connectionManager = new ConnectionManager(this);
+    //connectionManager = new ConnectionManager(this);
     setupBoard();
 
-    connect(connectionManager, &ConnectionManager::cellClicked, this, &MainWindow::handleCellClick);
-    connect(connectionManager, &ConnectionManager::playerButtonClicked, this, &MainWindow::handlePlayerButtonClick);
+    //connect(connectionManager, &ConnectionManager::cellClicked, this, &MainWindow::handleCellClick);
+    //connect(connectionManager, &ConnectionManager::playerButtonClicked, this, &MainWindow::handlePlayerButtonClick);
     setupPlayers();
 }
 
@@ -47,7 +47,7 @@ void MainWindow::setupBoard()
             QPushButton *button = new QPushButton(this);
 
             Cell* cell = gc->getCell(row, col);
-            cell->setButton(button);
+            //cell->setButton(button);
 
             // Set the size policy to make the button fill the available space
             button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -194,9 +194,9 @@ void MainWindow::handleCellFigureStateChanged()
     Cell *changedCell = qobject_cast<Cell*>(sender()); // Get the cell that emitted the signal
 
     // Find the corresponding button for the changed cell
-    QPushButton *button = changedCell->getButton();
+    //QPushButton *button = changedCell->getButton();
 
-    setButtonText(changedCell, button);
+    //setButtonText(changedCell, button);
 }
 
 void MainWindow::setButtonText(Cell* cell, QPushButton* button){

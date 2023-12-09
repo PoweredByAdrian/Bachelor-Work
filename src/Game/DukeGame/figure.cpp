@@ -35,27 +35,6 @@ Cell *Figure::getCell() const
     return cell;
 }
 
-QList<QPair<int, int>> Figure::placableCells(Cell* dukeCell){
-    QList<QPair<int, int>> result;
-    if(dukeCell == nullptr){
-        if(team == TeamA){
-            result.append(QPair<int, int>(0, 2));
-            result.append(QPair<int, int>(0, 3));
-        }
-        else{
-            result.append(QPair<int, int>(5, 2));
-            result.append(QPair<int, int>(5, 3));
-        }
-    }
-    else{
-        result.append(QPair<int, int>(dukeCell->getRow(), dukeCell->getCol() + 1));
-        result.append(QPair<int, int>(dukeCell->getRow(), dukeCell->getCol() - 1));
-        result.append(QPair<int, int>(dukeCell->getRow() + 1, dukeCell->getCol()));
-        result.append(QPair<int, int>(dukeCell->getRow() - 1, dukeCell->getCol()));
-    }
-    return result;
-}
-
 Figure* Figure::createFigure(PlayerTeam team, PieceType type, QObject *parent)
 {
     switch (type) {
@@ -90,3 +69,31 @@ Figure* Figure::createFigure(PlayerTeam team, PieceType type, QObject *parent)
         return nullptr; // Unknown piece type
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

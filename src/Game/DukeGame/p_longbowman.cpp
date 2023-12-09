@@ -31,10 +31,11 @@ Figure::MoveResult p_Longbowman::markAvailableJumps(Cell *cells[6][6]) const
     }
     //TODO Strike
     for (auto move = validMoves.begin(); move != validMoves.end();) {
+        MoveTypes type = std::get<0>(*move);
         int targetRow = std::get<1>(*move);
         int targetCol = std::get<2>(*move);
 
-        if (cells[targetRow][targetCol]->hasFigure()) {
+        if (cells[targetRow][targetCol]->hasFigure() && type != Strike) {
             move = validMoves.erase(move);
         } else {
             ++move;

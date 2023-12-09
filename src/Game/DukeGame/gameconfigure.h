@@ -22,6 +22,12 @@ public:
     figureBag* getBagPlayerA() const { return bagPlayerA; }
     figureBag* getBagPlayerB() const { return bagPlayerB; }
 
+    void updateDukeA(Cell *cell);
+    void updateDukeB(Cell *cell);
+
+    QList<QPair<int, int>> getPlacableCellsForNewPiece(PlayerTeam team);
+
+
     Cell* (*getCells())[6][6] {return &cells; }
 
 private:
@@ -37,6 +43,9 @@ private:
 
     figureBag* bagPlayerA;
     figureBag* bagPlayerB;
+
+    Cell *dukeCellA;
+    Cell *dukeCellB;
 };
 #endif // GAMECONFIGURE_H
 
