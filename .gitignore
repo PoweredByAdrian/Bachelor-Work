@@ -1,0 +1,11 @@
+# Ignore all files in the CheatSheet folder
+/CheatSheet/*
+
+# Ignore all files in the specified build directory
+/src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/*
+
+# Ignore all files in the Latex directory
+/Latex/*
+
+# But allow PDF files
+!/Latex/*.pdf
