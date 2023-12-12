@@ -59,9 +59,9 @@ void MainWindow::setupBoard()
             //TODO need checkup all below
 
             // Connect the cell button using ConnectionManager
-            connectionManager->connectCellButton(cell, button);
-            connect(cell, &Cell::figureStateChanged, this, &MainWindow::handleCellFigureStateChanged);
-            setButtonText(cell, button);
+            //connectionManager->connectCellButton(cell, button);
+            //connect(cell, &Cell::figureStateChanged, this, &MainWindow::handleCellFigureStateChanged);
+            //setButtonText(cell, button);
             //////////////////////////////////////////////////////////////
         }
     }

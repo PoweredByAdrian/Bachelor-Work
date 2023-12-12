@@ -9,14 +9,14 @@ ConnectionManager::ConnectionManager(QObject *parent)
 
 void ConnectionManager::connectCellButton(Cell *cell, QPushButton *button)
 {
-    buttonCellMap.insert(button, cell);
+    //buttonCellMap.insert(button, cell);
     connect(button, &QPushButton::clicked, this, &ConnectionManager::handleCellButtonClicked);
 }
 
 void ConnectionManager::connectPlayerButton(QPushButton *button, figureBag *bag, const QString &playerName)
 {
-    buttonBagMap.insert(button, bag);
-    connect(button, &QPushButton::clicked, this, &ConnectionManager::handlePlayerButtonClicked);
+    //buttonBagMap.insert(button, bag);
+    //connect(button, &QPushButton::clicked, this, &ConnectionManager::handlePlayerButtonClicked);
 }
 
 void ConnectionManager::handleCellButtonClicked()
