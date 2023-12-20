@@ -1,7 +1,7 @@
 #include "p_knight.h"
 
-p_Knight::p_Knight(PlayerTeam team, QObject *parent)
-    : Figure(team, Knight, parent)
+p_Knight::p_Knight(PlayerTeam team)
+    : Figure(team, Knight)
 {}
 
 bool p_Knight::isValidMove(Cell *cells[6][6], int row, int col) const

@@ -3,7 +3,6 @@
 GameConfigure::GameConfigure()
     : playerA(nullptr), playerB(nullptr), bagPlayerA(nullptr), bagPlayerB(nullptr)
 {
-
 }
 
 void GameConfigure::setupBoard(){

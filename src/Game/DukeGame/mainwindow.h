@@ -4,13 +4,11 @@
 #include <QMainWindow>
 #include <QGridLayout>
 #include <QPushButton>
-#include "cell.h"
-#include "figure.h"
-#include "figurebag.h"
+
+
 #include <QLabel>
-#include "connectionmanager.h"
 #include "enums.h"
-#include "gameconfigure.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,23 +24,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-
-private slots:
-    void handleCellClick(int row, int col);
-    void handlePlayerButtonClick(figureBag *bag, QPushButton* clickedButton);
-    void handleCellFigureStateChanged();
-
+public slots:
+    void setButtonText(int row, int col, PieceType type, PlayerTeam team);
+signals:
+    void gridButtonPressed(int row, int col);
+    void bagButtonPressed(PlayerTeam team);
 private:
     void setupBoard();
     void setupPlayers();
 
-    void setButtonText(Cell* cell, QPushButton* button);
     Ui::MainWindow *ui;
     QGridLayout *boardLayout;
-    Figure *selectedFigure;
-
-
-
 
     QLabel *selectedPlayerLabel;
     QLabel *selectedPieceLabelPlayerA;
@@ -50,11 +42,7 @@ private:
 
     QString pieceTypeToString(PieceType type);
 
-    ConnectionManager *connectionManager;
-
-
     PlayerTeam currentPlayer;
-    GameConfigure* gc;
 };
 #endif // MAINWINDOW_H
 

@@ -16,13 +16,8 @@ public:
     explicit GameInterface(QObject *parent = nullptr);
     void startGame();
 
-/*public slots:
-    void handleCellClick(int row, int col);
-    void handlePlayerButtonClick(figureBag *bag);*/
-    // Add more slots for other interactions
-
 private:
-    MainWindow mainWindow;
+    MainWindow mw;
     GameLogic* gl;
     ConnectionManager* cm;
 };

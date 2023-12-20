@@ -2,39 +2,19 @@
 
 class MainWindow;
 
-ConnectionManager::ConnectionManager(QObject *parent)
+ConnectionManager::ConnectionManager(QObject *parent, GameLogic* gl, MainWindow* mw)
     : QObject(parent)
 {
+    this->gl = gl;
+    this->mw = mw;
 }
-
-void ConnectionManager::connectCellButton(Cell *cell, QPushButton *button)
+void ConnectionManager::handleGridButtonClicked(int row, int col)
 {
-    //buttonCellMap.insert(button, cell);
-    connect(button, &QPushButton::clicked, this, &ConnectionManager::handleCellButtonClicked);
+
 }
-
-void ConnectionManager::connectPlayerButton(QPushButton *button, figureBag *bag, const QString &playerName)
+void ConnectionManager::handleBatgButtonClicked(PlayerTeam team)
 {
-    //buttonBagMap.insert(button, bag);
-    //connect(button, &QPushButton::clicked, this, &ConnectionManager::handlePlayerButtonClicked);
-}
 
-void ConnectionManager::handleCellButtonClicked()
-{
-    QPushButton *clickedButton = qobject_cast<QPushButton *>(sender());
-    if (clickedButton && buttonCellMap.contains(clickedButton)) {
-        Cell *clickedCell = buttonCellMap.value(clickedButton);
-        emit cellClicked(clickedCell->getRow(), clickedCell->getCol());
-    }
-}
-
-void ConnectionManager::handlePlayerButtonClicked()
-{
-    QPushButton *clickedButton = qobject_cast<QPushButton *>(sender());
-    if (clickedButton && buttonBagMap.contains(clickedButton)) {
-        figureBag *bag = buttonBagMap.value(clickedButton);
-        emit playerButtonClicked(bag, clickedButton);
-    }
 }
 
 

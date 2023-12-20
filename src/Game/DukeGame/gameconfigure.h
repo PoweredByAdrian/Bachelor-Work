@@ -34,10 +34,10 @@ private:
     // Private member functions for setup
     void createCells();
     void createPlayers();
-    void createBags();
 
     // Private members representing game components
     Cell *cells[6][6];
+
     Player* playerA;
     Player* playerB;
 

@@ -1,7 +1,7 @@
 #include "p_dracoon.h"
 
-p_Dracoon::p_Dracoon(PlayerTeam team, QObject *parent)
-    : Figure(team, Dracoon, parent)
+p_Dracoon::p_Dracoon(PlayerTeam team)
+    : Figure(team, Dracoon)
 {}
 
 bool p_Dracoon::isValidMove(Cell *cells[6][6], int row, int col) const

@@ -6,9 +6,8 @@
 
 class p_Priest : public Figure
 {
-    Q_OBJECT
 public:
-    explicit p_Priest(PlayerTeam team, QObject *parent = nullptr);
+    explicit p_Priest(PlayerTeam team);
 
     // Override the isValidMove function
     bool isValidMove(Cell *cells[6][6], int row, int col) const override;

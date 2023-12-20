@@ -1,7 +1,7 @@
 #include "p_wizard.h"
 
-p_Wizard::p_Wizard(PlayerTeam team, QObject *parent)
-    : Figure(team, Wizard, parent)
+p_Wizard::p_Wizard(PlayerTeam team)
+    : Figure(team, Wizard)
 {}
 
 bool p_Wizard::isValidMove(Cell *cells[6][6], int row, int col) const

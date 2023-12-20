@@ -1,7 +1,7 @@
 #include "p_assassin.h"
 
-p_Assassin::p_Assassin(PlayerTeam team, QObject *parent)
-    : Figure(team, Assassin, parent)
+p_Assassin::p_Assassin(PlayerTeam team)
+    : Figure(team, Assassin)
 {}
 
 bool p_Assassin::isValidMove(Cell *cells[6][6], int row, int col) const

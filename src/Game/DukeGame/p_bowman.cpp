@@ -1,7 +1,7 @@
 #include "p_bowman.h"
 
-p_Bowman::p_Bowman(PlayerTeam team, QObject *parent)
-    : Figure(team, Bowman, parent)
+p_Bowman::p_Bowman(PlayerTeam team)
+    : Figure(team, Bowman)
 {}
 
 bool p_Bowman::isValidMove(Cell *cells[6][6], int row, int col) const

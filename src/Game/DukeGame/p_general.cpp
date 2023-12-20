@@ -1,7 +1,7 @@
 #include "p_general.h"
 
-p_General::p_General(PlayerTeam team, QObject *parent)
-    : Figure(team, General, parent)
+p_General::p_General(PlayerTeam team)
+    : Figure(team, General)
 {}
 
 bool p_General::isValidMove(Cell *cells[6][6], int row, int col) const

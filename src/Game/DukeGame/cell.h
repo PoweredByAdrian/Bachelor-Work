@@ -1,13 +1,11 @@
 #ifndef CELL_H
 #define CELL_H
 
-#include <QObject>
-#include "figure.h"
-#include <QPushButton>
 
-class Cell : public QObject
+#include "figure.h"
+
+class Cell
 {
-    Q_OBJECT
 public:
     explicit Cell(int row = NULL, int col = NULL);
 

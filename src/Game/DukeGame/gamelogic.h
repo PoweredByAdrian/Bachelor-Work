@@ -10,7 +10,7 @@ public:
     GameLogic();
 
     bool getTurnRequest(int srcX, int srcY, int dstX, int dstY);
-
+    PieceType getPieceGeneratedRequest(PlayerTeam team);
 
 private:
 
@@ -21,6 +21,8 @@ private:
 
     Figure* dukeA;
     Figure* dukeB;
+
+
     GameConfigure *gc;
 };
 

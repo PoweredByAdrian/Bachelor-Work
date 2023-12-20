@@ -6,7 +6,16 @@ GameLogic::GameLogic() {
 
     gc->setupBoard();
 }
+PieceType GameLogic::getPieceGeneratedRequest(PlayerTeam team){
 
+    if(team == TeamA){
+        gc->getBagPlayerA()->takeRandomPiece();
+    }
+    else if(team == TeamB){
+        gc->getBagPlayerB()->takeRandomPiece();
+    }
+
+}
 bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
 
     Figure* selectedPiece = gc->getCell(srcX, srcY)->getFigure();
@@ -47,19 +56,20 @@ bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
     return valid;
 }
 
-
-
-
-
-
-
 void GameLogic::moveFigure(int srcX, int srcY, int dstX, int dstY){
     Figure* selectedPiece = gc->getCell(srcX, srcY)->getFigure();
 
     gc->getCell(dstX, dstY)->setFigure(selectedPiece);
     gc->getCell(srcX, srcY)->setFigure(nullptr);
 
-
+    if(selectedPiece->isDuke()){
+        if(selectedPiece->getTeam() == TeamA){
+            gc->updateDukeA(gc->getCell(dstX, dstY));
+        }
+        else if(selectedPiece->getTeam() == TeamB){
+            gc->updateDukeB(gc->getCell(dstX, dstY));
+        }
+    }
 };
 void GameLogic::commandFigure(int srcX, int srcY, int dstX, int dstY){
     if(gc->getCell(dstX, dstY)->hasFigure()){

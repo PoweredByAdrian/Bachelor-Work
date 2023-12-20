@@ -6,9 +6,8 @@
 
 class p_Duke : public Figure
 {
-    Q_OBJECT
 public:
-    explicit p_Duke(PlayerTeam team, QObject *parent = nullptr);
+    explicit p_Duke(PlayerTeam team);
 
     // Override the isValidMove function
     bool isValidMove(Cell *cells[6][6], int row, int col) const override;

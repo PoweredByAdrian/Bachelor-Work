@@ -1,7 +1,7 @@
 #include "p_pikeman.h"
 
-p_Pikeman::p_Pikeman(PlayerTeam team, QObject *parent)
-    : Figure(team, Pikeman, parent)
+p_Pikeman::p_Pikeman(PlayerTeam team)
+    : Figure(team, Pikeman)
 {}
 
 bool p_Pikeman::isValidMove(Cell *cells[6][6], int row, int col) const

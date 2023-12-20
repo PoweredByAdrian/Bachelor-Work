@@ -7,10 +7,8 @@
 
 class p_Bowman : public Figure
 {
-    Q_OBJECT
-
 public:
-    explicit p_Bowman(PlayerTeam team, QObject *parent = nullptr);
+    explicit p_Bowman(PlayerTeam team);
 
     // Override the isValidMove function
     bool isValidMove(Cell *cells[6][6], int row, int col) const override;

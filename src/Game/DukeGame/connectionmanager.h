@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QPushButton>
-#include "cell.h"
-#include "figurebag.h"
+#include "gamelogic.h"
+#include "mainwindow.h"
 
 
 class ConnectionManager : public QObject
@@ -12,23 +12,18 @@ class ConnectionManager : public QObject
     Q_OBJECT
 
 public:
-    explicit ConnectionManager(QObject *parent = nullptr);
-
-    void connectCellButton(Cell *cell, QPushButton *button);
-    void connectPlayerButton(QPushButton *button, figureBag *bag, const QString &playerName);
-
+    explicit ConnectionManager(QObject *parent = nullptr, GameLogic* gl = nullptr, MainWindow *mw = nullptr);
 signals:
-    void cellClicked(int row, int col);
-    void playerButtonClicked(figureBag *bag, QPushButton* clickedButton);
-
+    void cellStateChanged(int row, int col, PieceType type, PlayerTeam team);
 private slots:
-    void handleCellButtonClicked();
-    void handlePlayerButtonClicked();
-
+    void handleGridButtonClicked(int row, int col);
+    void handleBatgButtonClicked(PlayerTeam team);
 private:
     QHash<QPushButton*, Cell*> buttonCellMap;
     QHash<QPushButton*, figureBag*> buttonBagMap;
 
+    GameLogic* gl;
+    MainWindow* mw;
 };
 
 #endif // CONNECTIONMANAGER_H

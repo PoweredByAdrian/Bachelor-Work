@@ -8,19 +8,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , boardLayout(new QGridLayout)
-    , selectedFigure(nullptr)
     , currentPlayer(PlayerTeam::TeamA)
 {
     ui->setupUi(this);
-    gc = new GameConfigure();
 
-
-
-    //connectionManager = new ConnectionManager(this);
     setupBoard();
 
-    //connect(connectionManager, &ConnectionManager::cellClicked, this, &MainWindow::handleCellClick);
-    //connect(connectionManager, &ConnectionManager::playerButtonClicked, this, &MainWindow::handlePlayerButtonClick);
     setupPlayers();
 }
 
@@ -46,23 +39,10 @@ void MainWindow::setupBoard()
             // Create a button to represent the cell visually
             QPushButton *button = new QPushButton(this);
 
-            Cell* cell = gc->getCell(row, col);
-            //cell->setButton(button);
-
             // Set the size policy to make the button fill the available space
             button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
             // Add the button to the layout
             boardLayout->addWidget(button, row, col);
-
-
-            //////////////////////////////////////////////////////////
-            //TODO need checkup all below
-
-            // Connect the cell button using ConnectionManager
-            //connectionManager->connectCellButton(cell, button);
-            //connect(cell, &Cell::figureStateChanged, this, &MainWindow::handleCellFigureStateChanged);
-            //setButtonText(cell, button);
-            //////////////////////////////////////////////////////////////
         }
     }
 }
@@ -96,131 +76,31 @@ void MainWindow::setupPlayers()
     selectedPlayerLabel->setStyleSheet("QLabel { border: 1px solid black;}" );
     boardLayout->addWidget(selectedPlayerLabel, 2, 6, 2, 1); // Span 2 rows
 
-    // Create figure bags for each player
-    figureBag *bagPlayerA = gc->getBagPlayerA();
-    figureBag *bagPlayerB = gc->getBagPlayerB();
-
-
-
-    //////////////////////////////////////////////////////////
-    //TODO need checkup all below
-    connectionManager->connectPlayerButton(playerAButton, bagPlayerA, "Player A");
-    connectionManager->connectPlayerButton(playerBButton, bagPlayerB, "Player B");
 }
 
-void MainWindow::handlePlayerButtonClick(figureBag *bag, QPushButton *clickedButton)
-{
-    // Implement logic to handle player button clicks
-    // For now, let's print a message to the console
-    if (clickedButton) {
-        qDebug() << "Clicked on Player Button: " << clickedButton->text();
+void MainWindow::setButtonText(int row, int col, PieceType type = NoPiece, PlayerTeam team = NoTeam){
 
-        // Get the player from the button text
-        QString playerName = clickedButton->text();
 
-        // Check if the button corresponds to the current player's turn
-        if ((currentPlayer == PlayerTeam::TeamA && playerName == "Player A") ||
-            (currentPlayer == PlayerTeam::TeamB && playerName == "Player B")) {
-            // For now, let's assume you have a function getRandomPieceTypeForPlayer
-            Figure* randomPieceType = bag->takeRandomPiece();
-            if (randomPieceType == nullptr){
-                qDebug() << "NULL";
-            }
-            selectedFigure = randomPieceType;
+    QLayoutItem* item = boardLayout->itemAtPosition(row, col);
+    QPushButton* button;
 
-            if(currentPlayer == PlayerTeam::TeamA && playerName == "Player A"){
-                selectedPieceLabelPlayerA->setText("Selected Piece: " + pieceTypeToString(randomPieceType->type()));
-            }
-            else{
-                selectedPieceLabelPlayerA->setText("Selected Piece: " + pieceTypeToString(randomPieceType->type()));
-            }
-        }
+    if (item && item->widget()) {
+        button = qobject_cast<QPushButton*>(item->widget());
     }
-}
 
-void MainWindow::handleCellClick(int row, int col)
-{
-    Cell *clickedCell = gc->getCell(row, col);
-    PieceType pieceType;
+    // Convert the PieceType enum to a string for display
+    QString pieceTypeText = pieceTypeToString(type);
 
-    // Check whose turn it is
-    if (currentPlayer == PlayerTeam::TeamA) {
-        // Handle moving pieces for PlayerA
-        if (!selectedFigure) {
-            // If selectedFigure is empty, set it to the figure in the clicked cell (if any)
-            if (clickedCell->hasFigure() && clickedCell->getFigure()->getTeam() == PlayerTeam::TeamA) {
-                selectedFigure = clickedCell->getFigure();
-                pieceType = selectedFigure->type();
-                clickedCell->setFigure(nullptr);
-                // Update the selected piece label
-                selectedPieceLabelPlayerA->setText("Selected Piece: " + pieceTypeToString(pieceType));
-            }
-        } else {
-            // Move the selected figure to the clicked cell
-            if (!clickedCell->hasFigure()) {
-                clickedCell->setFigure(selectedFigure);
-                selectedFigure = nullptr;
-                // After moving, switch to the other player's turn
-                currentPlayer = PlayerTeam::TeamB;
-                selectedPlayerLabel->setText("Selected Player: Player B");
-            }
-        }
-    } else {  // Current player is PlayerB
-        // Handle moving pieces for PlayerB
-        if (!selectedFigure) {
-            // If selectedFigure is empty, set it to the figure in the clicked cell (if any)
-            if (clickedCell->hasFigure() && clickedCell->getFigure()->getTeam() == PlayerTeam::TeamB) {
-                selectedFigure = clickedCell->getFigure();
-                pieceType = selectedFigure->type();
-                clickedCell->setFigure(nullptr);
-                // Update the selected piece label
-                selectedPieceLabelPlayerB->setText("Selected Piece: " + pieceTypeToString(pieceType));
-            }
-        } else {
-            // Move the selected figure to the clicked cell
-            if (!clickedCell->hasFigure()) {
-                clickedCell->setFigure(selectedFigure);
-                selectedFigure = nullptr;
-                // After moving, switch to the other player's turn
-                currentPlayer = PlayerTeam::TeamA;
-                selectedPlayerLabel->setText("Selected Player: Player A");
-            }
-        }
-    }
-}
+    button->setText(pieceTypeText);
 
-void MainWindow::handleCellFigureStateChanged()
-{
-    Cell *changedCell = qobject_cast<Cell*>(sender()); // Get the cell that emitted the signal
-
-    // Find the corresponding button for the changed cell
-    //QPushButton *button = changedCell->getButton();
-
-    //setButtonText(changedCell, button);
-}
-
-void MainWindow::setButtonText(Cell* cell, QPushButton* button){
-    // Set text and font properties
-    // Set text and font properties
-    if (cell->hasFigure()) {
-        PieceType pieceType = cell->getFigureType();
-
-        // Convert the PieceType enum to a string for display
-        QString pieceTypeText = pieceTypeToString(pieceType);
-
-        button->setText(pieceTypeText);
-    } else {
-        button->setText("");
-    }
     button->setFont(QFont("Arial", 12, QFont::Bold));
 
     // Set background color based on the player if the cell has a figure
-    if (cell->hasFigure()) {
-        Figure* figure = cell->getFigure();
-        if (figure->getTeam() == PlayerTeam::TeamA) {
+    if (type != NoPiece) {
+        if (team == PlayerTeam::TeamA) {
             // Set background color for Player A
             button->setStyleSheet("background-color: #FFD700"); // Example color: gold
-        } else if (figure->getTeam() == PlayerTeam::TeamB) {
+        } else if (team == PlayerTeam::TeamB) {
             // Set background color for Player B
             button->setStyleSheet("background-color: #4169E1"); // Example color: royal blue
         }
@@ -279,6 +159,8 @@ QString MainWindow::pieceTypeToString(PieceType pieceType){
     case Longbowman:
         pieceTypeText = "Longbowman";
         break;
+    case NoPiece:
+        pieceTypeText = "";
     default:
         pieceTypeText = "U";
         break;

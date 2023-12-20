@@ -6,9 +6,8 @@
 
 class p_Assassin : public Figure
 {
-    Q_OBJECT
 public:
-    explicit p_Assassin(PlayerTeam team, QObject *parent = nullptr);
+    explicit p_Assassin(PlayerTeam team);
 
     // Override the isValidMove function
     bool isValidMove(Cell *cells[6][6], int row, int col) const override;

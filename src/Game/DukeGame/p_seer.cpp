@@ -1,7 +1,7 @@
 #include "p_seer.h"
 
-p_Seer::p_Seer(PlayerTeam team, QObject *parent)
-    : Figure(team, Seer, parent)
+p_Seer::p_Seer(PlayerTeam team)
+    : Figure(team, Seer)
 {}
 
 bool p_Seer::isValidMove(Cell *cells[6][6], int row, int col) const

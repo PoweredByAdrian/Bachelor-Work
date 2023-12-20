@@ -1,7 +1,7 @@
 #include "p_footman.h"
 
-p_Footman::p_Footman(PlayerTeam team, QObject *parent)
-    : Figure(team, Footman, parent)
+p_Footman::p_Footman(PlayerTeam team)
+    : Figure(team, Footman)
 {}
 
 bool p_Footman::isValidMove(Cell *cells[6][6], int row, int col) const

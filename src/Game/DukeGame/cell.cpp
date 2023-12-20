@@ -16,7 +16,6 @@ void Cell::setFigure(Figure *newFigure)
 {
     if (figure != newFigure) {
         figure = newFigure;
-        emit figureStateChanged();
     }
 }
 
@@ -27,5 +26,5 @@ bool Cell::hasFigure() const
 
 PieceType Cell::getFigureType() const
 {
-    return figure ? figure->type() : NoPiece; // Assuming NoPiece is a default type
+    return figure ? figure->type() : NoPiece;
 }

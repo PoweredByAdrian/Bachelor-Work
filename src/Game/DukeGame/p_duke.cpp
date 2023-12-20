@@ -1,7 +1,7 @@
 #include "p_duke.h"
 
-p_Duke::p_Duke(PlayerTeam team, QObject *parent)
-    : Figure(team, Duke, parent)
+p_Duke::p_Duke(PlayerTeam team)
+    : Figure(team, Duke)
 {}
 bool p_Duke::isValidMove(Cell *cells[6][6], int row, int col) const
 {

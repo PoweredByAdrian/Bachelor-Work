@@ -1,7 +1,7 @@
 #include "p_longbowman.h"
 
-p_Longbowman::p_Longbowman(PlayerTeam team, QObject *parent)
-    : Figure(team, Longbowman, parent)
+p_Longbowman::p_Longbowman(PlayerTeam team)
+    : Figure(team, Longbowman)
 {}
 
 bool p_Longbowman::isValidMove(Cell *cells[6][6], int row, int col) const

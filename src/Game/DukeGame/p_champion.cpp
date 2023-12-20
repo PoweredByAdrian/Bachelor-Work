@@ -1,7 +1,7 @@
 #include "p_champion.h"
 
-p_Champion::p_Champion(PlayerTeam team, QObject *parent)
-    : Figure(team, Champion, parent)
+p_Champion::p_Champion(PlayerTeam team)
+    : Figure(team, Champion)
 {}
 
 bool p_Champion::isValidMove(Cell *cells[6][6], int row, int col) const

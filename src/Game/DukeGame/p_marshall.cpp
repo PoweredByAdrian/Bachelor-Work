@@ -1,7 +1,7 @@
 #include "p_marshall.h"
 
-p_Marshall::p_Marshall(PlayerTeam team, QObject *parent)
-    : Figure(team, Marshall, parent)
+p_Marshall::p_Marshall(PlayerTeam team)
+    : Figure(team, Marshall)
 {}
 
 bool p_Marshall::isValidMove(Cell *cells[6][6], int row, int col) const
