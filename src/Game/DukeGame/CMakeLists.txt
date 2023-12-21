@@ -46,6 +46,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         gameconfigure.h gameconfigure.cpp
         gameinterface.h gameinterface.cpp
         gamelogic.h gamelogic.cpp
+        TODO
 
     )
 # Define target properties for Android with Qt 6 as:

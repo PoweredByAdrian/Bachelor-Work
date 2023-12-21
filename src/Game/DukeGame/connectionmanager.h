@@ -17,8 +17,9 @@ signals:
     void cellStateChanged(int row, int col, PieceType type, PlayerTeam team);
 private slots:
     void handleGridButtonClicked(int row, int col);
-    void handleBatgButtonClicked(PlayerTeam team);
+    void handleBagButtonClicked(PlayerTeam team);
 private:
+    void connectButtons();
     QHash<QPushButton*, Cell*> buttonCellMap;
     QHash<QPushButton*, figureBag*> buttonBagMap;
 

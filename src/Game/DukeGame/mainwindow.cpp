@@ -41,6 +41,7 @@ void MainWindow::setupBoard()
 
             // Set the size policy to make the button fill the available space
             button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
             // Add the button to the layout
             boardLayout->addWidget(button, row, col);
         }
@@ -50,8 +51,8 @@ void MainWindow::setupBoard()
 void MainWindow::setupPlayers()
 {
     // Create buttons for each player
-    QPushButton *playerAButton = new QPushButton("Player A", this);
-    QPushButton *playerBButton = new QPushButton("Player B", this);
+    playerAButton = new QPushButton("Player A", this);
+    playerBButton = new QPushButton("Player B", this);
     // Set vertical size policy to make the buttons fill the available vertical space
     playerAButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     playerBButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
@@ -110,7 +111,17 @@ void MainWindow::setButtonText(int row, int col, PieceType type = NoPiece, Playe
     }
 }
 
+QPushButton *MainWindow::getGridButton(int row, int col){
+    QLayoutItem* item = boardLayout->itemAtPosition(row, col);
+    QPushButton* button;
 
+    if (item && item->widget()) {
+        button = qobject_cast<QPushButton*>(item->widget());
+    }
+
+    return button;
+
+}
 
 QString MainWindow::pieceTypeToString(PieceType pieceType){
 

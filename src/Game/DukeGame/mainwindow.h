@@ -24,11 +24,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    QPushButton *getGridButton(int row, int col);
+    QPushButton *getPlayerAButton(){return this->playerAButton;}
+    QPushButton *getPlayerBButton(){return this->playerBButton;}
+
 public slots:
     void setButtonText(int row, int col, PieceType type, PlayerTeam team);
-signals:
-    void gridButtonPressed(int row, int col);
-    void bagButtonPressed(PlayerTeam team);
 private:
     void setupBoard();
     void setupPlayers();
@@ -39,6 +40,9 @@ private:
     QLabel *selectedPlayerLabel;
     QLabel *selectedPieceLabelPlayerA;
     QLabel *selectedPieceLabelPlayerB;
+
+    QPushButton *playerAButton;
+    QPushButton *playerBButton;
 
     QString pieceTypeToString(PieceType type);
 
