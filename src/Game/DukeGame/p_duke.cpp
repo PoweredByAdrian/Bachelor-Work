@@ -16,7 +16,7 @@ Figure::MoveResult p_Duke::markAvailableJumps(Cell *cells[6][6]) const
     int row = cell->getRow();
     QPair<int,int> currentPosition = QPair<int, int>(row, col);
     if(!flipped){
-        for (int moveCol = col - 1; moveCol >= 0; ++moveCol) {
+        for (int moveCol = col - 1; moveCol >= 0; --moveCol) {
             if(cells[row][moveCol]->hasFigure()){
                 break;
             }

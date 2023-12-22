@@ -6,15 +6,56 @@ GameLogic::GameLogic() {
 
     gc->setupBoard();
 }
+bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
+
+    if (newPiece != nullptr) {
+        QList<QPair<int, int>> placableCells = gc->getPlacableCellsForNewPiece(team);
+        QPair<int, int> targetCoord(x, y);
+        if(placableCells.contains(targetCoord)){
+            placeFigure(x, y);
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    } else {
+
+        if (!hasFirstCoord) {
+            // Store the first coordinate
+            firstCoordX = x;
+            firstCoordY = y;
+            hasFirstCoord = true;
+            return true;  // Continue waiting for the second coordinate
+        } else {
+
+            bool isValid = getTurnRequest(firstCoordX, firstCoordY, x, y);
+
+            // Reset the first coordinate state
+            hasFirstCoord = false;
+            firstCoordX = 0;
+            firstCoordY = 0;
+
+            return isValid;
+        }
+    }
+
+    // Case 3: Need 3 Coords - Add implementation when ready
+    // ...
+
+    // Default return
+    return false;
+}
 PieceType GameLogic::getPieceGeneratedRequest(PlayerTeam team){
 
     if(team == TeamA){
-        gc->getBagPlayerA()->takeRandomPiece();
+        newPiece = gc->getBagPlayerA()->takeRandomPiece();
     }
     else if(team == TeamB){
-        gc->getBagPlayerB()->takeRandomPiece();
+        newPiece = gc->getBagPlayerB()->takeRandomPiece();
     }
 
+    return newPiece->type();
 }
 bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
 
@@ -52,7 +93,10 @@ bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
         valid = true;
     }
 
-    selectedPiece->flip();
+    if(valid){
+       selectedPiece->flip();
+    }
+
     return valid;
 }
 
@@ -61,6 +105,8 @@ void GameLogic::moveFigure(int srcX, int srcY, int dstX, int dstY){
 
     gc->getCell(dstX, dstY)->setFigure(selectedPiece);
     gc->getCell(srcX, srcY)->setFigure(nullptr);
+
+    gc->getCell(dstX, dstY)->getFigure()->setCell(gc->getCell(dstX, dstY));
 
     if(selectedPiece->isDuke()){
         if(selectedPiece->getTeam() == TeamA){
@@ -85,6 +131,8 @@ void GameLogic::killFigure(int row, int col){
 };
 
 
-void GameLogic::placeFigure(int row, int col, Figure* newPiece){
+void GameLogic::placeFigure(int row, int col){
     gc->getCell(row, col)->setFigure(newPiece);
+    gc->getCell(row, col)->getFigure()->setCell(gc->getCell(row, col));
+    newPiece = nullptr;
 }

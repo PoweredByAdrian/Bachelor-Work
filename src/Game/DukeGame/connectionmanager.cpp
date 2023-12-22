@@ -12,14 +12,19 @@ ConnectionManager::ConnectionManager(QObject *parent, GameLogic* gl, MainWindow*
 void ConnectionManager::handleGridButtonClicked(int row, int col)
 {
     qDebug() << "Grid button pressed at row:" << row << "col:" << col;
+
+    // Call the function with both sets of coordinates
+    gl->handleSingleCoordAction(row, col, TeamA);
 }
 void ConnectionManager::handleBagButtonClicked(PlayerTeam team)
 {
     qDebug() << "Player button pressed for team:" << (team == PlayerTeam::TeamA ? "A" : "B");
+
+    gl->getPieceGeneratedRequest(team);
 }
 
 void ConnectionManager::connectButtons() {
-    // Assuming mainWindow is an instance of your MainWindow class
+
 
     // Connect grid buttons to handleGridButtonClicked
     for (int row = 0; row < 6; ++row) {

@@ -1,7 +1,7 @@
 #include "gameconfigure.h"
 
 GameConfigure::GameConfigure()
-    : playerA(nullptr), playerB(nullptr), bagPlayerA(nullptr), bagPlayerB(nullptr)
+    : playerA(nullptr), playerB(nullptr), bagPlayerA(nullptr), bagPlayerB(nullptr), dukeCellA(nullptr), dukeCellB(nullptr)
 {
 }
 

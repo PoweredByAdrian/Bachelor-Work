@@ -25,6 +25,10 @@ private:
 
     GameLogic* gl;
     MainWindow* mw;
+
+    int firstButtonRow = -1;
+    int firstButtonCol = -1;
+    bool waitingForSecondButton = false;
 };
 
 #endif // CONNECTIONMANAGER_H
