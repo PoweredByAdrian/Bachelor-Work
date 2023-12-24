@@ -28,8 +28,11 @@ public:
     QPushButton *getPlayerAButton(){return this->playerAButton;}
     QPushButton *getPlayerBButton(){return this->playerBButton;}
 
-public slots:
     void setButtonText(int row, int col, PieceType type, PlayerTeam team);
+
+    void switchPlayerAndResetLabels();
+    void updateSelectedPieceLabel(PieceType pieceType);
+
 private:
     void setupBoard();
     void setupPlayers();

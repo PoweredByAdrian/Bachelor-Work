@@ -8,20 +8,35 @@ ConnectionManager::ConnectionManager(QObject *parent, GameLogic* gl, MainWindow*
     this->gl = gl;
     this->mw = mw;
     connectButtons();
+
+    // Set the callback function
+    gl->setActionCompletedCallback([this](int srcX, int srcY, int dstX, int dstY, PieceType pieceType) {
+        handleActionCompleted(srcX, srcY, dstX, dstY, pieceType);
+    });
 }
 void ConnectionManager::handleGridButtonClicked(int row, int col)
 {
     qDebug() << "Grid button pressed at row:" << row << "col:" << col;
 
     // Call the function with both sets of coordinates
-    gl->handleSingleCoordAction(row, col, TeamA);
+    if(gl->handleSingleCoordAction(row, col, TeamA)){
+
+    }
+
+
 }
 void ConnectionManager::handleBagButtonClicked(PlayerTeam team)
 {
     qDebug() << "Player button pressed for team:" << (team == PlayerTeam::TeamA ? "A" : "B");
 
-    gl->getPieceGeneratedRequest(team);
+    PieceType newPieceType = gl->getPieceGeneratedRequest(team);
+    mw->updateSelectedPieceLabel(newPieceType);
 }
+void ConnectionManager::handleActionCompleted(int srcX, int srcY, int dstX, int dstY, PieceType pieceType) {
+    mw->setButtonText(srcX, srcY, NoPiece, TeamA);
+    mw->setButtonText(dstX, dstY, pieceType, TeamA);
+}
+
 
 void ConnectionManager::connectButtons() {
 
@@ -44,7 +59,4 @@ void ConnectionManager::connectButtons() {
     connect(mw->getPlayerBButton(), &QPushButton::clicked, this, [this]() {
         handleBagButtonClicked(PlayerTeam::TeamB);
     });
-
-    // Connect cellStateChanged to setButtonText
-    connect(this, &ConnectionManager::cellStateChanged, mw, &MainWindow::setButtonText);
 }

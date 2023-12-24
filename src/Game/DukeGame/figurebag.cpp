@@ -56,7 +56,7 @@ Figure* figureBag::takeRandomPiece(){
 
 
     if(!(isEmpty())){
-        int randomIndex = QRandomGenerator::global()->bounded(pieces.size());
+        int randomIndex = QRandomGenerator::global()->bounded(pieces.size() - 1);
         return pieces.takeAt(randomIndex); // Take and remove the piece from the bag
     }
     else

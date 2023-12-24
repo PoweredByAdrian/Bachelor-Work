@@ -13,13 +13,17 @@ class ConnectionManager : public QObject
 
 public:
     explicit ConnectionManager(QObject *parent = nullptr, GameLogic* gl = nullptr, MainWindow *mw = nullptr);
-signals:
-    void cellStateChanged(int row, int col, PieceType type, PlayerTeam team);
+    void handleActionCompleted(int srcX, int srcY, int dstX, int dstY, PieceType pieceType);
+
 private slots:
     void handleGridButtonClicked(int row, int col);
     void handleBagButtonClicked(PlayerTeam team);
+
 private:
+    void cellStateChanged(int row, int col, PieceType type, PlayerTeam team);
+
     void connectButtons();
+    void connectLabels();
     QHash<QPushButton*, Cell*> buttonCellMap;
     QHash<QPushButton*, figureBag*> buttonBagMap;
 

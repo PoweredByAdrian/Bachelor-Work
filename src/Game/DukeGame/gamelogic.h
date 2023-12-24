@@ -12,6 +12,12 @@ public:
     bool handleSingleCoordAction(int x, int y, PlayerTeam team);
     PieceType getPieceGeneratedRequest(PlayerTeam team);
 
+    // Define a callback function type
+    using ActionCompletedCallback = std::function<void(int, int, int, int, PieceType)>;
+
+    // Set the callback function
+    void setActionCompletedCallback(const ActionCompletedCallback& callback);
+
 private:
     bool getTurnRequest(int srcX, int srcY, int dstX, int dstY);
 
@@ -32,6 +38,9 @@ private:
     bool hasFirstCoord = false;
     int firstCoordX;
     int firstCoordY;
+
+    // Member variable to store the callback
+    ActionCompletedCallback actionCompletedCallback;
 };
 
 #endif // GAMELOGIC_H

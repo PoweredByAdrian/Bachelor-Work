@@ -123,6 +123,27 @@ QPushButton *MainWindow::getGridButton(int row, int col){
 
 }
 
+void MainWindow::switchPlayerAndResetLabels() {
+    // Switch the player label
+    currentPlayer = (currentPlayer == TeamA) ? TeamB : TeamA;
+    QString currentPlayerLabel = (currentPlayer == TeamA) ? "Selected Player: Player A" : "Selected Player: Player B";
+
+    // Reset both piece labels to "None"
+    selectedPieceLabelPlayerA->setText("Selected Piece: None");
+    selectedPieceLabelPlayerB->setText("Selected Piece: None");
+
+    // Update the player label
+    selectedPlayerLabel->setText(currentPlayerLabel);
+}
+
+void MainWindow::updateSelectedPieceLabel(PieceType pieceType) {
+    // Determine which piece label to update based on the player
+    QLabel *selectedPieceLabel = (currentPlayer == TeamA) ? selectedPieceLabelPlayerA : selectedPieceLabelPlayerB;
+
+    // Update the selected piece label with the piece type
+    selectedPieceLabel->setText("Selected Piece: " + pieceTypeToString(pieceType));
+}
+
 QString MainWindow::pieceTypeToString(PieceType pieceType){
 
     QString pieceTypeText;

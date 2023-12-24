@@ -12,7 +12,11 @@ bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
         QList<QPair<int, int>> placableCells = gc->getPlacableCellsForNewPiece(team);
         QPair<int, int> targetCoord(x, y);
         if(placableCells.contains(targetCoord)){
+
+            actionCompletedCallback(x, y, x, y, newPiece->type());
             placeFigure(x, y);
+
+
             return true;
         }
         else{
@@ -26,17 +30,32 @@ bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
             firstCoordX = x;
             firstCoordY = y;
             hasFirstCoord = true;
-            return true;  // Continue waiting for the second coordinate
+            return false;  // Continue waiting for the second coordinate
         } else {
 
             bool isValid = getTurnRequest(firstCoordX, firstCoordY, x, y);
 
-            // Reset the first coordinate state
-            hasFirstCoord = false;
-            firstCoordX = 0;
-            firstCoordY = 0;
 
-            return isValid;
+
+            if (isValid) {
+                // ... existing code
+
+                // Emit the signal with information about the completed action
+                actionCompletedCallback(firstCoordX, firstCoordY, x, y, gc->getCell(x, y)->getFigureType());
+                // Reset the first coordinate state
+                hasFirstCoord = false;
+                firstCoordX = 0;
+                firstCoordY = 0;
+
+                return true;
+            }
+            else{
+                // Reset the first coordinate state
+                hasFirstCoord = false;
+                firstCoordX = 0;
+                firstCoordY = 0;
+                return false;
+            }
         }
     }
 
@@ -45,6 +64,9 @@ bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
 
     // Default return
     return false;
+}
+void GameLogic::setActionCompletedCallback(const ActionCompletedCallback& callback) {
+    actionCompletedCallback = callback;
 }
 PieceType GameLogic::getPieceGeneratedRequest(PlayerTeam team){
 
