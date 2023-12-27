@@ -11,11 +11,11 @@ class GameLogic
 public:
     GameLogic();
 
-    bool handleSingleCoordAction(int x, int y, PlayerTeam team);
+    bool handleSingleCoordAction(int x, int y);
     PieceType getPieceGeneratedRequest(PlayerTeam team);
 
     // Define a callback function type
-    using ActionCompletedCallback = std::function<void(int, int, int, int, PieceType)>;
+    using ActionCompletedCallback = std::function<void(int, int, int, int, PieceType, PlayerTeam)>;
     using SwitchPlayerCallback = std::function<void(PlayerTeam)>;
 
     // Set the callback function

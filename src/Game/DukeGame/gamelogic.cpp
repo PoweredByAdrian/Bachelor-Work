@@ -9,10 +9,9 @@ GameLogic::GameLogic() : currentPlayer(PlayerTeam::TeamA) {
 
     dm = new DebugManager();
 }
-bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
-
+bool GameLogic::handleSingleCoordAction(int x, int y) {
     if (newPiece != nullptr) {
-        QList<QPair<int, int>> placableCells = gc->getPlacableCellsForNewPiece(team);
+        QList<QPair<int, int>> placableCells = gc->getPlacableCellsForNewPiece(currentPlayer);
         QPair<int, int> targetCoord(x, y);
         if(placableCells.contains(targetCoord)){
 
@@ -25,7 +24,7 @@ bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
                 }
             }
 
-            actionCompletedCallback(x, y, x, y, newPiece->type());
+            actionCompletedCallback(x, y, x, y, newPiece->type(), newPiece->getTeam());
             placeFigure(x, y);
 
 
@@ -54,7 +53,7 @@ bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
                 // ... existing code
 
                 // Emit the signal with information about the completed action
-                actionCompletedCallback(firstCoordX, firstCoordY, x, y, gc->getCell(x, y)->getFigureType());
+                actionCompletedCallback(firstCoordX, firstCoordY, x, y, gc->getCell(x, y)->getFigureType(), gc->getCell(x, y)->getFigure()->getTeam());
                 // Reset the first coordinate state
                 hasFirstCoord = false;
                 firstCoordX = 0;

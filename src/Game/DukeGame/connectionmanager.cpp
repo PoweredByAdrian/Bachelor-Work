@@ -10,8 +10,8 @@ ConnectionManager::ConnectionManager(QObject *parent, GameLogic* gl, MainWindow*
     connectButtons();
 
     // Set the callback function
-    gl->setActionCompletedCallback([this](int srcX, int srcY, int dstX, int dstY, PieceType pieceType) {
-        handleActionCompleted(srcX, srcY, dstX, dstY, pieceType);
+    gl->setActionCompletedCallback([this](int srcX, int srcY, int dstX, int dstY, PieceType pieceType, PlayerTeam team) {
+        handleActionCompleted(srcX, srcY, dstX, dstY, pieceType, team);
     });
 
     gl->setSwitchPlayerCallback([this](PlayerTeam team) {
@@ -23,7 +23,7 @@ void ConnectionManager::handleGridButtonClicked(int row, int col)
     qDebug() << "Grid button pressed at row:" << row << "col:" << col;
 
     // Call the function with both sets of coordinates
-    if(gl->handleSingleCoordAction(row, col, TeamA)){
+    if(gl->handleSingleCoordAction(row, col)){
 
     }
 }
@@ -37,9 +37,9 @@ void ConnectionManager::handleBagButtonClicked(PlayerTeam team)
 void ConnectionManager::handlePlayerSwitch(PlayerTeam team){
     mw->switchPlayerAndResetLabels(team);
 }
-void ConnectionManager::handleActionCompleted(int srcX, int srcY, int dstX, int dstY, PieceType pieceType) {
-    mw->setButtonText(srcX, srcY, NoPiece, TeamA);
-    mw->setButtonText(dstX, dstY, pieceType, TeamA);
+void ConnectionManager::handleActionCompleted(int srcX, int srcY, int dstX, int dstY, PieceType pieceType, PlayerTeam team) {
+    mw->setButtonText(srcX, srcY, NoPiece, team);
+    mw->setButtonText(dstX, dstY, pieceType, team);
 }
 
 
