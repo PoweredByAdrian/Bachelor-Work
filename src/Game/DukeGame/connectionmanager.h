@@ -14,7 +14,7 @@ class ConnectionManager : public QObject
 public:
     explicit ConnectionManager(QObject *parent = nullptr, GameLogic* gl = nullptr, MainWindow *mw = nullptr);
     void handleActionCompleted(int srcX, int srcY, int dstX, int dstY, PieceType pieceType);
-
+    void handlePlayerSwitch(PlayerTeam team);
 private slots:
     void handleGridButtonClicked(int row, int col);
     void handleBagButtonClicked(PlayerTeam team);

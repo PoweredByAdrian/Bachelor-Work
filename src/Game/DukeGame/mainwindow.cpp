@@ -123,9 +123,9 @@ QPushButton *MainWindow::getGridButton(int row, int col){
 
 }
 
-void MainWindow::switchPlayerAndResetLabels() {
+void MainWindow::switchPlayerAndResetLabels(PlayerTeam currTeam) {
     // Switch the player label
-    currentPlayer = (currentPlayer == TeamA) ? TeamB : TeamA;
+    currentPlayer = currTeam;
     QString currentPlayerLabel = (currentPlayer == TeamA) ? "Selected Player: Player A" : "Selected Player: Player B";
 
     // Reset both piece labels to "None"
@@ -192,9 +192,8 @@ QString MainWindow::pieceTypeToString(PieceType pieceType){
         pieceTypeText = "Longbowman";
         break;
     case NoPiece:
-        pieceTypeText = "";
     default:
-        pieceTypeText = "U";
+        pieceTypeText = "";
         break;
     }
 

@@ -1,10 +1,13 @@
 #include "gamelogic.h"
 
-GameLogic::GameLogic() {
+GameLogic::GameLogic() : currentPlayer(PlayerTeam::TeamA) {
 
     gc = new GameConfigure();
 
     gc->setupBoard();
+
+
+    dm = new DebugManager();
 }
 bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
 
@@ -13,8 +16,18 @@ bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
         QPair<int, int> targetCoord(x, y);
         if(placableCells.contains(targetCoord)){
 
+            if(newPiece->isDuke()){
+                if(newPiece->getTeam() == TeamA){
+                    gc->updateDukeA(gc->getCell(x, y));
+                }
+                else if(newPiece->getTeam() == TeamB){
+                    gc->updateDukeB(gc->getCell(x, y));
+                }
+            }
+
             actionCompletedCallback(x, y, x, y, newPiece->type());
             placeFigure(x, y);
+
 
 
             return true;
@@ -68,6 +81,9 @@ bool GameLogic::handleSingleCoordAction(int x, int y, PlayerTeam team) {
 void GameLogic::setActionCompletedCallback(const ActionCompletedCallback& callback) {
     actionCompletedCallback = callback;
 }
+void GameLogic::setSwitchPlayerCallback(const SwitchPlayerCallback& callback) {
+    switchPlayerCallback = callback;
+}
 PieceType GameLogic::getPieceGeneratedRequest(PlayerTeam team){
 
     if(team == TeamA){
@@ -85,6 +101,8 @@ bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
 
     Cell* (*cells)[6][6] = gc->getCells();
     Figure::MoveResult result = selectedPiece->markAvailableJumps(*cells);
+
+    dm->printMoves(result);
 
     bool valid = false;
     bool movement = false;
@@ -116,7 +134,8 @@ bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
     }
 
     if(valid){
-       selectedPiece->flip();
+        selectedPiece->flip();
+        switchTurn();
     }
 
     return valid;
@@ -157,4 +176,11 @@ void GameLogic::placeFigure(int row, int col){
     gc->getCell(row, col)->setFigure(newPiece);
     gc->getCell(row, col)->getFigure()->setCell(gc->getCell(row, col));
     newPiece = nullptr;
+}
+
+
+void GameLogic::switchTurn() {
+    // Toggle between TeamA and TeamB
+    currentPlayer = (currentPlayer == PlayerTeam::TeamA) ? PlayerTeam::TeamB : PlayerTeam::TeamA;
+    switchPlayerCallback(currentPlayer);
 }

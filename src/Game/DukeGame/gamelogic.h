@@ -4,6 +4,8 @@
 #include "gameconfigure.h"
 #include "figure.h"
 
+#include "DebugManager.h"
+
 class GameLogic
 {
 public:
@@ -14,9 +16,13 @@ public:
 
     // Define a callback function type
     using ActionCompletedCallback = std::function<void(int, int, int, int, PieceType)>;
+    using SwitchPlayerCallback = std::function<void(PlayerTeam)>;
 
     // Set the callback function
     void setActionCompletedCallback(const ActionCompletedCallback& callback);
+    void setSwitchPlayerCallback(const SwitchPlayerCallback& callback);
+
+    PlayerTeam getCurrentPlayer() const {return currentPlayer;}
 
 private:
     bool getTurnRequest(int srcX, int srcY, int dstX, int dstY);
@@ -41,6 +47,12 @@ private:
 
     // Member variable to store the callback
     ActionCompletedCallback actionCompletedCallback;
+    SwitchPlayerCallback switchPlayerCallback;
+
+    void switchTurn();  // Switch the turn to the other player
+    PlayerTeam currentPlayer;
+
+    DebugManager *dm;
 };
 
 #endif // GAMELOGIC_H

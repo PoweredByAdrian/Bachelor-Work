@@ -22,7 +22,7 @@ Figure::MoveResult p_Bowman::markAvailableJumps(Cell *cells[6][6]) const
         validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col + 1));
         validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col - 1));
 
-        validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row - 1, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row - 2, col));
         validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row, col + 2));
         validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row, col - 2));
 

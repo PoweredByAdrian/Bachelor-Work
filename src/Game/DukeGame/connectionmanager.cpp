@@ -13,6 +13,10 @@ ConnectionManager::ConnectionManager(QObject *parent, GameLogic* gl, MainWindow*
     gl->setActionCompletedCallback([this](int srcX, int srcY, int dstX, int dstY, PieceType pieceType) {
         handleActionCompleted(srcX, srcY, dstX, dstY, pieceType);
     });
+
+    gl->setSwitchPlayerCallback([this](PlayerTeam team) {
+        handlePlayerSwitch(team);
+    });
 }
 void ConnectionManager::handleGridButtonClicked(int row, int col)
 {
@@ -22,8 +26,6 @@ void ConnectionManager::handleGridButtonClicked(int row, int col)
     if(gl->handleSingleCoordAction(row, col, TeamA)){
 
     }
-
-
 }
 void ConnectionManager::handleBagButtonClicked(PlayerTeam team)
 {
@@ -31,6 +33,9 @@ void ConnectionManager::handleBagButtonClicked(PlayerTeam team)
 
     PieceType newPieceType = gl->getPieceGeneratedRequest(team);
     mw->updateSelectedPieceLabel(newPieceType);
+}
+void ConnectionManager::handlePlayerSwitch(PlayerTeam team){
+    mw->switchPlayerAndResetLabels(team);
 }
 void ConnectionManager::handleActionCompleted(int srcX, int srcY, int dstX, int dstY, PieceType pieceType) {
     mw->setButtonText(srcX, srcY, NoPiece, TeamA);

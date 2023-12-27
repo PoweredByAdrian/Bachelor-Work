@@ -30,7 +30,7 @@ public:
 
     void setButtonText(int row, int col, PieceType type, PlayerTeam team);
 
-    void switchPlayerAndResetLabels();
+    void switchPlayerAndResetLabels(PlayerTeam currTeam);
     void updateSelectedPieceLabel(PieceType pieceType);
 
 private:
