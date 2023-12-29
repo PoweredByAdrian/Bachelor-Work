@@ -44,6 +44,7 @@ protected:
     PlayerTeam team;
     Cell *cell; // Reference to the cell the figure is on
     bool flipped;
+    int direction;
 };
 
 #endif // FIGURE_H

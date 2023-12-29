@@ -48,7 +48,10 @@ Figure::MoveResult p_Wizard::markAvailableJumps(Cell *cells[6][6]) const
         //     ++move;
         // }
 
-        if(cells[targetRow][targetCol]->hasFigure()){
+        if(targetRow >= 6 || targetCol >= 6 || targetRow < 0 || targetCol < 0){
+            move = validMoves.erase(move);
+        }
+        else if(cells[targetRow][targetCol]->hasFigure()){
             Figure* target = cells[targetRow][targetCol]->getFigure();
             if(target->getTeam() == this->team){
                 move = validMoves.erase(move);

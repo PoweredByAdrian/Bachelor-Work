@@ -18,6 +18,7 @@
 Figure::Figure(PlayerTeam team, PieceType type)
     : cell(nullptr), team(team), flipped(false)
 {
+    direction = (team == TeamA) ? 1 : -1;
 }
 
 void Figure::setTeam(PlayerTeam team)

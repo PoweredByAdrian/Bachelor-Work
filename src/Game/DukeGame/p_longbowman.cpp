@@ -19,15 +19,15 @@ Figure::MoveResult p_Longbowman::markAvailableJumps(Cell *cells[6][6]) const
     if(!flipped){
         validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col + 1));
         validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col - 1));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1, col));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1 * direction, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1 * direction, col));
     }
     else{
-        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1, col + 1));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1, col - 1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1 * direction, col + 1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1 * direction, col - 1));
 
-        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 3, col));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 2, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 3 * direction, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 2 * direction, col));
     }
     //TODO Strike
     for (auto move = validMoves.begin(); move != validMoves.end();) {
@@ -41,7 +41,10 @@ Figure::MoveResult p_Longbowman::markAvailableJumps(Cell *cells[6][6]) const
         //     ++move;
         // }
 
-        if(cells[targetRow][targetCol]->hasFigure()){
+        if(targetRow >= 6 || targetCol >= 6 || targetRow < 0 || targetCol < 0){
+            move = validMoves.erase(move);
+        }
+        else if(cells[targetRow][targetCol]->hasFigure()){
             Figure* target = cells[targetRow][targetCol]->getFigure();
             if(target->getTeam() == this->team){
                 move = validMoves.erase(move);

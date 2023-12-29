@@ -18,11 +18,11 @@ Figure::MoveResult p_Bowman::markAvailableJumps(Cell *cells[6][6]) const
     QPair<int,int> currentPosition = QPair<int, int>(row, col);
     if(!flipped){
 
-        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1 * direction, col));
         validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col + 1));
         validMoves.append(std::tuple<MoveTypes,int,int>(Move, row, col - 1));
 
-        validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row - 2, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row - 2 * direction, col));
         validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row, col + 2));
         validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row, col - 2));
 
@@ -30,13 +30,13 @@ Figure::MoveResult p_Bowman::markAvailableJumps(Cell *cells[6][6]) const
     }
     else{
 
-        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1, col));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1, col + 1));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1, col - 1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1 * direction, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1 * direction, col + 1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row - 1 * direction, col - 1));
 
-        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 2, col));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 1, col + 1));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 1, col -1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 2 * direction, col));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 1 * direction, col + 1));
+        validMoves.append(std::tuple<MoveTypes,int,int>(Strike, row + 1 * direction, col -1));
 
     }
     for (auto move = validMoves.begin(); move != validMoves.end();) {
@@ -52,7 +52,11 @@ Figure::MoveResult p_Bowman::markAvailableJumps(Cell *cells[6][6]) const
 
         if(cells[targetRow][targetCol]->hasFigure()){
             Figure* target = cells[targetRow][targetCol]->getFigure();
-            if(target->getTeam() == this->team){
+
+            if(targetRow >= 6 || targetCol >= 6 || targetRow < 0 || targetCol < 0){
+                move = validMoves.erase(move);
+            }
+            else if(target->getTeam() == this->team){
                 move = validMoves.erase(move);
             }
             else{

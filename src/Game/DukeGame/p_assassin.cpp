@@ -16,8 +16,12 @@ Figure::MoveResult p_Assassin::markAvailableJumps(Cell *cells[6][6]) const
     int col = cell->getCol();
     int row = cell->getRow();
     QPair<int,int> currentPosition = QPair<int, int>(row, col);
+
+    int maxRow = (direction == 1) ? 6 : 0;
+    int minRow = (direction == 1) ? 0 : 6;
+
     if(!flipped){
-        for (int moveRow = row + 1; moveRow < 6; ++row) {
+        for (int moveRow = row + 1 * direction; moveRow < maxRow; moveRow += 1 * direction) {
             if(cells[moveRow][col]->hasFigure()){
                 if(cells[moveRow][col]->getFigure()->getTeam() != this->team){
                     validMoves.append(std::tuple<MoveTypes,int,int>(JumpSlide, moveRow, col));
@@ -29,7 +33,7 @@ Figure::MoveResult p_Assassin::markAvailableJumps(Cell *cells[6][6]) const
             }
         }
         // Check diagonal backward moves
-        for (int moveRow = row - 1, moveCol = col - 1; row >= 0 && col >= 0; --moveRow, --moveCol) {
+        for (int moveRow = row - 1 * direction, moveCol = col - 1; row >= minRow && col >= 0; moveRow -= 1 * direction, --moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
                 if(cells[moveRow][col]->getFigure()->getTeam() != this->team){
                     validMoves.append(std::tuple<MoveTypes,int,int>(JumpSlide, moveRow, col));
@@ -40,7 +44,7 @@ Figure::MoveResult p_Assassin::markAvailableJumps(Cell *cells[6][6]) const
                 validMoves.append(std::tuple<MoveTypes,int,int>(JumpSlide, moveRow, moveCol));
             }
         }
-        for (int moveRow = row - 1, moveCol = col + 1; row >= 0 && col < 6; --moveRow, ++moveCol) {
+        for (int moveRow = row - 1 * direction, moveCol = col + 1; row >= minRow && col < 6; moveRow -= 1 * direction, ++moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
                 if(cells[moveRow][col]->getFigure()->getTeam() != this->team){
                     validMoves.append(std::tuple<MoveTypes,int,int>(JumpSlide, moveRow, col));
@@ -55,7 +59,7 @@ Figure::MoveResult p_Assassin::markAvailableJumps(Cell *cells[6][6]) const
 
     }
     else{
-        for (int moveRow = row - 1; moveRow < 0; ++row) {
+        for (int moveRow = row - 1 * direction; moveRow >= minRow; moveRow -= 1 * direction) {
 
             if(cells[moveRow][col]->hasFigure()){
                 if(cells[moveRow][col]->getFigure()->getTeam() != this->team){
@@ -68,7 +72,7 @@ Figure::MoveResult p_Assassin::markAvailableJumps(Cell *cells[6][6]) const
             }
         }
         // Check diagonal backward moves
-        for (int moveRow = row + 1, moveCol = col - 1; row < 6 && col >= 0; --moveRow, --moveCol) {
+        for (int moveRow = row + 1 * direction, moveCol = col - 1; row < maxRow && col >= 0; moveRow += 1 * direction, --moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
                 if(cells[moveRow][col]->getFigure()->getTeam() != this->team){
                     validMoves.append(std::tuple<MoveTypes,int,int>(JumpSlide, moveRow, col));
@@ -79,7 +83,7 @@ Figure::MoveResult p_Assassin::markAvailableJumps(Cell *cells[6][6]) const
                 validMoves.append(std::tuple<MoveTypes,int,int>(JumpSlide, moveRow, moveCol));
             }
         }
-        for (int moveRow = row + 1, moveCol = col + 1; row < 6 && col < 6; --moveRow, ++moveCol) {
+        for (int moveRow = row + 1 * direction, moveCol = col + 1; row < maxRow && col < 6; moveRow += 1 * direction, ++moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
                 if(cells[moveRow][col]->getFigure()->getTeam() != this->team){
                     validMoves.append(std::tuple<MoveTypes,int,int>(JumpSlide, moveRow, col));
