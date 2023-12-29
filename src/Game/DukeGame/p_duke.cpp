@@ -18,6 +18,9 @@ Figure::MoveResult p_Duke::markAvailableJumps(Cell *cells[6][6]) const
     if(!flipped){
         for (int moveCol = col - 1; moveCol >= 0; --moveCol) {
             if(cells[row][moveCol]->hasFigure()){
+                if(cells[row][moveCol]->getFigure()->getTeam() != this->team){
+                    validMoves.append(std::tuple<MoveTypes,int,int>(Slide, row, moveCol));
+                }
                 break;
             }
             else{
@@ -27,6 +30,9 @@ Figure::MoveResult p_Duke::markAvailableJumps(Cell *cells[6][6]) const
         }
         for (int moveCol = col + 1; moveCol < 6; ++moveCol) {
             if(cells[row][moveCol]->hasFigure()){
+                if(cells[row][moveCol]->getFigure()->getTeam() != this->team){
+                    validMoves.append(std::tuple<MoveTypes,int,int>(Slide, row, moveCol));
+                }
                 break;
             }
             else{
@@ -38,6 +44,9 @@ Figure::MoveResult p_Duke::markAvailableJumps(Cell *cells[6][6]) const
     else{
         for (int moveRow = row - 1; moveRow >= 0; --moveRow) {
             if(cells[moveRow][col]->hasFigure()){
+                if(cells[moveRow][col]->getFigure()->getTeam() != this->team){
+                    validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, col));
+                }
                 break;
             }
             else{
@@ -47,6 +56,9 @@ Figure::MoveResult p_Duke::markAvailableJumps(Cell *cells[6][6]) const
         }
         for (int moveRow = row + 1; moveRow < 6; ++moveRow) {
             if(cells[moveRow][col]->hasFigure()){
+                if(cells[moveRow][col]->getFigure()->getTeam() != this->team){
+                    validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, col));
+                }
                 break;
             }
             else{

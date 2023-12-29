@@ -27,7 +27,10 @@ Figure::MoveResult p_Dracoon::markAvailableJumps(Cell *cells[6][6]) const
     }
     else{
         validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 1, col));
-        validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 2, col));
+        if(cells[row+1][col]->hasFigure() == false){
+            validMoves.append(std::tuple<MoveTypes,int,int>(Move, row + 2, col));
+        }
+
 
         validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row + 2, col + 1));
         validMoves.append(std::tuple<MoveTypes,int,int>(Jump, row + 2, col - 1));
@@ -35,6 +38,9 @@ Figure::MoveResult p_Dracoon::markAvailableJumps(Cell *cells[6][6]) const
         // Check diagonal backward moves
         for (int moveRow = row - 1, moveCol = col - 1; row >= 0 && col >= 0; --moveRow, --moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
+                if(cells[moveRow][moveCol]->getFigure()->getTeam() != this->team){
+                   validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+                }
                 break;
             }
             else{
@@ -45,6 +51,9 @@ Figure::MoveResult p_Dracoon::markAvailableJumps(Cell *cells[6][6]) const
 
         for (int moveRow = row - 1, moveCol = col + 1; row >= 0 && col < 6; --moveRow, ++moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
+                if(cells[moveRow][moveCol]->getFigure()->getTeam() != this->team){
+                    validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+                }
                 break;
             }
             else{
@@ -59,9 +68,22 @@ Figure::MoveResult p_Dracoon::markAvailableJumps(Cell *cells[6][6]) const
         int targetRow = std::get<1>(*move);
         int targetCol = std::get<2>(*move);
 
-        if (cells[targetRow][targetCol]->hasFigure() && type != Strike) {
-            move = validMoves.erase(move);
-        } else {
+        // if (cells[targetRow][targetCol]->hasFigure() && type != Strike) {
+        //     move = validMoves.erase(move);
+        // } else {
+        //     ++move;
+        // }
+
+        if(cells[targetRow][targetCol]->hasFigure()){
+            Figure* target = cells[targetRow][targetCol]->getFigure();
+            if(target->getTeam() == this->team){
+                move = validMoves.erase(move);
+            }
+            else{
+                ++move;
+            }
+        }
+        else{
             ++move;
         }
     }

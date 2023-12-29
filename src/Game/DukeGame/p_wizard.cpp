@@ -42,9 +42,22 @@ Figure::MoveResult p_Wizard::markAvailableJumps(Cell *cells[6][6]) const
         int targetRow = std::get<1>(*move);
         int targetCol = std::get<2>(*move);
 
-        if (cells[targetRow][targetCol]->hasFigure()) {
-            move = validMoves.erase(move);
-        } else {
+        // if (cells[targetRow][targetCol]->hasFigure()) {
+        //     move = validMoves.erase(move);
+        // } else {
+        //     ++move;
+        // }
+
+        if(cells[targetRow][targetCol]->hasFigure()){
+            Figure* target = cells[targetRow][targetCol]->getFigure();
+            if(target->getTeam() == this->team){
+                move = validMoves.erase(move);
+            }
+            else{
+                ++move;
+            }
+        }
+        else{
             ++move;
         }
     }

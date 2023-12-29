@@ -177,6 +177,10 @@ bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
 void GameLogic::moveFigure(int srcX, int srcY, int dstX, int dstY){
     Figure* selectedPiece = gc->getCell(srcX, srcY)->getFigure();
 
+    if(gc->getCell(dstX, dstY)->hasFigure() && gc->getCell(dstX, dstY)->getFigure()->getTeam() != currentPlayer){
+        killFigure(dstX, dstY);
+    }
+
     gc->getCell(dstX, dstY)->setFigure(selectedPiece);
     gc->getCell(srcX, srcY)->setFigure(nullptr);
 

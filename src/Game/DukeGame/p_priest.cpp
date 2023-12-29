@@ -21,6 +21,9 @@ Figure::MoveResult p_Priest::markAvailableJumps(Cell *cells[6][6]) const
         // Check diagonal backward moves
         for (int moveRow = row - 1, moveCol = col - 1; moveRow >= 0 && moveCol >= 0; --moveRow, --moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
+                if(cells[moveRow][moveCol]->getFigure()->getTeam() != this->team){
+                    validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+                }
                 break;
             }
             else{
@@ -29,6 +32,9 @@ Figure::MoveResult p_Priest::markAvailableJumps(Cell *cells[6][6]) const
         }
         for (int moveRow = row - 1, moveCol = col + 1; moveRow >= 0 && moveCol < 6; --moveRow, ++moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
+                if(cells[moveRow][moveCol]->getFigure()->getTeam() != this->team){
+                    validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+                }
                 break;
             }
             else{
@@ -38,6 +44,9 @@ Figure::MoveResult p_Priest::markAvailableJumps(Cell *cells[6][6]) const
         // Check diagonal forward moves
         for (int moveRow = row + 1, moveCol = col - 1; moveRow < 6 && moveCol >= 0; ++moveRow, --moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
+                if(cells[moveRow][moveCol]->getFigure()->getTeam() != this->team){
+                    validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+                }
                 break;
             }
             else{
@@ -46,6 +55,9 @@ Figure::MoveResult p_Priest::markAvailableJumps(Cell *cells[6][6]) const
         }
         for (int moveRow = row + 1, moveCol = col + 1; moveRow < 6 && moveCol < 6; ++moveRow, ++moveCol) {
             if(cells[moveRow][moveCol]->hasFigure()){
+                if(cells[moveRow][moveCol]->getFigure()->getTeam() != this->team){
+                    validMoves.append(std::tuple<MoveTypes,int,int>(Slide, moveRow, moveCol));
+                }
                 break;
             }
             else{
@@ -68,9 +80,22 @@ Figure::MoveResult p_Priest::markAvailableJumps(Cell *cells[6][6]) const
         int targetRow = std::get<1>(*move);
         int targetCol = std::get<2>(*move);
 
-        if (cells[targetRow][targetCol]->hasFigure()) {
-            move = validMoves.erase(move);
-        } else {
+        // if (cells[targetRow][targetCol]->hasFigure()) {
+        //     move = validMoves.erase(move);
+        // } else {
+        //     ++move;
+        // }
+
+        if(cells[targetRow][targetCol]->hasFigure()){
+            Figure* target = cells[targetRow][targetCol]->getFigure();
+            if(target->getTeam() == this->team){
+                move = validMoves.erase(move);
+            }
+            else{
+                ++move;
+            }
+        }
+        else{
             ++move;
         }
     }
