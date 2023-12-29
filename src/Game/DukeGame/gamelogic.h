@@ -53,6 +53,11 @@ private:
     PlayerTeam currentPlayer;
 
     DebugManager *dm;
+
+    int placedPiecesCounter = 0;  // Count of pieces placed (reset to 0 after reaching 3)
+    int firstTurnCounter = 0;     // Count of first turn (reset to 0 after reaching 2)
+
+    bool firstTurnDone = false;
 };
 
 #endif // GAMELOGIC_H

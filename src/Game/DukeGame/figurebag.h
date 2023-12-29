@@ -21,6 +21,8 @@ private:
     void initialize();
     PlayerTeam team;
     bool dukeDelivered;
+
+    char footmanCounter = 0;
 };
 
 #endif // FIGUREBAG_H

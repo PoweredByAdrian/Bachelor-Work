@@ -15,12 +15,8 @@ void figureBag::initialize() {
     pieces.append(F_seer);
     Figure* F_champion = Figure::createFigure(team, Champion);
     pieces.append(F_champion);
-    Figure* F_footman1 = Figure::createFigure(team, Footman);
-    pieces.append(F_footman1);
-    Figure* F_footman2 = Figure::createFigure(team, Footman);
-    pieces.append(F_footman2);
-    Figure* F_footman3 = Figure::createFigure(team, Footman);
-    pieces.append(F_footman3);
+    Figure* F_footman = Figure::createFigure(team, Footman);
+    pieces.append(F_footman);
     Figure* F_wizard = Figure::createFigure(team, Wizard);
     pieces.append(F_wizard);
     Figure* F_general = Figure::createFigure(team, General);
@@ -52,6 +48,12 @@ Figure* figureBag::takeRandomPiece(){
         Figure* F_Duke = Figure::createFigure(team, Duke);
         dukeDelivered = true;
         return F_Duke;
+    }
+
+    if (footmanCounter < 2) {
+        Figure* F_Footman = Figure::createFigure(team, Footman);
+        ++footmanCounter;
+        return F_Footman;
     }
 
 

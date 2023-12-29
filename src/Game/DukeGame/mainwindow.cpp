@@ -140,8 +140,10 @@ void MainWindow::updateSelectedPieceLabel(PieceType pieceType) {
     // Determine which piece label to update based on the player
     QLabel *selectedPieceLabel = (currentPlayer == TeamA) ? selectedPieceLabelPlayerA : selectedPieceLabelPlayerB;
 
+    QString pieceTypeString = pieceTypeToString(pieceType);
+    pieceTypeString = (pieceTypeString.isEmpty()) ? "None" : pieceTypeString;
     // Update the selected piece label with the piece type
-    selectedPieceLabel->setText("Selected Piece: " + pieceTypeToString(pieceType));
+    selectedPieceLabel->setText("Selected Piece: " + pieceTypeString);
 }
 
 QString MainWindow::pieceTypeToString(PieceType pieceType){

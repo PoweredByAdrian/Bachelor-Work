@@ -1,6 +1,6 @@
 #include "gamelogic.h"
 
-GameLogic::GameLogic() : currentPlayer(PlayerTeam::TeamA) {
+GameLogic::GameLogic() : currentPlayer(PlayerTeam::TeamA), newPiece(nullptr) {
 
     gc = new GameConfigure();
 
@@ -27,7 +27,25 @@ bool GameLogic::handleSingleCoordAction(int x, int y) {
             actionCompletedCallback(x, y, x, y, newPiece->type(), newPiece->getTeam());
             placeFigure(x, y);
 
+            ++placedPiecesCounter;
 
+            if(!firstTurnDone){
+                // Check if the placed pieces counter reaches 3
+                if (placedPiecesCounter == 3) {
+                    // Reset placed pieces counter
+                    placedPiecesCounter = 0;
+
+                    // Increment first turn counter
+                    ++firstTurnCounter;
+                    switchTurn();
+                }
+
+                if(firstTurnCounter == 2){
+                    firstTurnDone = true;
+                }
+            }else{
+               switchTurn();
+            }
 
             return true;
         }
@@ -37,11 +55,18 @@ bool GameLogic::handleSingleCoordAction(int x, int y) {
 
     } else {
 
+        if(!firstTurnDone){
+            return false;
+        }
+
         if (!hasFirstCoord) {
             // Store the first coordinate
-            firstCoordX = x;
-            firstCoordY = y;
-            hasFirstCoord = true;
+            if(gc->getCell(x,y)->hasFigure() && currentPlayer == gc->getCell(x, y)->getFigure()->getTeam()){
+                firstCoordX = x;
+                firstCoordY = y;
+                hasFirstCoord = true;
+            }
+
             return false;  // Continue waiting for the second coordinate
         } else {
 
@@ -85,11 +110,20 @@ void GameLogic::setSwitchPlayerCallback(const SwitchPlayerCallback& callback) {
 }
 PieceType GameLogic::getPieceGeneratedRequest(PlayerTeam team){
 
-    if(team == TeamA){
+    if(team == TeamA && team == currentPlayer){
+        if(gc->getPlacableCellsForNewPiece(currentPlayer).isEmpty()){
+            return NoPiece;
+        }
         newPiece = gc->getBagPlayerA()->takeRandomPiece();
     }
-    else if(team == TeamB){
+    else if(team == TeamB && team == currentPlayer){
+        if(gc->getPlacableCellsForNewPiece(currentPlayer).isEmpty()){
+            return NoPiece;
+        }
         newPiece = gc->getBagPlayerB()->takeRandomPiece();
+    }
+    else{
+        return NoPiece;
     }
 
     return newPiece->type();
