@@ -4,9 +4,9 @@
 # Ignore all files in the specified build directory
 /src/Game/build-DukeGame-Desktop_Qt_6_6_1_MinGW_64_bit-Debug/*
 
-# Ignore all Visual Studio files
-.vs
-.vscode
+# Ignore all .vs and .vscode folders
+.vs/
+.vscode/
 
 # Ignore all files in the Latex directory
 /Latex/*
