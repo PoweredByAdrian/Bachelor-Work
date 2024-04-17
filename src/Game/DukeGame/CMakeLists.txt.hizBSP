@@ -53,9 +53,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         Algorithms/ExpMinMax/expectiminimax.h Algorithms/ExpMinMax/expectiminimax.cpp
 
-
-        Algorithms/MCTS/mctsnode.h Algorithms/MCTS/mctsnode.cpp
-        Algorithms/MCTS/mctsnode.h Algorithms/MCTS/mctsnode.cpp
+        #Algorithms/MCTS/mcts.h Algorithms/MCTS/mcts.cpp
+        #Algorithms/MCTS/Action.h
+        #Algorithms/MCTS/State.h
+        #Algorithms/MCTS/mctsnode.h Algorithms/MCTS/mctsnode.cpp
 
 
 

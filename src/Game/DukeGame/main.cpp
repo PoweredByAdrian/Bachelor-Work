@@ -1,4 +1,4 @@
-#include "gameinterface.h"  // Include the declaration of GameInterface
+#include "Game\gameinterface.h"  // Include the declaration of GameInterface
 
 #include <QApplication>
 
