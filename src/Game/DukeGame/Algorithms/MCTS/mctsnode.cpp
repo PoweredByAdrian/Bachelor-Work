@@ -1,24 +1,66 @@
 #include "mctsnode.h"
 #include <limits>
+#include <random>
+#include <qdebug.h>
 
-MCTSNode::MCTSNode(State state, MCTSNode* parent = nullptr, Action parentAction = nullptr)
+MCTSNode::MCTSNode(MoveSimulator::BoardState state,Action parentAction, MCTSNode* parent = nullptr )
     : state(state), parent(parent), parentAction(parentAction)  {
 
     this->children.clear();
     this->visits = 0;
     results[1] = 0;
     results[-1] = 0;
-    untriedActions = untriedActions();
+    this->ms = new MoveSimulator();
+    untriedactions = untriedActions();
+
 }
 
-std::vector<Action> MCTSNode::untriedActions() const {
+std::vector<Action> MCTSNode::untriedActions() {
 
-    this->untriedActions = state.getLegalActions();
+    // Iterate through each row
+    for (size_t i = 0; i < state.simBoard.size(); ++i) {
+        // Iterate through each column
+        for (size_t j = 0; j < state.simBoard[i].size(); ++j) {
+            const CellInfo& cellInfo = state.simBoard[i][j];
+
+            // Set figure details
+            if (cellInfo.hasFigure) {
+                if(cellInfo.owner == state.currentTeam){
+                    ms->setState(state);
+                    ms->rollBackBoard();
+                    Figure::MoveResult moves = ms->simulateAndFilterMoves(nullptr, i, j);
+
+                   Action act;
+                    for (const auto& move : moves.validMoves) {
+                        int moveRow = std::get<1>(move);
+                        int moveCol = std::get<2>(move);
+                        // Get the move type
+                        MoveTypes moveType = std::get<0>(move);
+
+                        if(moveType == CommandTo || moveType == CommandFrom){
+                            continue;
+                        }
+
+                        act.currentPosition = moves.currentPosition;
+                        act.nextPosition = std::pair(moveRow, moveCol);
+                        act.moveType = moveType;
+
+                        this->untriedactions.push_back(act);
+
+                    }
+                }
+            }
+        }
+    }
+
+    if(!ms->drawPieceCheck(state.currentTeam).empty()){
+        QList<QPair<int, int>>draws =  ms->drawPieceCheck(state.currentTeam);
+        //TODO draws
+    }
 
 
-    return this->untriedActions;
+    return this->untriedactions;
 }
-
 
 int MCTSNode::q() {
     int wins = this->results[1];
@@ -26,20 +68,20 @@ int MCTSNode::q() {
     return wins - loses;
 }
 
-int MCTSNode::n(){
+int MCTSNode::n()const {
     return this->visits;
 }
 
 MCTSNode* MCTSNode::expand(){
     // Pop an action from untried_actions
-    int action = untriedActions.back();
-    untriedActions.pop_back();
+    Action action = untriedactions.back();
+    untriedactions.pop_back();
 
     // Get the next state after applying the action
-    GameState nextState = state.move(action);
+    MoveSimulator::BoardState nextState = this->ms->simulateMove(action.currentPosition.first, action.currentPosition.second, state.simBoard, std::tuple(action.moveType, action.nextPosition.first, action.nextPosition.second));
 
     // Create a new child node with the next state
-    MCTSNode* child_node = new MCTSNode(nextState, this, action);
+    MCTSNode* child_node = new MCTSNode(nextState, action, this);
 
     // Add the child node to the list of children
     children.push_back(child_node);
@@ -48,23 +90,83 @@ MCTSNode* MCTSNode::expand(){
 }
 
 bool MCTSNode::isTerminalNode() const {
-    return state.is_game_over();
+
+
+
+    return this->ms->is_game_over(state);
 }
-
 double MCTSNode::rollout() const {
-    GameState current_rollout_state = state;
+    MoveSimulator::BoardState current_rollout_state = state;
 
-    while (!current_rollout_state.is_game_over()) {
-        std::vector<Action> possible_moves = current_rollout_state.get_legal_actions();
+    while (!this->ms->is_game_over(current_rollout_state)) {
+
+        std::vector<Action> possible_moves;
+
+        // Iterate through each row
+        for (size_t i = 0; i < current_rollout_state.simBoard.size(); ++i) {
+            // Iterate through each column
+            for (size_t j = 0; j < current_rollout_state.simBoard[i].size(); ++j) {
+                const CellInfo& cellInfo = current_rollout_state.simBoard[i][j];
+
+                // Set figure details
+                if (cellInfo.hasFigure) {
+                    if(cellInfo.owner == current_rollout_state.currentTeam){
+
+                        ms->setState(current_rollout_state);
+                        ms->rollBackBoard();
+                        Figure::MoveResult moves = ms->simulateAndFilterMoves(nullptr, i, j);
+
+                        Action act;
+                        for (const auto& move : moves.validMoves) {
+                            int moveRow = std::get<1>(move);
+                            int moveCol = std::get<2>(move);
+                            // Get the move type
+                            MoveTypes moveType = std::get<0>(move);
+
+                            if(moveType == CommandTo || moveType == CommandFrom){
+                                continue;
+                            }
+                            Action act;
+
+                            act.currentPosition = moves.currentPosition;
+                            act.nextPosition = std::pair(moveRow, moveCol);
+                            act.moveType = moveType;
+
+                            possible_moves.push_back(act);
+
+                        }
+                    }
+                }
+            }
+        }
+
 
         // Use your rollout policy to select an action
-        Action action = rollout_policy(possible_moves);
+        Action action = rolloutPolicy(possible_moves);
 
-        current_rollout_state = current_rollout_state.move(action);
+        qDebug() << "";
+        qDebug() << "";
+        qDebug() << "";
+        qDebug() << "MCTS";
+
+
+        current_rollout_state = ms->simulateMove(action.currentPosition.first, action.currentPosition.second, current_rollout_state.simBoard, std::tuple(action.moveType, action.nextPosition.first, action.nextPosition.second));
+
     }
 
+    // Create a random number generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    // Define the distribution for integers in the range [-1, 1]
+    std::uniform_int_distribution<int> dist(-1, 1);
+
+    // Generate a random number
+    int randomValue = dist(gen);
+
     // Return the result of the game
-    return current_rollout_state.game_result();
+    //TODO return current_rollout_state.game_result();
+    return randomValue;
 }
 
 void MCTSNode::backpropagate(double result) {
@@ -77,10 +179,10 @@ void MCTSNode::backpropagate(double result) {
 }
 
 bool MCTSNode::isFullyExpanded() const {
-    return untriedActions.empty();
+    return untriedactions.empty();
 }
 
-MCTSNode* MCTSNode::bestChild(double cParam) const {
+MCTSNode* MCTSNode::bestChild(double cParam = 0.1) const {
     double maxWeight = -std::numeric_limits<double>::infinity();
     MCTSNode* bestChild = nullptr;
 
@@ -94,7 +196,7 @@ MCTSNode* MCTSNode::bestChild(double cParam) const {
     return bestChild;
 }
 
-int MCTSNode::rolloutPolicy(const std::vector<int>& possibleMoves) const {
+Action MCTSNode::rolloutPolicy(const std::vector<Action>& possibleMoves) const {
     // Generate a random index within the range of possible moves
     int randomIndex = std::rand() % possibleMoves.size();
     // Return the randomly selected move

@@ -7,6 +7,7 @@
 #include "mainwindow.h"
 
 #include "../Algorithms/ExpMinMax/Expectiminimax.h"
+#include "../Algorithms/MCTS/mctsnode.h"
 
 
 class ConnectionManager : public QObject
@@ -37,10 +38,10 @@ private:
     bool waitingForSecondButton = false;
 
 
-
+    bool firstTurn = false;
 
     Expectiminimax* PlayerA_AI;
-    Expectiminimax* PlayerB_AI;
+    MCTSNode* PlayerB_AI;
 
 };
 

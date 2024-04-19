@@ -17,6 +17,7 @@ public:
     struct MoveResult {
         QPair<int, int> currentPosition;
         QList<std::tuple<MoveTypes, int, int>> validMoves;
+        QPair<int, int> cmdTo = std::make_pair(-1,-1);
     };
 
     explicit Figure(PlayerTeam team, PieceType type);

@@ -23,17 +23,21 @@ public:
         // Duke coordinates for each team
         std::pair<int, int> dukeA;
         std::pair<int, int> dukeB;
+
+        PlayerTeam currentTeam;
     };
 
     MoveSimulator();
 
     void setState(BoardState state){
-        this->board = state.simBoard;
+        this->board.clear();
+        this->board.assign(state.simBoard.begin(), state.simBoard.end());
+        //this->board = state.simBoard;
         this->dukeA = state.dukeA;
         this->dukeB = state.dukeB;
     }
 
-    Figure::MoveResult simulateAndFilterMoves(Figure* figure);
+    Figure::MoveResult simulateAndFilterMoves(Figure* figure, int row = -1, int col = -1);
     void simulateMove(int fromX, int fromY, int toX, int toY, MoveTypes type, /* coord for command */int commandX = NULL, int commandY = NULL);
     MoveSimulator::BoardState simulateMove(int row, int col, std::vector<std::vector<CellInfo>> board, std::tuple<MoveTypes, int, int> move);
     std::vector<std::vector<CellInfo>> simulateMove(int row, int col, std::vector<std::vector<CellInfo>>);
@@ -47,6 +51,8 @@ public:
     QList<QPair<int, int>> drawPieceCheck(PlayerTeam currentPlayer);
 
     void rollBackBoard(GameConfigure* gc = nullptr);
+
+    bool is_game_over(BoardState state);
 private:
 
     // Function to get the current state of the cell

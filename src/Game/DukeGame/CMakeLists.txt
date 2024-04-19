@@ -56,6 +56,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         Algorithms/MCTS/mctsnode.h Algorithms/MCTS/mctsnode.cpp
         Algorithms/MCTS/mctsnode.h Algorithms/MCTS/mctsnode.cpp
+        Algorithms/MCTS/Action.h
 
 
 

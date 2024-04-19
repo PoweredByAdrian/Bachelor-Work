@@ -10,6 +10,7 @@ ConnectionManager::ConnectionManager(QObject *parent, GameLogic* gl, MainWindow*
     connectButtons();
 
     this->PlayerA_AI = new Expectiminimax(1, PlayerTeam::TeamA);
+    this->PlayerB_AI = nullptr;
     //FIXME this->PlayerB_AI = new Expectiminimax(1, PlayerTeam::TeamB);
 
     // Set the callback function
@@ -38,22 +39,22 @@ void ConnectionManager::handleGridButtonClicked(int row, int col)
             gl->handleSingleCoordAction(nextMove.secondCoord.first, nextMove.secondCoord.second);
         }
 
-        if(this->PlayerB_AI == nullptr){
-            this->PlayerB_AI = new Expectiminimax(1, PlayerTeam::TeamB);
+        if(firstTurn == false){
+            this->firstTurn = true;
         }
 
     }
-    else if(team == TeamB && this->PlayerB_AI != nullptr){
-        std::pair<int, int> nullPair = std::make_pair(-1, -1);
-        MoveSimulator::finalMove nextMove = PlayerB_AI->chooseMove(gl->getGC());
-        if(nextMove.secondCoord == nullPair){
-            this->handleBagButtonClicked(TeamB);
-            gl->handleSingleCoordAction(nextMove.firstCoord.first, nextMove.firstCoord.second);
-        }
-        else if(nextMove.thirdCoord == nullPair){
-            gl->handleSingleCoordAction(nextMove.firstCoord.first, nextMove.firstCoord.second);
-            gl->handleSingleCoordAction(nextMove.secondCoord.first, nextMove.secondCoord.second);
-        }
+    else if(team == TeamB && this->firstTurn){
+        MoveSimulator* ms = new MoveSimulator();
+
+        MoveSimulator::BoardState state = ms->loadBoard(this->gl->getGC());
+        Action act;
+        MCTSNode* root = new MCTSNode(state, act, nullptr);
+        MCTSNode* selectedNode = root->bestAction();
+        act = selectedNode->parentAction;
+
+        gl->handleSingleCoordAction(act.currentPosition.first, act.currentPosition.second);
+        gl->handleSingleCoordAction(act.nextPosition.first, act.nextPosition.second);
 
     }
     else{

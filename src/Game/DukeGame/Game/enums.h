@@ -35,7 +35,9 @@ enum MoveTypes{
     Strike,
     Command,
     CommandFrom,
-    CommandTo
+    CommandTo,
+
+    Draw
 };
 
 #endif // ENUMS_H

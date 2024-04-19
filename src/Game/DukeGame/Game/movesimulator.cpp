@@ -4,6 +4,7 @@
 MoveSimulator::MoveSimulator()
 {
     board.resize(6, std::vector<CellInfo>(6, CellInfo(false, NoTeam, NoPiece, false)));
+    this->gc = nullptr;
 }
 
 void MoveSimulator::updateBoard(GameConfigure* gameconfig){
@@ -39,7 +40,12 @@ void MoveSimulator::updateBoard(GameConfigure* gameconfig){
     dukeB.second = gc->getPlayerDuke(TeamB)->getCol();
 
 }
-Figure::MoveResult MoveSimulator::simulateAndFilterMoves(Figure* figure){
+Figure::MoveResult MoveSimulator::simulateAndFilterMoves(Figure* figure, int row, int col){
+
+    if(row != -1 && col != -1){
+        figure = gc->getCell(row, col)->getFigure();
+    }
+
     Figure::MoveResult moves = figure->markAvailableJumps(gc->getCells());
 
     PlayerTeam team = figure->getTeam();
@@ -66,6 +72,7 @@ Figure::MoveResult MoveSimulator::simulateAndFilterMoves(Figure* figure){
                 if(selfGuard(team)){
                     moves.validMoves.removeAll(commmove);
                 }
+                rollBackBoard();
             }
         }
         else{
@@ -161,10 +168,16 @@ void MoveSimulator::simulateMove(int fromX, int fromY, int toX, int toY, MoveTyp
         }
     }
 }
-void MoveSimulator::rollBackBoard(GameConfigure* gc){
+void MoveSimulator::rollBackBoard(GameConfigure* gconf){
 
-    if(gc != nullptr){
-        this->gc = gc;
+
+
+    if(gconf != nullptr){
+        this->gc = gconf;
+    }
+    else if(this->gc == nullptr){
+        this->gc = new GameConfigure();
+        gc->setupBoard();
     }
 
     // Iterate through each row
@@ -279,6 +292,35 @@ bool MoveSimulator::endGameCheck(GameConfigure* gconfig, PlayerTeam team){
     return true;
 }
 
+bool MoveSimulator::is_game_over(BoardState state){
+    GameConfigure* configure = new GameConfigure();
+
+    this->board = state.simBoard;
+    this->dukeA = state.dukeA;
+    this->dukeB = state.dukeB;
+    this->rollBackBoard(nullptr);
+
+
+    // Populate grid based on figures on the board
+    for (int row = 0; row < 6; ++row) {
+        for (int col = 0; col < 6; ++col) {
+            if (gc->getCell(row, col)->hasFigure() && (gc->getCell(row, col)->getFigure()->getTeam() == state.currentTeam)) {
+                Figure::MoveResult moves = simulateAndFilterMoves(gc->getCell(row, col)->getFigure());
+                if(moves.validMoves.isEmpty()){
+                    continue;
+                }
+                else{
+                    rollBackBoard();
+                    return false;
+                }
+            }
+        }
+
+    }
+    rollBackBoard();
+    return true;
+}
+
 
 MoveSimulator::BoardState MoveSimulator::loadBoard(GameConfigure* gameconfig){
     this->gc = gameconfig;
@@ -321,11 +363,12 @@ MoveSimulator::BoardState MoveSimulator::loadBoard(GameConfigure* gameconfig){
 
 MoveSimulator::BoardState MoveSimulator::simulateMove(int row, int col, std::vector<std::vector<CellInfo>> board, std::tuple<MoveTypes, int, int> move){
     MoveTypes type = std::get<0>(move);
+    PlayerTeam team;
     if(type != CommandFrom){
         Figure* f = gc->getCell(row, col)->getFigure();
         placeFigure(std::get<1>(move), std::get<2>(move), f->getTeam(), f->type(), !f->isFlipped());
         this->removeFigure(row, row);
-
+        team = f->getTeam();
         if(f->isDuke()){
             f->getTeam() == TeamA ? gc->updateDukeA(gc->getCell(std::get<1>(move), std::get<2>(move))) : gc->updateDukeB(gc->getCell(std::get<1>(move), std::get<2>(move)));
         }
@@ -336,7 +379,8 @@ MoveSimulator::BoardState MoveSimulator::simulateMove(int row, int col, std::vec
 
     MoveSimulator::BoardState simBoard;
     simBoard = loadBoard(this->gc);
-
+    simBoard.currentTeam = team == TeamA ? TeamB : TeamA;
+    this->printBoard();
     this->rollBackBoard();
     return simBoard;
 
