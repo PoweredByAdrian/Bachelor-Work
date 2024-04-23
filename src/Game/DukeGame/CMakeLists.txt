@@ -23,40 +23,42 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(DukeGame
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        Game/cell.h Game/cell.cpp
-        Game/figure.h Game/figure.cpp
-        Game/p_duke.h Game/p_duke.cpp
-        Game/p_bowman.h Game/p_bowman.cpp
-        Game/p_dracoon.h Game/p_dracoon.cpp
-        Game/p_assassin.h Game/p_assassin.cpp
-        Game/p_champion.h Game/p_champion.cpp
-        Game/p_footman.h Game/p_footman.cpp
-        Game/p_general.h Game/p_general.cpp
-        Game/p_marshall.h Game/p_marshall.cpp
-        Game/p_priest.h Game/p_priest.cpp
-        Game/p_knight.h Game/p_knight.cpp
-        Game/p_pikeman.h Game/p_pikeman.cpp
-        Game/p_seer.h Game/p_seer.cpp
-        Game/p_wizard.h Game/p_wizard.cpp
-        Game/figurebag.h Game/figurebag.cpp
-        Game/player.h Game/player.cpp
-        Game/p_longbowman.h Game/p_longbowman.cpp
+        Game/GameComponents/cell.h Game/GameComponents/cell.cpp
+        Game/GameComponents/Figures/figure.h Game/GameComponents/Figures/figure.cpp
+        Game/GameComponents/Figures/p_duke.h Game/GameComponents/Figures/p_duke.cpp
+        Game/GameComponents/Figures/p_bowman.h Game/GameComponents/Figures/p_bowman.cpp
+        Game/GameComponents/Figures/p_dracoon.h Game/GameComponents/Figures/p_dracoon.cpp
+        Game/GameComponents/Figures/p_assassin.h Game/GameComponents/Figures/p_assassin.cpp
+        Game/GameComponents/Figures/p_champion.h Game/GameComponents/Figures/p_champion.cpp
+        Game/GameComponents/Figures/p_footman.h Game/GameComponents/Figures/p_footman.cpp
+        Game/GameComponents/Figures/p_general.h Game/GameComponents/Figures/p_general.cpp
+        Game/GameComponents/Figures/p_marshall.h Game/GameComponents/Figures/p_marshall.cpp
+        Game/GameComponents/Figures/p_priest.h Game/GameComponents/Figures/p_priest.cpp
+        Game/GameComponents/Figures/p_knight.h Game/GameComponents/Figures/p_knight.cpp
+        Game/GameComponents/Figures/p_pikeman.h Game/GameComponents/Figures/p_pikeman.cpp
+        Game/GameComponents/Figures/p_seer.h Game/GameComponents/Figures/p_seer.cpp
+        Game/GameComponents/Figures/p_wizard.h Game/GameComponents/Figures/p_wizard.cpp
+        Game/GameComponents/figurebag.h Game/GameComponents/figurebag.cpp
+        Game/GameComponents/player.h Game/GameComponents/player.cpp
+        Game/GameComponents/Figures/p_longbowman.h Game/GameComponents/Figures/p_longbowman.cpp
         Game/enums.h
         Game/connectionmanager.h Game/connectionmanager.cpp
-        Game/gameconfigure.h Game/gameconfigure.cpp
+        Game/GameComponents/gameconfigure.h Game/GameComponents/gameconfigure.cpp
         Game/gameinterface.h Game/gameinterface.cpp
         Game/gamelogic.h Game/gamelogic.cpp
         TODO
         Game/debugmanager.h Game/debugmanager.cpp
         Game/movesimulator.h Game/movesimulator.cpp
-        Game/cellinfo.h Game/cellinfo.cpp
+
+
 
         Algorithms/ExpMinMax/expectiminimax.h Algorithms/ExpMinMax/expectiminimax.cpp
 
 
         Algorithms/MCTS/mctsnode.h Algorithms/MCTS/mctsnode.cpp
-        Algorithms/MCTS/mctsnode.h Algorithms/MCTS/mctsnode.cpp
         Algorithms/MCTS/Action.h
+        Game/GameComponents/GameState.h
+        Algorithms/FinalMove.h
 
 
 

@@ -1,24 +1,28 @@
 #ifndef EXPECTIMINIMAX_H
 #define EXPECTIMINIMAX_H
 
-#include "../../Game/GameConfigure.h"
 #include "../../Game/movesimulator.h"
+#include "../../Game/GameComponents/GameState.h"
 #include <random>
-
+#include "../FinalMove.h"
 
 class Expectiminimax
 {
 public:
 
     Expectiminimax(int maxDepth, PlayerTeam team);
-    MoveSimulator::finalMove chooseMove(GameConfigure* gc);
+    ~Expectiminimax(){delete ms;};
+    FinalMove chooseMove(GameState state);
 
 private:
-    double expectiminimax(MoveSimulator::BoardState board, int depth, bool isMaximizingPlayer) const;
-    double evaluateBoard(MoveSimulator::BoardState board) const;
-    bool isTerminalState(MoveSimulator::BoardState board) const;
+    double expectiminimax(GameState state, int depth, bool isMaximizingPlayer) const;
+    double evaluateBoard(GameState state) const;
+    bool isTerminalState(GameState state) const;
 
-    GameConfigure* gc;
+    GameState actualBoard;
+    GameState bestDrawBoard;
+    GameState bestMoveBoard;
+
     int maxDepth;
     PlayerTeam myTeam;
     MoveSimulator* ms;

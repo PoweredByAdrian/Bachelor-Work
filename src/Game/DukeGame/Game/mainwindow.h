@@ -8,7 +8,7 @@
 
 #include <QLabel>
 #include "enums.h"
-
+#include "GameComponents/GameState.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,16 +24,22 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void updateUI(GameState gamestate);
+
     QPushButton *getGridButton(int row, int col);
     QPushButton *getPlayerAButton(){return this->playerAButton;}
     QPushButton *getPlayerBButton(){return this->playerBButton;}
 
-    void setButtonText(int row, int col, PieceType type, PlayerTeam team);
 
-    void switchPlayerAndResetLabels(PlayerTeam currTeam);
+
+
     void updateSelectedPieceLabel(PieceType pieceType);
 
 private:
+    void setButtonText(int row, int col, PieceType type, PlayerTeam team,  bool flipped);
+
+    void switchPlayerAndResetLabels(PlayerTeam currTeam);
+
     void setupBoard();
     void setupPlayers();
 
@@ -44,10 +50,15 @@ private:
     QLabel *selectedPieceLabelPlayerA;
     QLabel *selectedPieceLabelPlayerB;
 
+    QLabel* playerAPiecesLabel;
+    QLabel* playerBPiecesLabel;
+
     QPushButton *playerAButton;
     QPushButton *playerBButton;
 
     QString pieceTypeToString(PieceType type);
+
+    void updatePlayerBag(PlayerTeam team, const std::vector<PieceType>& bag);
 
     PlayerTeam currentPlayer;
 };

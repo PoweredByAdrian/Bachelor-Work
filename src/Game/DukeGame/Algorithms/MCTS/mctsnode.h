@@ -4,19 +4,20 @@
 #include <unordered_map>
 #include <vector>
 #include <algorithm>
-#include "../../Game/figure.h"
+#include "../../Game/GameComponents/Figures/figure.h"
+#include "../../Game/GameComponents/GameState.h"
 #include "../../Game/movesimulator.h"
 #include "Action.h"
 
 class MCTSNode
 {
 public:
-    MCTSNode(MoveSimulator::BoardState state, Action parentAction, MCTSNode* parent);
+    MCTSNode(GameState state, Action parentAction, MCTSNode* parent);
     MCTSNode* bestAction();
     Action parentAction;
 private:
 
-    MoveSimulator::BoardState state;
+    GameState state;
     MCTSNode* parent;
     std::vector<MCTSNode*> children;
 

@@ -1,17 +1,74 @@
 #include "gamelogic.h"
 
 
-GameLogic::GameLogic() : currentPlayer(PlayerTeam::TeamA), newPiece(nullptr) {
+GameLogic::GameLogic() : newPiece(nullptr) {
 
     gc = new GameConfigure();
 
     gc->setupBoard();
 
+    gc->setTeam(TeamA);
 
 
-
+    //DEBUG
     dm = new DebugManager();
 }
+
+//TODO Change generation new pieces
+PieceType GameLogic::getPieceGeneratedRequest(PlayerTeam team){
+
+    if(newPiece != nullptr){
+        return newPiece->type();
+    }
+
+    GameState state = this->gc->getState();
+
+    MoveSimulator *ms = new MoveSimulator();
+    ms->updateBoard(state);
+
+    QList<QPair<int, int>> moves = ms->drawPieceCheck(team);
+    dm->printMoves(moves);
+
+
+    if(team == TeamA && team == state.currentPlayer){
+        if(moves.empty()){
+            delete ms;
+            return NoPiece;
+        }
+
+        if(gc->getBagPlayerA()->isEmpty()){
+            delete ms;
+            return NoPiece;
+        }
+
+        newPiece = gc->getBagPlayerA()->takeRandomPiece();
+
+    }
+    else if(team == TeamB && team == state.currentPlayer){
+        if(moves.empty()){
+            delete ms;
+            return NoPiece;
+        }
+
+        if(gc->getBagPlayerA()->isEmpty()){
+            delete ms;
+            return NoPiece;
+        }
+        if(gc->getBagPlayerB()->isEmpty()){
+            delete ms;
+            return NoPiece;
+        }
+        newPiece = gc->getBagPlayerB()->takeRandomPiece();
+
+    }
+    else{
+        delete ms;
+        return NoPiece;
+    }
+    delete ms;
+    return newPiece->type();
+}
+
 bool GameLogic::handleSingleCoordAction(int x, int y) {
     if (newPiece != nullptr) {
         return addFigure(x, y);
@@ -42,34 +99,43 @@ bool GameLogic::handleSingleCoordAction(int x, int y) {
 
         }
     }
-
-    // Case 3: Need 3 Coords - Add implementation when ready
-    // ...
-
     // Default return
     return false;
 }
 bool GameLogic::addFigure(int x, int y){
-    QList<QPair<int, int>> placableCells = gc->getPlacableCellsForNewPiece(currentPlayer);
+
+    GameState state = gc->getState();
+    MoveSimulator *ms = new MoveSimulator();
+    ms->updateBoard(state);
+
+    QList<QPair<int, int>> placableCells = ms->drawPieceCheck(state.currentPlayer);
     QPair<int, int> targetCoord(x, y);
+
+    delete ms;
+
+
     if(placableCells.contains(targetCoord)){
 
         if(newPiece->isDuke()){
             if(newPiece->getTeam() == TeamA){
-                gc->updateDukeA(gc->getCell(x, y));
+                gc->updateDukeA(newPiece);
             }
             else if(newPiece->getTeam() == TeamB){
-                gc->updateDukeB(gc->getCell(x, y));
+                gc->updateDukeB(newPiece);
             }
         }
 
-        actionCompletedCallback(x, y, newPiece->type(), newPiece->getTeam());
         placeFigure(x, y);
-
         ++placedPiecesCounter;
 
         if(!firstTurnDone){
             // Check if the placed pieces counter reaches 3
+            if (this->gc->getState().currentPlayer == TeamA){
+                this->gc->firstTurnA++;
+            }
+            if (this->gc->getState().currentPlayer == TeamB){
+                this->gc->firstTurnB++;
+            }
             if (placedPiecesCounter == 3) {
                 // Reset placed pieces counter
                 placedPiecesCounter = 0;
@@ -86,52 +152,58 @@ bool GameLogic::addFigure(int x, int y){
             switchTurn();
         }
 
+        if(gc->getState().currentPlayer == TeamA){
+            gc->guardPlayerB = false;
+        }
+        else if(gc->getState().currentPlayer == TeamB){
+            gc->guardPlayerA = false;
+        }
+
+        actionCompletedCallback(gc->getState());
         return true;
     }
     else{
         return false;
     }
 }
+
 void GameLogic::firstClick(int x, int y){
     // Store the first coordinate
-    if(gc->getCell(x,y)->hasFigure() && currentPlayer == gc->getCell(x, y)->getFigure()->getTeam()){
+    if(gc->getCell(x,y)->hasFigure() && gc->getCurrentPlayer() == gc->getCell(x, y)->getFigure()->getTeam()){
         firstCoordX = x;
         firstCoordY = y;
         hasFirstCoord = true;
 
-        //#######################
-        //DEBUG
-        std::vector<std::vector<Cell*>>& cells = gc->getCells();
-        this->result = gc->getCell(x,y)->getFigure()->markAvailableJumps(cells);
 
-        dm->printMoves(result);
 
         MoveSimulator *ms = new MoveSimulator();
-        ms->updateBoard(this->gc);
-        this->result = ms->simulateAndFilterMoves(gc->getCell(x,y)->getFigure());
-        dm->printMoves(result);
+        ms->updateBoard(this->gc->getState());
+        this->result = ms->simulateAndFilterMoves(x, y);
+
+        if(result.validMoves.empty()){
+            hasFirstCoord = false;
+        }
+
+        delete ms;
         //DEBUG
-        //#######################
+        //#################################
+        dm->printMoves(result);
     }
 }
+
 bool GameLogic::secondClick(int x, int y){
     bool isValid = getTurnRequest(firstCoordX, firstCoordY, x, y);
 
     if (isValid) {
-        // ... existing code
 
-        if(striked){
-
-            actionCompletedCallback(firstCoordX, firstCoordY, gc->getCell(firstCoordX, firstCoordY)->getFigureType(), gc->getCell(firstCoordX, firstCoordY)->getFigure()->getTeam());
-            actionCompletedCallback(x, y, NoPiece, NoTeam);
-
-            striked = false;
+        if(gc->getState().currentPlayer == TeamA){
+            gc->guardPlayerB = false;
         }
-        else{
-            // Emit the signal with information about the completed action
-            actionCompletedCallback(firstCoordX, firstCoordY, NoPiece, NoTeam);
-            actionCompletedCallback(x, y, gc->getCell(x, y)->getFigureType(), gc->getCell(x, y)->getFigure()->getTeam());
+        else if(gc->getState().currentPlayer == TeamB){
+            gc->guardPlayerA = false;
         }
+        actionCompletedCallback(gc->getState());
+
 
         // Reset the first coordinate state
         hasFirstCoord = false;
@@ -151,6 +223,7 @@ bool GameLogic::secondClick(int x, int y){
         return false;
     }
 }
+
 bool GameLogic::thirdClick(int x, int y){
     // Check if the list contains the specified move type and coordinates
     for (const auto& move : this->result.validMoves) {
@@ -162,15 +235,18 @@ bool GameLogic::thirdClick(int x, int y){
 
             gc->getCell(firstCoordX, firstCoordY)->getFigure()->flip();
 
-            // if(this->selfGuard()){
-            //     qDebug() << "selfGuard!";
-            // }
-            if(this->isGuard()){
-                qDebug() << "isGuard!";
-            }
+            //bool guard = this->isGuard();
+            //gc->getCurrentPlayer() == TeamA ? gc->guardPlayerB = guard : gc->guardPlayerA = guard;
+
+
             switchTurn();
-            actionCompletedCallback(secondCoordX, secondCoordY, NoPiece, NoTeam);
-            actionCompletedCallback(x, y, gc->getCell(x, y)->getFigureType(), gc->getCell(x, y)->getFigure()->getTeam());
+            if(gc->getState().currentPlayer == TeamA){
+                gc->guardPlayerB = false;
+            }
+            else if(gc->getState().currentPlayer == TeamB){
+                gc->guardPlayerA = false;
+            }
+            actionCompletedCallback(gc->getState());
 
             return true;
         }
@@ -179,68 +255,6 @@ bool GameLogic::thirdClick(int x, int y){
     return false;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void GameLogic::setActionCompletedCallback(const ActionCompletedCallback& callback) {
-    actionCompletedCallback = callback;
-}
-void GameLogic::setSwitchPlayerCallback(const SwitchPlayerCallback& callback) {
-    switchPlayerCallback = callback;
-}
-PieceType GameLogic::getPieceGeneratedRequest(PlayerTeam team){
-
-    if(newPiece != nullptr){
-        return newPiece->type();
-    }
-    MoveSimulator *ms = new MoveSimulator();
-    if(team == TeamA && team == currentPlayer){
-        if(gc->getPlacableCellsForNewPiece(currentPlayer).isEmpty()){
-            return NoPiece;
-        }
-
-        if(firstTurnDone){
-            ms->updateBoard(this->gc);
-            if(ms->drawPieceCheck(team).isEmpty()){
-                return NoPiece;
-            }
-        }
-        newPiece = gc->getBagPlayerA()->takeRandomPiece();
-        if(gc->getBagPlayerA()->isEmpty()){
-            return NoPiece;
-        }
-    }
-    else if(team == TeamB && team == currentPlayer){
-        if(gc->getPlacableCellsForNewPiece(currentPlayer).isEmpty()){
-            return NoPiece;
-        }
-        if(firstTurnDone){
-            ms->updateBoard(this->gc);
-            if(ms->drawPieceCheck(team).isEmpty()){
-                return NoPiece;
-            }
-        }
-        newPiece = gc->getBagPlayerB()->takeRandomPiece();
-        if(gc->getBagPlayerB()->isEmpty()){
-            return NoPiece;
-        }
-    }
-    else{
-        return NoPiece;
-    }
-    return newPiece->type();
-}
 bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
 
 
@@ -283,30 +297,21 @@ bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
     else if(attack){
         killFigure(dstX,dstY);
         valid = true;
-        striked = true;
     }
     else if(cmd){
         secondCoordX = dstX;
         secondCoordY = dstY;
         commandRequest = true;
+
+        //DEBUG
         dm->printMoves(this->result, true);
         return false;
     }
 
     if(valid){
         selectedPiece->flip();
-        if(this->isGuard()){
-            qDebug() << "isGuard!";
-            this->currentPlayer == TeamA ? gc->guardPlayerB = true : gc->guardPlayerA = true;
-            MoveSimulator *ms = new MoveSimulator();
-            if(ms->endGameCheck(gc, this->currentPlayer == TeamA ? TeamB : TeamA)){
-              qDebug() << "GAME OVER!";
-            }
-
-        }
-        else{
-            this->currentPlayer == TeamA ? gc->guardPlayerB = false : gc->guardPlayerA = false;
-        }
+        //bool guard = this->isGuard();
+        //gc->getCurrentPlayer() == TeamA ? gc->guardPlayerB = guard : gc->guardPlayerA = guard;
         switchTurn();
     }
 
@@ -316,49 +321,56 @@ bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
 void GameLogic::moveFigure(int srcX, int srcY, int dstX, int dstY){
     Figure* selectedPiece = gc->getCell(srcX, srcY)->getFigure();
 
-    if(gc->getCell(dstX, dstY)->hasFigure() && gc->getCell(dstX, dstY)->getFigure()->getTeam() != currentPlayer){
+    if(gc->getCell(dstX, dstY)->hasFigure()){
         killFigure(dstX, dstY);
     }
 
     gc->getCell(dstX, dstY)->setFigure(selectedPiece);
     gc->getCell(srcX, srcY)->setFigure(nullptr);
 
-    gc->getCell(dstX, dstY)->getFigure()->setCell(gc->getCell(dstX, dstY));
-
     if(selectedPiece->isDuke()){
         if(selectedPiece->getTeam() == TeamA){
-            gc->updateDukeA(gc->getCell(dstX, dstY));
+            gc->updateDukeA(selectedPiece);
         }
         else if(selectedPiece->getTeam() == TeamB){
-            gc->updateDukeB(gc->getCell(dstX, dstY));
+            gc->updateDukeB(selectedPiece);
         }
     }
 };
+
 void GameLogic::commandFigure(int srcX, int srcY, int dstX, int dstY){
-    if(gc->getCell(dstX, dstY)->hasFigure()){
-        killFigure(dstX, dstY);
-        moveFigure(srcX, srcY, dstX, dstY);
-    }
-    else{
-        moveFigure(srcX, srcY, dstX, dstY);
-    }
+
+    moveFigure(srcX, srcY, dstX, dstY);
+
 };
 void GameLogic::killFigure(int row, int col){
+    delete gc->getCell(row, col)->getFigure();
     gc->getCell(row, col)->setFigure(nullptr);
 };
 
 
 void GameLogic::placeFigure(int row, int col){
     gc->getCell(row, col)->setFigure(newPiece);
-    gc->getCell(row, col)->getFigure()->setCell(gc->getCell(row, col));
     newPiece = nullptr;
 }
 
 
 void GameLogic::switchTurn() {
+
+    if(this->firstTurnDone){
+        bool guard = this->isGuard();
+        gc->getCurrentPlayer() == TeamA ? gc->guardPlayerB = guard : gc->guardPlayerA = guard;
+    }
+
+
     // Toggle between TeamA and TeamB
-    currentPlayer = (currentPlayer == PlayerTeam::TeamA) ? PlayerTeam::TeamB : PlayerTeam::TeamA;
-    switchPlayerCallback(currentPlayer);
+    gc->setCurrentPlayer(gc->getCurrentPlayer() == PlayerTeam::TeamA ? PlayerTeam::TeamB : PlayerTeam::TeamA);
+    /*if(gc->getCurrentPlayer() == TeamA){
+        gc->guardPlayerA = false;
+    }
+    else if(gc->getCurrentPlayer() == TeamB){
+        gc->guardPlayerB = false;
+    }*/
 }
 
 bool GameLogic::isGuard(){
@@ -367,9 +379,15 @@ bool GameLogic::isGuard(){
             Cell* c = gc->getCell(row, col);
             if(c->hasFigure()){
                 Figure* f = c->getFigure();
-                if(f->getTeam() == currentPlayer){
-                    Cell* dukecell = gc->getPlayerDuke(currentPlayer == TeamA ? TeamB : TeamA);
-                    if(f->isValidMove(gc->getCells(), dukecell->getRow(), dukecell->getCol())){
+                if(f->getTeam() == gc->getCurrentPlayer()){
+                    Cell* dukecell = gc->getPlayerDuke(gc->getCurrentPlayer() == TeamA ? TeamB : TeamA)->getCell();
+                    if(f->isValidMove(gc->getState(), dukecell->getRow(), dukecell->getCol())){
+
+                        MoveSimulator* ms = new MoveSimulator();
+
+                        ms->endGameCheck(this->gc->getState());
+
+                        delete ms;
                         return true;
                     }
                 }
@@ -377,6 +395,21 @@ bool GameLogic::isGuard(){
         }
     }
     return false;
+}
+
+
+
+
+
+
+
+
+
+
+void GameLogic::setActionCompletedCallback(const ActionCompletedCallback& callback) {
+    actionCompletedCallback = callback;
+
+    actionCompletedCallback(gc->getState());
 }
 
 

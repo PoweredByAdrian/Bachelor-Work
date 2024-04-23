@@ -59,7 +59,36 @@ void DebugManager::printMoves(Figure::MoveResult moves, bool cmdOnly) {
     }
 
     // Print the grid
-    qDebug() << "Recorded Moves:";
+    //qDebug() << "Recorded Moves:";
+    for (int row = 0; row < 6; ++row) {
+        QString rowString;
+        for (int col = 0; col < 6; ++col) {
+            rowString += grid[row][col] + " ";
+        }
+        qDebug() << rowString.trimmed(); // Trim the trailing space and print the entire row
+    }
+}
+
+void DebugManager::printMoves(QList<QPair<int, int>> moves) {
+    // Create a 6x6 grid of empty cells
+    QString grid[6][6];
+    for (int row = 0; row < 6; ++row) {
+        for (int col = 0; col < 6; ++col) {
+            grid[row][col] = "[ ]"; // Initialize with empty cells
+        }
+    }
+
+    // Mark valid moves with 'X'
+    for (const auto& move : moves) {
+        int moveRow = move.first;
+        int moveCol = move.second;
+
+
+        grid[moveRow][moveCol] = "[X]";
+    }
+
+    // Print the grid
+    //qDebug() << "Recorded Moves:";
     for (int row = 0; row < 6; ++row) {
         QString rowString;
         for (int col = 0; col < 6; ++col) {

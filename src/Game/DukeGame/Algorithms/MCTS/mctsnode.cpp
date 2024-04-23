@@ -3,7 +3,7 @@
 #include <random>
 #include <qdebug.h>
 
-MCTSNode::MCTSNode(MoveSimulator::BoardState state,Action parentAction, MCTSNode* parent = nullptr )
+MCTSNode::MCTSNode(GameState state,Action parentAction, MCTSNode* parent = nullptr )
     : state(state), parent(parent), parentAction(parentAction)  {
 
     this->children.clear();
@@ -16,48 +16,68 @@ MCTSNode::MCTSNode(MoveSimulator::BoardState state,Action parentAction, MCTSNode
 }
 
 std::vector<Action> MCTSNode::untriedActions() {
+    this->ms->updateBoard(state);
 
-    // Iterate through each row
-    for (size_t i = 0; i < state.simBoard.size(); ++i) {
-        // Iterate through each column
-        for (size_t j = 0; j < state.simBoard[i].size(); ++j) {
-            const CellInfo& cellInfo = state.simBoard[i][j];
+    if((state.currentPlayer == TeamA && state.firstTurnA >= 3) || (state.currentPlayer == TeamB && state.firstTurnB >= 3)){
+        // Iterate through each row
+        for (size_t i = 0; i < state.board.size(); ++i) {
+            // Iterate through each column
+            for (size_t j = 0; j < state.board[i].size(); ++j) {
+                PieceType Ptype;
+                PlayerTeam Pteam;
+                bool Pflipped;
+                std::tie(Ptype, Pteam, Pflipped) = state.board[i][j];
 
-            // Set figure details
-            if (cellInfo.hasFigure) {
-                if(cellInfo.owner == state.currentTeam){
-                    ms->setState(state);
-                    ms->rollBackBoard();
-                    Figure::MoveResult moves = ms->simulateAndFilterMoves(nullptr, i, j);
+                // Set figure details
+                if (Ptype != NoPiece) {
+                    if(Pteam == state.currentPlayer){
 
-                   Action act;
-                    for (const auto& move : moves.validMoves) {
-                        int moveRow = std::get<1>(move);
-                        int moveCol = std::get<2>(move);
-                        // Get the move type
-                        MoveTypes moveType = std::get<0>(move);
+                        ms->updateBoard(state);
+                        Figure::MoveResult moves = ms->simulateAndFilterMoves(i, j);
 
-                        if(moveType == CommandTo || moveType == CommandFrom){
-                            continue;
+
+                        Action act;
+                        for (const auto& move : moves.validMoves) {
+                            int moveRow = std::get<1>(move);
+                            int moveCol = std::get<2>(move);
+                            // Get the move type
+                            MoveTypes moveType = std::get<0>(move);
+
+
+                            if(moveType == CommandTo || moveType == CommandFrom){
+                                //TODO Finish command
+                                continue;
+                            }
+
+                            act.currentPosition = moves.currentPosition;
+                            act.nextPosition = std::pair(moveRow, moveCol);
+                            act.moveType = moveType;
+
+                            this->untriedactions.push_back(act);
+
                         }
-
-                        act.currentPosition = moves.currentPosition;
-                        act.nextPosition = std::pair(moveRow, moveCol);
-                        act.moveType = moveType;
-
-                        this->untriedactions.push_back(act);
-
                     }
                 }
             }
         }
     }
 
-    if(!ms->drawPieceCheck(state.currentTeam).empty()){
-        QList<QPair<int, int>>draws =  ms->drawPieceCheck(state.currentTeam);
-        //TODO draws
-    }
+    QList<QPair<int, int>> drawCells = ms->drawPieceCheck(state.currentPlayer);
+    if(!drawCells.empty()){
+        for (const auto& cell : drawCells) {
+            int x = cell.first;
+            int y = cell.second;
 
+           Action act;
+
+            act.currentPosition = std::pair(x, y);
+            act.nextPosition = std::pair(-1, -1);
+            act.moveType = Draw;
+
+            this->untriedactions.push_back(act);
+        }
+
+    }
 
     return this->untriedactions;
 }
@@ -76,9 +96,25 @@ MCTSNode* MCTSNode::expand(){
     // Pop an action from untried_actions
     Action action = untriedactions.back();
     untriedactions.pop_back();
+    GameState nextState;
 
     // Get the next state after applying the action
-    MoveSimulator::BoardState nextState = this->ms->simulateMove(action.currentPosition.first, action.currentPosition.second, state.simBoard, std::tuple(action.moveType, action.nextPosition.first, action.nextPosition.second));
+
+    if(action.moveType != Draw){
+        this->ms->updateBoard(state);
+        this->ms->simulateMove(action.currentPosition.first, action.currentPosition.second, action.nextPosition.first, action.nextPosition.second, action.moveType);
+        nextState = this->ms->getBoard();
+
+    }else if(action.moveType == Draw){
+        this->ms->updateBoard(state);
+
+
+
+       this->ms->simulateDraw(action.currentPosition.first, action.currentPosition.second, state.currentPlayer);
+
+        nextState = this->ms->getBoard();
+
+    }
 
     // Create a new child node with the next state
     MCTSNode* child_node = new MCTSNode(nextState, action, this);
@@ -92,52 +128,94 @@ MCTSNode* MCTSNode::expand(){
 bool MCTSNode::isTerminalNode() const {
 
 
-
-    return this->ms->is_game_over(state);
+    //TODO check if state.currentTeam is right in this state
+    return this->ms->endGameCheck(state);
 }
-double MCTSNode::rollout() const {
-    MoveSimulator::BoardState current_rollout_state = state;
 
-    while (!this->ms->is_game_over(current_rollout_state)) {
+double MCTSNode::rollout() const {
+    GameState current_rollout_state = state;
+
+    int maxSim = 0;
+
+
+    while (!this->ms->endGameCheck(current_rollout_state, true) && maxSim < 100) {
+
+        if(current_rollout_state.currentPlayer == TeamA){
+            current_rollout_state.currentPlayer = TeamB;
+        }else{
+            current_rollout_state.currentPlayer = TeamA;
+        }
+        if(ms->endGameCheck(current_rollout_state)){
+            break;
+        }
+        else{
+            if(current_rollout_state.currentPlayer == TeamA){
+                current_rollout_state.currentPlayer = TeamB;
+            }else{
+                current_rollout_state.currentPlayer = TeamA;
+            }
+        }
 
         std::vector<Action> possible_moves;
 
-        // Iterate through each row
-        for (size_t i = 0; i < current_rollout_state.simBoard.size(); ++i) {
-            // Iterate through each column
-            for (size_t j = 0; j < current_rollout_state.simBoard[i].size(); ++j) {
-                const CellInfo& cellInfo = current_rollout_state.simBoard[i][j];
+        if((current_rollout_state.currentPlayer == TeamA && current_rollout_state.firstTurnA >= 3) || (current_rollout_state.currentPlayer == TeamB && current_rollout_state.firstTurnB >= 3)){
+            // Iterate through each row
+            for (size_t i = 0; i < current_rollout_state.board.size(); ++i) {
+                // Iterate through each column
+                for (size_t j = 0; j < current_rollout_state.board[i].size(); ++j) {
+                    PieceType Ptype;
+                    PlayerTeam Pteam;
+                    bool Pflipped;
+                    std::tie(Ptype, Pteam, Pflipped) = current_rollout_state.board[i][j];
 
-                // Set figure details
-                if (cellInfo.hasFigure) {
-                    if(cellInfo.owner == current_rollout_state.currentTeam){
+                    // Set figure details
+                    if (Ptype != NoPiece) {
+                        if(Pteam == current_rollout_state.currentPlayer){
 
-                        ms->setState(current_rollout_state);
-                        ms->rollBackBoard();
-                        Figure::MoveResult moves = ms->simulateAndFilterMoves(nullptr, i, j);
+                            this->ms->updateBoard(current_rollout_state);
+                            Figure::MoveResult moves = ms->simulateAndFilterMoves(i, j);
 
-                        Action act;
-                        for (const auto& move : moves.validMoves) {
-                            int moveRow = std::get<1>(move);
-                            int moveCol = std::get<2>(move);
-                            // Get the move type
-                            MoveTypes moveType = std::get<0>(move);
-
-                            if(moveType == CommandTo || moveType == CommandFrom){
-                                continue;
-                            }
                             Action act;
+                            for (const auto& move : moves.validMoves) {
+                                int moveRow = std::get<1>(move);
+                                int moveCol = std::get<2>(move);
+                                // Get the move type
+                                MoveTypes moveType = std::get<0>(move);
 
-                            act.currentPosition = moves.currentPosition;
-                            act.nextPosition = std::pair(moveRow, moveCol);
-                            act.moveType = moveType;
+                                if(moveType == CommandTo || moveType == CommandFrom){
+                                    //TODO Finish command
+                                    continue;
+                                }
+                                Action act;
 
-                            possible_moves.push_back(act);
+                                act.currentPosition = moves.currentPosition;
+                                act.nextPosition = std::pair(moveRow, moveCol);
+                                act.moveType = moveType;
 
+                                possible_moves.push_back(act);
+
+                            }
                         }
                     }
                 }
             }
+        }
+
+        QList<QPair<int, int>> drawCells = ms->drawPieceCheck(current_rollout_state.currentPlayer);
+        if(!drawCells.empty()){
+            for (const auto& cell : drawCells) {
+                int x = cell.first;
+                int y = cell.second;
+
+                Action act;
+
+                act.currentPosition = std::pair(x, y);
+                act.nextPosition = std::pair(-1, -1);
+                act.moveType = Draw;
+
+                possible_moves.push_back(act);
+            }
+
         }
 
 
@@ -150,8 +228,20 @@ double MCTSNode::rollout() const {
         qDebug() << "MCTS";
 
 
-        current_rollout_state = ms->simulateMove(action.currentPosition.first, action.currentPosition.second, current_rollout_state.simBoard, std::tuple(action.moveType, action.nextPosition.first, action.nextPosition.second));
+        if(action.moveType != Draw){
+            this->ms->updateBoard(current_rollout_state);
+            this->ms->simulateMove(action.currentPosition.first, action.currentPosition.second, action.nextPosition.first, action.nextPosition.second, action.moveType);
+            current_rollout_state = ms->getBoard();
+        }else if(action.moveType == Draw){
+            this->ms->updateBoard(current_rollout_state);
 
+            this->ms->simulateDraw(action.currentPosition.first, action.currentPosition.second, current_rollout_state.currentPlayer);
+
+            current_rollout_state = this->ms->getBoard();
+
+        }
+        maxSim++;
+        //TODO add also board evaluation cuz of max simulations break
     }
 
     // Create a random number generator
@@ -216,9 +306,10 @@ MCTSNode* MCTSNode::treePolicy() {
 }
 
 MCTSNode* MCTSNode::bestAction() {
-    const int simulationNo = 100;
+    const int simulationNo = 5;
     for (int i = 0; i < simulationNo; ++i) {
         MCTSNode* v = treePolicy();
+        //TODO put limit in rollout (probably) to limit how many turns it should check up
         double reward = v->rollout();
         v->backpropagate(reward);
     }

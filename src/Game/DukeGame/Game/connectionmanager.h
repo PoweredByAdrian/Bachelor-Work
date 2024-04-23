@@ -16,14 +16,13 @@ class ConnectionManager : public QObject
 
 public:
     explicit ConnectionManager(QObject *parent = nullptr, GameLogic* gl = nullptr, MainWindow *mw = nullptr);
-    void handleActionCompleted(int X, int Y, PieceType pieceType, PlayerTeam team);
+    void handleActionCompleted(GameState state);
     void handlePlayerSwitch(PlayerTeam team);
 private slots:
     void handleGridButtonClicked(int row, int col);
     void handleBagButtonClicked(PlayerTeam team);
 
 private:
-    void cellStateChanged(int row, int col, PieceType type, PlayerTeam team);
     PlayerTeam team;
     void connectButtons();
     void connectLabels();
@@ -32,6 +31,7 @@ private:
 
     GameLogic* gl;
     MainWindow* mw;
+    GameState board;
 
     int firstButtonRow = -1;
     int firstButtonCol = -1;
@@ -40,8 +40,9 @@ private:
 
     bool firstTurn = false;
 
-    Expectiminimax* PlayerA_AI;
-    MCTSNode* PlayerB_AI;
+    Expectiminimax* PlayerA_AI = nullptr;
+    bool useMCTS = false;
+    //MCTSNode* PlayerB_AI = nullptr;
 
 };
 
