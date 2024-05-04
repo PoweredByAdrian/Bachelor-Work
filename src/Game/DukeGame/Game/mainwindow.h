@@ -35,7 +35,11 @@ public:
 
     void updateSelectedPieceLabel(PieceType pieceType);
 
+
+
 private:
+
+
     void setButtonText(int row, int col, PieceType type, PlayerTeam team,  bool flipped);
 
     void switchPlayerAndResetLabels(PlayerTeam currTeam);

@@ -18,7 +18,7 @@ void MoveSimulator::resetCounter(){
     this->simulations = 0;
 }
 
-//TODO This need also check if current team is under GUARD and if yes, then filter moves
+
 Figure::MoveResult MoveSimulator::simulateAndFilterMoves(int row, int col){
 
     PieceType type;
@@ -76,7 +76,6 @@ Figure::MoveResult MoveSimulator::simulateAndFilterMoves(int row, int col){
         else{
             this->simulateMove(moves.currentPosition.first, moves.currentPosition.second, moveRow, moveCol, moveType);
             if(selfGuard(team)){
-                qDebug() << moves.currentPosition.first << ":" << moves.currentPosition.second << "..." << moveRow << ":" << moveCol;
                 if(moves.validMoves.size() == 1){
                     moves.validMoves.clear();
                 }
@@ -119,7 +118,7 @@ Figure::MoveResult MoveSimulator::simulateAndFilterMoves(int row, int col){
     return moves;
 }
 
-QList<QPair<int, int>> MoveSimulator::drawPieceCheck(PlayerTeam currentPlayer){
+QList<QPair<int, int>> MoveSimulator::drawPieceCheck(PlayerTeam currentPlayer, bool emptyCheck){
 
     Figure* duke;
 
@@ -132,7 +131,7 @@ QList<QPair<int, int>> MoveSimulator::drawPieceCheck(PlayerTeam currentPlayer){
         duke->setCoord(this->boardState.dukeCoordB.first, this->boardState.dukeCoordB.second);
     }
 
-    QList<QPair<int, int>> cells = duke->getPlacableCellsForNewPiece(this->boardState);
+    QList<QPair<int, int>> cells = duke->getPlacableCellsForNewPiece(this->boardState, emptyCheck);
 
     // Copy each row
     if(cells.isEmpty()){
@@ -161,8 +160,7 @@ QList<QPair<int, int>> MoveSimulator::drawPieceCheck(PlayerTeam currentPlayer){
 
 bool MoveSimulator::selfGuard(PlayerTeam currentPlayer){
 
-    //qDebug() << "SelfGuard board Representation:\n";
-    //printBoard();
+
 
     for (int row = 0; row < 6; ++row) {
         for (int col = 0; col < 6; ++col) {
@@ -184,13 +182,13 @@ bool MoveSimulator::selfGuard(PlayerTeam currentPlayer){
 
                     if(currentPlayer == TeamA){
                         if(f->isValidMove(this->boardState, this->boardState.dukeCoordA.first, this->boardState.dukeCoordA.second)){
-                            qDebug() << row << ", "<< col <<"selfGuard!";
+
                             return true;
                         }
                     }
                     else if(currentPlayer == TeamB){
                         if(f->isValidMove(this->boardState, this->boardState.dukeCoordB.first, this->boardState.dukeCoordB.second)){
-                            qDebug() << row << ", "<< col <<"selfGuard!";
+
                             return true;
                         }
                     }
@@ -221,8 +219,10 @@ void MoveSimulator::removeFigure(int row, int col) {
     placeFigure(row, col, NoTeam, NoPiece, false);
 }
 
-//TODO Check if move is valid
+
 void MoveSimulator::simulateMove(int fromX, int fromY, int toX, int toY, MoveTypes type, /* coord for command */int commandX, int commandY){
+    this->simulations++;
+
     PieceType Ptype;
     PlayerTeam Pteam;
     bool flipped;
@@ -267,9 +267,9 @@ void MoveSimulator::simulateMove(int fromX, int fromY, int toX, int toY, MoveTyp
     }
 }
 
-//TODO Check if its valid
-void MoveSimulator::simulateDraw(int row, int col, PlayerTeam team){
 
+void MoveSimulator::simulateDraw(int row, int col, PlayerTeam team){
+    this->simulations++;
 
 
 
@@ -369,7 +369,35 @@ bool MoveSimulator::endGameCheck(GameState state, bool startTurn){
         return false;
     }
 
+    if(state.playerABag.empty() && state.playerBBag.empty()){
+        bool foundNonDukePiece = false;
+        for (int row = 0; row < 6; ++row) {
+            for (int col = 0; col < 6; ++col) {
+                PieceType type;
+                PlayerTeam Pteam;
+                bool flipped;
+                std::tie(type, Pteam, flipped) = state.board[row][col];
+                if (type != PieceType::Duke && type != PieceType::NoPiece) {
+                    foundNonDukePiece = true; // Set the flag if a non-Duke piece is found
+                    break; // No need to continue checking, exit the inner loop
+
+                }
+            }
+            if (foundNonDukePiece) {
+                break; // Exit the outer loop if a non-Duke piece is found
+            }
+        }
+        if (!foundNonDukePiece) {
+            this->updateBoard(state);
+            state.status = Tie;
+            // If no other pieces were found, return true
+            return true;
+        }
+    }
+
     this->updateBoard(state);
+
+
 
     for (int row = 0; row < 6; ++row) {
         for (int col = 0; col < 6; ++col) {
@@ -384,36 +412,81 @@ bool MoveSimulator::endGameCheck(GameState state, bool startTurn){
                 if(!startTurn){
                     if(Pteam != state.currentPlayer){
                         if(!this->simulateAndFilterMoves(row, col).validMoves.empty()){
+                            state.status = InProgress;
                             return false;
                         }
+
                     }
+
                 }
                 else{
                     if(Pteam == state.currentPlayer){
                         if(!this->simulateAndFilterMoves(row, col).validMoves.empty()){
+                            state.status = InProgress;
                             return false;
                         }
                     }
+
                 }
             }
         }
     }
 
-    qDebug() << "END GAME";
+    if(!startTurn){
+        if(state.currentPlayer == TeamA){
+            if(!this->drawPieceCheck(TeamB).empty()){
+                return false;
+            }
+        }
+        else{
+            if(!this->drawPieceCheck(TeamA).empty()){
+                return false;
+            }
+        }
+    }
+    else{
+        if(!this->drawPieceCheck(state.currentPlayer).empty()){
+            return false;
+        }
+    }
+
+    if(state.currentPlayer == TeamA){
+        if(!startTurn){
+            state.status = A_Win;
+
+        }
+        else{
+            state.status = B_Win;
+
+        }
+    }
+    else{
+        if(!startTurn){
+            state.status = B_Win;
+
+        }
+        else{
+            state.status = A_Win;
+
+        }
+    }
+
+    this->updateBoard(state);
+
     return true;
 }
 
 
 
-//TODO FIX printing
+
 void MoveSimulator::printBoard() {
-    this->simulations++;
+
     qDebug() << "Default board Representation:" << this->simulations << "\n";
     // Create a 6x6 grid of empty cells
     std::string grid[6][6];
     for (int row = 0; row < 6; ++row) {
         for (int col = 0; col < 6; ++col) {
-            // Use '-' for empty cells
+            // Use for empty cells
             grid[row][col] = "[ ]";
         }
     }

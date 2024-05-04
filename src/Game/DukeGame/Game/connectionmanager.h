@@ -42,7 +42,6 @@ private:
 
     Expectiminimax* PlayerA_AI = nullptr;
     bool useMCTS = false;
-    //MCTSNode* PlayerB_AI = nullptr;
 
 };
 

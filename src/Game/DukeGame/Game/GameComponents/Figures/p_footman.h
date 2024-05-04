@@ -8,8 +8,6 @@ class p_Footman : public Figure
 public:
     explicit p_Footman(PlayerTeam team);
 
-    // Override the isValidMove function
-    //bool isValidMove(Cell *cells[6][6], int row, int col) const override;
 
     // Override the markAvailableJumps function
     MoveResult markAvailableJumps(GameState state) const override;

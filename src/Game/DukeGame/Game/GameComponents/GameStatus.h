@@ -1,11 +1,8 @@
-#ifndef GAMESTATE_H
-#define GAMESTATE_H
-#include <vector>
+#ifndef GAMESTATUS_H
+#define GAMESTATUS_H
 
-#include "../enums.h"
 
-// Struct to represent the game
-struct GameState {
+struct GameStatus {
     std::vector<std::vector<std::tuple<PieceType, PlayerTeam, bool>>> board;  // 2D array to show the placement of figures and their flipped state
     PlayerTeam currentPlayer;
     std::vector<PieceType> playerABag;  // List of pieces in bag for player A (with their flipped state)
@@ -18,10 +15,8 @@ struct GameState {
     int firstTurnA;
     int firstTurnB;
 
-
-
-    GameStatus status = InProgress;
+    GameStatus status = ;
 };
 
 
-#endif // GAMESTATE_H
+#endif // GAMESTATUS_H

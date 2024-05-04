@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
     setupBoard();
 
     setupPlayers();
+
+
 }
 
 MainWindow::~MainWindow()
@@ -161,6 +163,15 @@ void MainWindow::updateUI(GameState gameState) {
         playerBButton->setText("Player B\nUnder Guard: No");
     }
 
+    if(gameState.status != InProgress){
+        if(gameState.status == A_Win){
+            selectedPlayerLabel->setText("A Winner");
+        }
+        else if(gameState.status == B_Win){
+            selectedPlayerLabel->setText("B Winner");
+        }
+    }
+
     // Update player bags
     updatePlayerBag(PlayerTeam::TeamA, gameState.playerABag);
     updatePlayerBag(PlayerTeam::TeamB, gameState.playerBBag);
@@ -194,9 +205,11 @@ void MainWindow::updatePlayerBag(PlayerTeam team, const std::vector<PieceType>& 
 
     // Update the bag label with the constructed string
     bagLabel->setText(bagText);
+
+
+
+
 }
-
-
 
 QPushButton *MainWindow::getGridButton(int row, int col){
     QLayoutItem* item = boardLayout->itemAtPosition(row+1, col);
@@ -209,6 +222,8 @@ QPushButton *MainWindow::getGridButton(int row, int col){
     return button;
 
 }
+
+
 
 void MainWindow::switchPlayerAndResetLabels(PlayerTeam currTeam) {
     // Switch the player label

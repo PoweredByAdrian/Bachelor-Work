@@ -15,6 +15,7 @@ public:
     MCTSNode(GameState state, Action parentAction, MCTSNode* parent);
     MCTSNode* bestAction();
     Action parentAction;
+    int simulations;
 private:
 
     GameState state;
@@ -33,7 +34,7 @@ private:
     MCTSNode* expand();
     bool isTerminalNode() const;
     double rollout() const;
-    void backpropagate(double result);
+    void backpropagate(double result, int sims);
     bool isFullyExpanded() const;
     MCTSNode* bestChild(double cParam) const;
     Action rolloutPolicy(const std::vector<Action>& possibleMoves) const;

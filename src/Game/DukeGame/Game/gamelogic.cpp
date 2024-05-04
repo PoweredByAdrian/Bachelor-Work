@@ -14,7 +14,7 @@ GameLogic::GameLogic() : newPiece(nullptr) {
     dm = new DebugManager();
 }
 
-//TODO Change generation new pieces
+
 PieceType GameLogic::getPieceGeneratedRequest(PlayerTeam team){
 
     if(newPiece != nullptr){
@@ -50,14 +50,11 @@ PieceType GameLogic::getPieceGeneratedRequest(PlayerTeam team){
             return NoPiece;
         }
 
-        if(gc->getBagPlayerA()->isEmpty()){
-            delete ms;
-            return NoPiece;
-        }
         if(gc->getBagPlayerB()->isEmpty()){
             delete ms;
             return NoPiece;
         }
+
         newPiece = gc->getBagPlayerB()->takeRandomPiece();
 
     }
@@ -108,7 +105,7 @@ bool GameLogic::addFigure(int x, int y){
     MoveSimulator *ms = new MoveSimulator();
     ms->updateBoard(state);
 
-    QList<QPair<int, int>> placableCells = ms->drawPieceCheck(state.currentPlayer);
+    QList<QPair<int, int>> placableCells = ms->drawPieceCheck(state.currentPlayer, false);
     QPair<int, int> targetCoord(x, y);
 
     delete ms;
@@ -235,9 +232,6 @@ bool GameLogic::thirdClick(int x, int y){
 
             gc->getCell(firstCoordX, firstCoordY)->getFigure()->flip();
 
-            //bool guard = this->isGuard();
-            //gc->getCurrentPlayer() == TeamA ? gc->guardPlayerB = guard : gc->guardPlayerA = guard;
-
 
             switchTurn();
             if(gc->getState().currentPlayer == TeamA){
@@ -310,8 +304,6 @@ bool GameLogic::getTurnRequest(int srcX, int srcY, int dstX, int dstY){
 
     if(valid){
         selectedPiece->flip();
-        //bool guard = this->isGuard();
-        //gc->getCurrentPlayer() == TeamA ? gc->guardPlayerB = guard : gc->guardPlayerA = guard;
         switchTurn();
     }
 
@@ -365,12 +357,7 @@ void GameLogic::switchTurn() {
 
     // Toggle between TeamA and TeamB
     gc->setCurrentPlayer(gc->getCurrentPlayer() == PlayerTeam::TeamA ? PlayerTeam::TeamB : PlayerTeam::TeamA);
-    /*if(gc->getCurrentPlayer() == TeamA){
-        gc->guardPlayerA = false;
-    }
-    else if(gc->getCurrentPlayer() == TeamB){
-        gc->guardPlayerB = false;
-    }*/
+
 }
 
 bool GameLogic::isGuard(){
@@ -385,7 +372,15 @@ bool GameLogic::isGuard(){
 
                         MoveSimulator* ms = new MoveSimulator();
 
-                        ms->endGameCheck(this->gc->getState());
+                        bool end = ms->endGameCheck(this->gc->getState());
+                        if(end){
+                            if(this->gc->getState().currentPlayer == TeamA){
+                                this->gc->status = A_Win;
+                            }
+                            else{
+                                this->gc->status = B_Win;
+                            }
+                        }
 
                         delete ms;
                         return true;

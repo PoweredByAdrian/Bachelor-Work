@@ -63,7 +63,6 @@ Figure* figureBag::takeRandomPiece(){
     }
     else
     {
-        //TODO BAG EMPTY
         return nullptr; // Bag is empty
     }
 }

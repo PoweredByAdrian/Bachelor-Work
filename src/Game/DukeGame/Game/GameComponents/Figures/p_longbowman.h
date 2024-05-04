@@ -8,8 +8,6 @@ class p_Longbowman : public Figure
 public:
     explicit p_Longbowman(PlayerTeam team);
 
-    // Override the isValidMove function
-    //bool isValidMove(Cell *cells[6][6], int row, int col) const override;
 
     // Override the markAvailableJumps function
     MoveResult markAvailableJumps(GameState state) const override;

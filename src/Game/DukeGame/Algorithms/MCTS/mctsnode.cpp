@@ -6,6 +6,7 @@
 MCTSNode::MCTSNode(GameState state,Action parentAction, MCTSNode* parent = nullptr )
     : state(state), parent(parent), parentAction(parentAction)  {
 
+    this->simulations = 0;
     this->children.clear();
     this->visits = 0;
     results[1] = 0;
@@ -45,7 +46,7 @@ std::vector<Action> MCTSNode::untriedActions() {
 
 
                             if(moveType == CommandTo || moveType == CommandFrom){
-                                //TODO Finish command
+
                                 continue;
                             }
 
@@ -127,18 +128,19 @@ MCTSNode* MCTSNode::expand(){
 
 bool MCTSNode::isTerminalNode() const {
 
-
-    //TODO check if state.currentTeam is right in this state
-    return this->ms->endGameCheck(state);
+    return this->ms->endGameCheck(state, true);
 }
 
 double MCTSNode::rollout() const {
     GameState current_rollout_state = state;
 
-    int maxSim = 0;
+    this->ms->resetCounter();
 
+    while (!this->ms->endGameCheck(current_rollout_state, true)) {
 
-    while (!this->ms->endGameCheck(current_rollout_state, true) && maxSim < 100) {
+        if(this->ms->getCounter() >= 100){
+            return -1;
+        }
 
         if(current_rollout_state.currentPlayer == TeamA){
             current_rollout_state.currentPlayer = TeamB;
@@ -183,7 +185,7 @@ double MCTSNode::rollout() const {
                                 MoveTypes moveType = std::get<0>(move);
 
                                 if(moveType == CommandTo || moveType == CommandFrom){
-                                    //TODO Finish command
+
                                     continue;
                                 }
                                 Action act;
@@ -220,12 +222,10 @@ double MCTSNode::rollout() const {
 
 
         // Use your rollout policy to select an action
+        if(possible_moves.empty()){
+            break;
+        }
         Action action = rolloutPolicy(possible_moves);
-
-        qDebug() << "";
-        qDebug() << "";
-        qDebug() << "";
-        qDebug() << "MCTS";
 
 
         if(action.moveType != Draw){
@@ -240,31 +240,29 @@ double MCTSNode::rollout() const {
             current_rollout_state = this->ms->getBoard();
 
         }
-        maxSim++;
-        //TODO add also board evaluation cuz of max simulations break
+
     }
 
-    // Create a random number generator
-    std::random_device rd;
-    std::mt19937 gen(rd());
-
-    // Define the distribution for integers in the range [-1, 1]
-    std::uniform_int_distribution<int> dist(-1, 1);
-
-    // Generate a random number
-    int randomValue = dist(gen);
 
     // Return the result of the game
-    //TODO return current_rollout_state.game_result();
-    return randomValue;
+    current_rollout_state = this->ms->getBoard();
+    if(current_rollout_state.status == A_Win){
+        return -1;
+    }else if(current_rollout_state.status == B_Win){
+        return 1;
+    }else{
+        return 0;
+    }
+
 }
 
-void MCTSNode::backpropagate(double result) {
+void MCTSNode::backpropagate(double result, int sims) {
     this->visits += 1;
     this->results[result] += 1;
+    this->simulations += sims;
 
     if (parent) {
-        parent->backpropagate(result);
+        parent->backpropagate(result, sims);
     }
 }
 
@@ -272,17 +270,18 @@ bool MCTSNode::isFullyExpanded() const {
     return untriedactions.empty();
 }
 
-MCTSNode* MCTSNode::bestChild(double cParam = 0.1) const {
+MCTSNode* MCTSNode::bestChild(double cParam = 1) const {
     double maxWeight = -std::numeric_limits<double>::infinity();
     MCTSNode* bestChild = nullptr;
 
     for (const auto& child : children) {
-        double weight = (child->q() / child->n()) + cParam * std::sqrt((2 * std::log(n()) / child->n()));
+        double weight = (child->q() / child->n()) + cParam * std::sqrt((2 * std::log(this->n()) / child->n()));
         if (weight > maxWeight) {
             maxWeight = weight;
             bestChild = child;
         }
     }
+
     return bestChild;
 }
 
@@ -306,73 +305,15 @@ MCTSNode* MCTSNode::treePolicy() {
 }
 
 MCTSNode* MCTSNode::bestAction() {
-    const int simulationNo = 5;
+    const int simulationNo = 500;
     for (int i = 0; i < simulationNo; ++i) {
         MCTSNode* v = treePolicy();
-        //TODO put limit in rollout (probably) to limit how many turns it should check up
+
         double reward = v->rollout();
-        v->backpropagate(reward);
+        int sims = v->ms->getCounter();
+        v->backpropagate(reward, sims);
     }
+    qDebug() << "Wins: " << this->results[1] << ", Loses: " << this->results[-1] << ", Draws: " << this->results[0];
     return bestChild(0.0);
 }
 
-
-
-// def get_legal_actions(self):
-//     '''
-//     Modify according to your game or
-//     needs. Constructs a list of all
-//     possible actions from current state.
-//     Returns a list.
-//     '''
-// def is_game_over(self):
-//     '''
-//     Modify according to your game or
-//     needs. It is the game over condition
-//         and depends on your game. Returns
-//             true or false
-//     '''
-// def game_result(self):
-//     '''
-//     Modify according to your game or
-//     needs. Returns 1 or 0 or -1 depending
-//     on your state corresponding to win,
-//      tie or a loss.
-//     '''
-// def move(self,action):
-//     '''
-//     Modify according to your game or
-//     needs. Changes the state of your
-//     board with a new value. For a normal
-//     Tic Tac Toe game, it can be a 3 by 3
-//   array with all the elements of array
-//   being 0 initially. 0 means the board
-//   position is empty. If you place x in
-//   row 2 column 3, then it would be some
-//   thing like board[2][3] = 1, where 1
-//   represents that x is placed. Returns
-//   the new state after making a move.
-//     '''
-// std::vector<Action> GameState::getLegalActions() const {
-//     // Modify according to your game logic to construct a list of legal actions
-//     std::vector<Action> legalActions;
-//     // Add legal actions to the vector
-//     return legalActions;
-// }
-
-// bool GameState::isGameOver() const {
-//     // Modify according to your game logic to check if the game is over
-//     // Return true if the game is over, false otherwise
-// }
-
-// int GameState::gameResult() const {
-//     // Modify according to your game logic to determine the game result
-//     // Return 1 for win, 0 for tie, and -1 for loss
-// }
-
-// GameState GameState::move(const Action& action) const {
-//     // Modify according to your game logic to make a move and return the new state
-//     GameState newState = *this;
-//     // Make the move and update the state
-//     return newState;
-// }

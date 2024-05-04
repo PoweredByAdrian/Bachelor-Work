@@ -40,4 +40,13 @@ enum MoveTypes{
     Draw
 };
 
+enum GameStatus {
+    A_Win,
+    B_Win,
+    Tie,
+
+    InProgress
+
+};
+
 #endif // ENUMS_H

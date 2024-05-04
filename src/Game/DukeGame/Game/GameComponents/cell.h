@@ -13,14 +13,11 @@ public:
     Figure *getFigure() const;
     void setFigure(Figure *figure);
     bool hasFigure() const;
-    PieceType getFigureType() const;
+
     int getRow() const {return x;}
     int getCol() const {return y;};
 
 
-signals:
-    //TODO is this neccessary
-    void figureStateChanged();
 
 private:
     int x;

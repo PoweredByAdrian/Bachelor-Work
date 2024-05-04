@@ -10,12 +10,10 @@ ConnectionManager::ConnectionManager(QObject *parent, GameLogic* gl, MainWindow*
     this->mw = mw;
     connectButtons();
 
-    //this->PlayerA_AI = new Expectiminimax(2, PlayerTeam::TeamA);
+    this->PlayerA_AI = new Expectiminimax(5, PlayerTeam::TeamA, true);
 
 
     this->useMCTS = true;
-    //this->PlayerB_AI = new MCTSNode();
-    //FIXME this->PlayerB_AI = new Expectiminimax(1, PlayerTeam::TeamB);
 
     // Set the callback function
     gl->setActionCompletedCallback([this](GameState state) {
@@ -27,7 +25,7 @@ void ConnectionManager::handleGridButtonClicked(int row, int col)
     qDebug() << "Grid button pressed at row:" << row << "col:" << col;
 
     std::pair<int, int> nullPair = std::make_pair(-1, -1);
-    //TODO Find where to call AI
+
     if(team == TeamA && this->PlayerA_AI != nullptr){
 
         auto startTime = std::chrono::high_resolution_clock::now();
@@ -52,16 +50,25 @@ void ConnectionManager::handleGridButtonClicked(int row, int col)
             gl->handleSingleCoordAction(nextMove.firstCoord.first, nextMove.firstCoord.second);
             gl->handleSingleCoordAction(nextMove.secondCoord.first, nextMove.secondCoord.second);
         }
-        //TODO command
+
 
 
     }
     else if(team == TeamB && this->useMCTS){
 
+        auto startTime = std::chrono::high_resolution_clock::now();
         Action act;
         MCTSNode* root = new MCTSNode(this->board, act, nullptr);
         MCTSNode* selectedNode = root->bestAction();
         act = selectedNode->parentAction;
+
+        auto endTime = std::chrono::high_resolution_clock::now();
+
+        // Calculate the duration (elapsed time)
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+
+        // Output the duration
+        qDebug() << "Execution time: " << duration.count() << " milliseconds\nSimulations: " << root->simulations << "\n";
 
         if(act.moveType == Draw){
             this->handleBagButtonClicked(TeamB);
@@ -71,7 +78,7 @@ void ConnectionManager::handleGridButtonClicked(int row, int col)
             gl->handleSingleCoordAction(act.currentPosition.first, act.currentPosition.second);
             gl->handleSingleCoordAction(act.nextPosition.first, act.nextPosition.second);
         }
-        //TODO command
+
 
     }
     else{
@@ -116,4 +123,6 @@ void ConnectionManager::connectButtons() {
     connect(mw->getPlayerBButton(), &QPushButton::clicked, this, [this]() {
         handleBagButtonClicked(PlayerTeam::TeamB);
     });
+
+
 }

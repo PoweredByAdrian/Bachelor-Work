@@ -27,13 +27,11 @@ public:
     void updateDukeB(Figure* duke);
 
 
-    std::vector<std::vector<Cell*>>& getCells() {return cells; }
     Figure* getPlayerDuke(PlayerTeam player) const {return player == TeamA ? dukeA : dukeB;}
 
     bool guardPlayerA;
     bool guardPlayerB;
 
-    bool canDrawFromBag(PlayerTeam player);
 
     GameState getState();
 
@@ -44,6 +42,8 @@ public:
 
     int firstTurnA;
     int firstTurnB;
+
+    GameStatus status;
 private:
     // Private member functions for setup
     void createCells();
@@ -62,6 +62,8 @@ private:
     Figure *dukeB;
 
     PlayerTeam currentTeam;
+
+
 
 
 

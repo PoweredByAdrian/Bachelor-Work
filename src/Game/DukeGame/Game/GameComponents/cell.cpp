@@ -27,7 +27,3 @@ bool Cell::hasFigure() const
     return figure != nullptr;
 }
 
-PieceType Cell::getFigureType() const
-{
-    return figure ? figure->type() : NoPiece;
-}

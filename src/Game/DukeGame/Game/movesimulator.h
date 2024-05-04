@@ -9,12 +9,6 @@
 class MoveSimulator
 {
 public:
-    //TODO move this into different file
-    struct finalMove {
-        std::pair<int, int> firstCoord;
-        std::pair<int, int> secondCoord;
-        std::pair<int, int> thirdCoord;
-    };
 
     MoveSimulator();
 
@@ -23,12 +17,14 @@ public:
     void simulateMove(int fromX, int fromY, int toX, int toY, MoveTypes type, /* coord for command */int commandX = NULL, int commandY = NULL);
     void simulateDraw(int row, int col, PlayerTeam team);
     void rollBackBoard();
-    GameState getBoard(){    qDebug() << "Return board Representation:\n";
-                             this->printBoard();
+    GameState getBoard(){    //qDebug() << "Return board Representation:\n";
+                             //this->printBoard();
                              return this->boardState;}
     bool endGameCheck(GameState state, bool startTurn = false);
-    QList<QPair<int, int>> drawPieceCheck(PlayerTeam currentPlayer);
+    QList<QPair<int, int>> drawPieceCheck(PlayerTeam currentPlayer, bool emptyCheck = true);
 
+
+    int getCounter(){return this->simulations;};
     void printBoard();
     void resetCounter();
 private:

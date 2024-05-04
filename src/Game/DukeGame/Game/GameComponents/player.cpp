@@ -16,14 +16,3 @@ figureBag* Player::getPieceBag() const
     return figurebag;
 }
 
-Figure* Player::getRandomPieceFromBag()
-{
-    if (figurebag)
-    {
-        return figurebag->takeRandomPiece();
-    }
-    else
-    {
-        return nullptr; // Player has no piece bag
-    }
-}

@@ -2,7 +2,7 @@
 
 GameConfigure::GameConfigure()
     : playerA(nullptr), playerB(nullptr), bagPlayerA(nullptr), bagPlayerB(nullptr), dukeA(nullptr), dukeB(nullptr),
-    guardPlayerA(false), guardPlayerB(false), currentTeam(NoTeam), firstTurnA(0), firstTurnB(0)
+    guardPlayerA(false), guardPlayerB(false), currentTeam(NoTeam), firstTurnA(0), firstTurnB(0), status(InProgress)
 {
 }
 
@@ -37,13 +37,6 @@ void GameConfigure::updateDukeB(Figure* duke){
     dukeB = duke;
 }
 
-bool GameConfigure::canDrawFromBag(PlayerTeam player){
-    figureBag* bag = (player == TeamA ? this->getBagPlayerA() : this->getBagPlayerB());
-    if(!bag->isEmpty() && !this->getPlayerDuke(player)->getPlacableCellsForNewPiece(this->getState()).empty()){
-        return true;
-    }
-    return false;
-}
 
 GameState GameConfigure::getState(){
     GameState state;
@@ -90,6 +83,8 @@ GameState GameConfigure::getState(){
         }
         board.push_back(row);
     }
+
+    state.status = this->status;
 
     state.board = board;
 

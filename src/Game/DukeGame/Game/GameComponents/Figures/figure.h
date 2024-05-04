@@ -47,7 +47,7 @@ public:
     // Abstract method to get the type of the figure
     virtual PieceType type() const = 0;
 
-    virtual QList<QPair<int, int>> getPlacableCellsForNewPiece(GameState state){return{};};
+    virtual QList<QPair<int, int>> getPlacableCellsForNewPiece(GameState state, bool emptyCheck){return{};};
 
 protected:
     PlayerTeam team;

@@ -82,7 +82,7 @@ Figure::MoveResult p_Duke::markAvailableJumps(GameState state) const
     return{currentPosition, validMoves};
 }
 
-QList<QPair<int, int>> p_Duke::getPlacableCellsForNewPiece(GameState state){
+QList<QPair<int, int>> p_Duke::getPlacableCellsForNewPiece(GameState state, bool emptyCheck){
     QList<QPair<int, int>> result;
     if(team == TeamA){
         if(row == -1 || col == -1){
@@ -90,7 +90,8 @@ QList<QPair<int, int>> p_Duke::getPlacableCellsForNewPiece(GameState state){
             result.append(QPair<int, int>(0, 3));
             return result;
         }
-        if(state.playerABag.empty()){
+
+        if(emptyCheck && state.playerABag.empty()){
             result.clear();
             return result;
         }
@@ -101,7 +102,7 @@ QList<QPair<int, int>> p_Duke::getPlacableCellsForNewPiece(GameState state){
             result.append(QPair<int, int>(5, 3));
             return result;
         }
-        if(state.playerBBag.empty()){
+        if(emptyCheck && state.playerBBag.empty()){
             result.clear();
             return result;
         }

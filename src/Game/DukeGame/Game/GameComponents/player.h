@@ -12,7 +12,6 @@ public:
     void setPieceBag();
     figureBag* getPieceBag() const;
 
-    Figure* getRandomPieceFromBag();
     PlayerTeam getTeam() {return team;}
 
 private:

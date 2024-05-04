@@ -8,9 +8,6 @@ class p_Pikeman : public Figure
 public:
     explicit p_Pikeman(PlayerTeam team);
 
-    // Override the isValidMove function
-    //bool isValidMove(Cell *cells[6][6], int row, int col) const override;
-
     // Override the markAvailableJumps function
     MoveResult markAvailableJumps(GameState state) const override;
 
